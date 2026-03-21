@@ -1,26 +1,29 @@
+import { Github, Music, Heart } from "lucide-react";
+
 export default function Footer() {
   return (
     <footer className="border-t border-border mt-24 py-8">
       <div className="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-muted-foreground text-xs">
-          © {new Date().getFullYear()} Boniface. All rights reserved.
+        <p className="text-muted-foreground text-xs flex items-center gap-1">
+          © {new Date().getFullYear()} Boniface Kagunda. Made with
+          <Heart size={12} className="text-accent" />
         </p>
-        <div className="flex gap-6">
+        <div className="flex items-center gap-5">
           <a
             href="https://github.com/Boniface1818"
             target="_blank"
             rel="noreferrer"
-            className="color-shift text-xs"
+            className="color-shift text-xs inline-flex items-center gap-1.5"
           >
-            GitHub
+            <Github size={14} /> GitHub
           </a>
           <a
             href="https://musescore.com/user/108485503"
             target="_blank"
             rel="noreferrer"
-            className="color-shift text-xs"
+            className="color-shift text-xs inline-flex items-center gap-1.5"
           >
-            MuseScore
+            <Music size={14} /> MuseScore
           </a>
         </div>
       </div>
