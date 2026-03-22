@@ -1,4 +1,14 @@
-import { Github, Music, Heart } from "lucide-react";
+import { Github, Music, Heart, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+
+const socials = [
+  { href: "https://github.com/Boniface1818", icon: Github, label: "GitHub" },
+  { href: "https://musescore.com/user/108485503", icon: Music, label: "MuseScore" },
+  { href: "https://www.linkedin.com/in/BonifaceKagunda", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://www.instagram.com/bonifacekagunda39/", icon: Instagram, label: "Instagram" },
+  { href: "https://www.facebook.com/profile.php?id=61550230027573", icon: Facebook, label: "Facebook" },
+  { href: "https://www.youtube.com/@BonifaceKagunda006", icon: Youtube, label: "YouTube" },
+  { href: "https://www.tiktok.com/@b.o.n.i.5090", icon: Music, label: "TikTok" },
+];
 
 export default function Footer() {
   return (
@@ -8,23 +18,18 @@ export default function Footer() {
           © {new Date().getFullYear()} Boniface Kagunda. Made with
           <Heart size={12} className="text-accent" />
         </p>
-        <div className="flex items-center gap-5">
-          <a
-            href="https://github.com/Boniface1818"
-            target="_blank"
-            rel="noreferrer"
-            className="color-shift text-xs inline-flex items-center gap-1.5"
-          >
-            <Github size={14} /> GitHub
-          </a>
-          <a
-            href="https://musescore.com/user/108485503"
-            target="_blank"
-            rel="noreferrer"
-            className="color-shift text-xs inline-flex items-center gap-1.5"
-          >
-            <Music size={14} /> MuseScore
-          </a>
+        <div className="flex items-center gap-4 flex-wrap justify-center">
+          {socials.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              className="color-shift text-xs inline-flex items-center gap-1.5"
+            >
+              <s.icon size={14} /> {s.label}
+            </a>
+          ))}
         </div>
       </div>
     </footer>

@@ -57,22 +57,19 @@ export default function Contact() {
             <Section delay={300}>
               <div className="glass-card space-y-3">
                 <p className="text-xs text-muted-foreground">Find me online</p>
-                <a
-                  href="https://github.com/Boniface1818"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 text-sm color-shift"
-                >
-                  <Github size={16} /> GitHub
-                </a>
-                <a
-                  href="https://musescore.com/user/108485503"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 text-sm color-shift"
-                >
-                  <Music size={16} /> MuseScore
-                </a>
+                {[
+                  { href: "https://github.com/Boniface1818", icon: Github, label: "GitHub" },
+                  { href: "https://musescore.com/user/108485503", icon: Music, label: "MuseScore" },
+                  { href: "https://www.linkedin.com/in/BonifaceKagunda", icon: Linkedin, label: "LinkedIn" },
+                  { href: "https://www.instagram.com/bonifacekagunda39/", icon: Instagram, label: "Instagram" },
+                  { href: "https://www.facebook.com/profile.php?id=61550230027573", icon: Facebook, label: "Facebook" },
+                  { href: "https://www.youtube.com/@BonifaceKagunda006", icon: Youtube, label: "YouTube" },
+                  { href: "https://www.tiktok.com/@b.o.n.i.5090", icon: Music, label: "TikTok" },
+                ].map((s) => (
+                  <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm color-shift">
+                    <s.icon size={16} /> {s.label}
+                  </a>
+                ))}
               </div>
             </Section>
           </div>
