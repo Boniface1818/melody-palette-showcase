@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import Section from "@/components/Section";
