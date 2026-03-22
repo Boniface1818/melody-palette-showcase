@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { toast } from "sonner";
-import { Send, Mail, MapPin, Github, Music } from "lucide-react";
+import { Send, Mail, MapPin, Github, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 export default function Contact() {
   useBackgroundCycle(5000);
