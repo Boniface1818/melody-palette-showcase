@@ -41,7 +41,7 @@ export default function Contact() {
                 <Mail size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
                   <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="text-sm font-body text-foreground">kagundaboniface18@gmail.com</p>
+                  <p className="text-sm font-body text-foreground">Kagundaboniface98@gmail.com</p>
                 </div>
               </div>
             </Section>
