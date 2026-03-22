@@ -4,20 +4,37 @@ import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { Send, Mail, MapPin, Github, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 export default function Contact() {
   useBackgroundCycle(5000);
   const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
-      toast.success("Message sent! I'll get back to you soon.");
-      (e.target as HTMLFormElement).reset();
-    }, 1200);
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const name = (formData.get("name") as string).trim();
+    const email = (formData.get("email") as string).trim();
+    const subject = (formData.get("subject") as string).trim();
+    const message = (formData.get("message") as string).trim();
+
+    const { error } = await supabase.from("contact_submissions").insert({
+      name,
+      email,
+      subject,
+      message,
+    });
+
+    setSending(false);
+    if (error) {
+      toast.error("Something went wrong. Please try again.");
+      return;
+    }
+    toast.success("Message sent! I'll get back to you soon.");
+    form.reset();
   };
 
   return (
@@ -83,6 +100,7 @@ export default function Contact() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <input
                   type="text"
+                  name="name"
                   placeholder="Name"
                   required
                   minLength={3}
@@ -90,6 +108,7 @@ export default function Contact() {
                 />
                 <input
                   type="email"
+                  name="email"
                   placeholder="Email"
                   required
                   className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-foreground text-sm font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
@@ -97,11 +116,13 @@ export default function Contact() {
               </div>
               <input
                 type="text"
+                name="subject"
                 placeholder="Subject"
                 required
                 className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-foreground text-sm font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
               />
               <textarea
+                name="message"
                 placeholder="Your message..."
                 required
                 minLength={10}
