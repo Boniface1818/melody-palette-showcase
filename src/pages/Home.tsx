@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import Section from "@/components/Section";
@@ -56,12 +57,12 @@ export default function Home() {
           </Section>
           <Section delay={500}>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <a href="/projects" className="btn-primary group">
+              <Link to="/projects" className="btn-primary group">
                 View Projects
                 <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-              <a
-                href="/contact"
+              </Link>
+              <Link
+                to="/contact"
                 className="btn-primary"
                 style={{
                   background: "transparent",
@@ -69,7 +70,7 @@ export default function Home() {
                 }}
               >
                 Say Hello
-              </a>
+              </Link>
             </div>
           </Section>
         </section>
