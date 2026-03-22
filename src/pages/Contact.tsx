@@ -100,6 +100,7 @@ export default function Contact() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <input
                   type="text"
+                  name="name"
                   placeholder="Name"
                   required
                   minLength={3}
