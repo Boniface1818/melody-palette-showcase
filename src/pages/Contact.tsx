@@ -108,6 +108,7 @@ export default function Contact() {
                 />
                 <input
                   type="email"
+                  name="email"
                   placeholder="Email"
                   required
                   className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-foreground text-sm font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
