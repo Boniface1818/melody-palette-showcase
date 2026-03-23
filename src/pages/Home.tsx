@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
+import { useTextReveal } from "@/hooks/useTextReveal";
 import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, Github, Music, Code2, Sparkles, Zap } from "lucide-react";
 
+const quotes = [
+  "Where code meets composition — I build scalable web systems and craft musical arrangements that move people.",
+  "Every algorithm has a rhythm, every melody has logic — I live at the intersection of both.",
+];
+
 export default function Home() {
   const typedText = useTypingAnimation();
   useBackgroundCycle(5000);
+  const heading = useTextReveal("Hi, I'm Boniface", 70, 300);
+  const quote1 = useTextReveal(quotes[0], 25, 1800);
+  const quote2 = useTextReveal(quotes[1], 25, 4500);
 
   return (
     <>
@@ -21,6 +30,7 @@ export default function Home() {
             <div className="absolute top-1/4 left-1/4 w-1 h-1 rounded-full bg-primary/30 animate-pulse" />
             <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 rounded-full bg-accent/20 animate-pulse" style={{ animationDelay: "1s" }} />
             <div className="absolute bottom-1/3 left-1/3 w-1 h-1 rounded-full bg-primary/20 animate-pulse" style={{ animationDelay: "2s" }} />
+            <div className="absolute top-1/2 right-1/4 w-1 h-1 rounded-full bg-accent/25 animate-pulse" style={{ animationDelay: "3s" }} />
           </div>
 
           <Section>
@@ -33,11 +43,20 @@ export default function Home() {
               className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.95]"
               style={{ textWrap: "balance" as any }}
             >
-              Hi, I'm{" "}
-              <span className="color-shift relative">
-                Boniface
-                <span className="absolute -bottom-2 left-0 w-full h-1 rounded-full bg-gradient-to-r from-primary to-accent opacity-60" />
-              </span>
+              {heading.revealed.includes("I'm") ? (
+                <>
+                  {heading.revealed.split("I'm ")[0]}I'm{" "}
+                  <span className="color-shift relative">
+                    {heading.revealed.split("I'm ")[1]}
+                    {heading.done && (
+                      <span className="absolute -bottom-2 left-0 w-full h-1 rounded-full bg-gradient-to-r from-primary to-accent opacity-60" />
+                    )}
+                  </span>
+                </>
+              ) : (
+                heading.revealed
+              )}
+              {!heading.done && <span className="typing-cursor" />}
             </h1>
           </Section>
           <Section delay={200}>
@@ -51,8 +70,17 @@ export default function Home() {
               className="mt-8 max-w-md text-sm text-muted-foreground leading-relaxed mx-auto"
               style={{ textWrap: "pretty" as any }}
             >
-              Where code meets composition — I build scalable web systems and
-              craft musical arrangements that move people.
+              {quote1.revealed}
+              {!quote1.done && <span className="typing-cursor" />}
+            </p>
+          </Section>
+          <Section delay={450}>
+            <p
+              className="mt-4 max-w-md text-sm text-muted-foreground/80 leading-relaxed mx-auto italic"
+              style={{ textWrap: "pretty" as any }}
+            >
+              {quote2.revealed}
+              {!quote2.done && quote1.done && <span className="typing-cursor" />}
             </p>
           </Section>
           <Section delay={500}>
