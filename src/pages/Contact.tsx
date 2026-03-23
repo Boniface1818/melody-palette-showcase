@@ -50,7 +50,7 @@ export default function Contact() {
           </p>
         </Section>
 
-        <div className="grid md:grid-cols-5 gap-6 mt-16 max-w-3xl mx-auto">
+        <div className="grid md:grid-cols-5 gap-8 mt-16 max-w-4xl mx-auto">
           {/* Sidebar info */}
           <div className="md:col-span-2 flex flex-col gap-4">
             <Section delay={100}>
@@ -92,10 +92,10 @@ export default function Contact() {
           </div>
 
           {/* Form */}
-          <Section delay={150}>
+          <Section delay={150} className="md:col-span-3">
             <form
               onSubmit={handleSubmit}
-              className="glass-card flex flex-col gap-4 md:col-span-3"
+              className="glass-card flex flex-col gap-5"
             >
               <div className="grid sm:grid-cols-2 gap-4">
                 <input
@@ -104,14 +104,14 @@ export default function Contact() {
                   placeholder="Name"
                   required
                   minLength={3}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-foreground text-sm font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
+                  className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
                 />
                 <input
                   type="email"
                   name="email"
                   placeholder="Email"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-foreground text-sm font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
+                  className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
                 />
               </div>
               <input
@@ -119,15 +119,15 @@ export default function Contact() {
                 name="subject"
                 placeholder="Subject"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-foreground text-sm font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
+                className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
               />
               <textarea
                 name="message"
                 placeholder="Your message..."
                 required
                 minLength={10}
-                rows={5}
-                className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-foreground text-sm font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow resize-none"
+                rows={6}
+                className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow resize-none"
               />
               <button
                 type="submit"
