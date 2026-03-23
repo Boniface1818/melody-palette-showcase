@@ -5,7 +5,7 @@ import Section from "@/components/Section";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { Send, Mail, MapPin, Github, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Send, Mail, MapPin, Phone, Github, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 export default function Contact() {
   useBackgroundCycle(5000);
@@ -59,6 +59,16 @@ export default function Contact() {
                 <div>
                   <p className="text-xs text-muted-foreground">Email</p>
                   <p className="text-sm font-body text-foreground">Kagundaboniface98@gmail.com</p>
+                </div>
+              </div>
+            </Section>
+            <Section delay={150}>
+              <div className="glass-card flex items-start gap-3">
+                <Phone size={18} className="text-primary mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Phone / WhatsApp</p>
+                  <p className="text-sm font-body text-foreground">0757 394 587</p>
+                  <p className="text-sm font-body text-foreground">0104 586 361</p>
                 </div>
               </div>
             </Section>
