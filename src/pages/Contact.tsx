@@ -5,7 +5,7 @@ import Section from "@/components/Section";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { Send, Mail, MapPin, Github, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Send, Mail, MapPin, Phone, Github, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 export default function Contact() {
   useBackgroundCycle(5000);
