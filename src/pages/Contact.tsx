@@ -62,6 +62,16 @@ export default function Contact() {
                 </div>
               </div>
             </Section>
+            <Section delay={150}>
+              <div className="glass-card flex items-start gap-3">
+                <Phone size={18} className="text-primary mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-xs text-muted-foreground">Phone / WhatsApp</p>
+                  <p className="text-sm font-body text-foreground">0757 394 587</p>
+                  <p className="text-sm font-body text-foreground">0104 586 361</p>
+                </div>
+              </div>
+            </Section>
             <Section delay={200}>
               <div className="glass-card flex items-start gap-3">
                 <MapPin size={18} className="text-primary mt-0.5 shrink-0" />

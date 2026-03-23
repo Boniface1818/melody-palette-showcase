@@ -2,22 +2,17 @@ import { Link } from "react-router-dom";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useTextReveal } from "@/hooks/useTextReveal";
+import { useRotatingQuotes } from "@/hooks/useRotatingQuotes";
 import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, Github, Music, Code2, Sparkles, Zap } from "lucide-react";
 
-const quotes = [
-  "Where code meets composition — I build scalable web systems and craft musical arrangements that move people.",
-  "Every algorithm has a rhythm, every melody has logic — I live at the intersection of both.",
-];
-
 export default function Home() {
   const typedText = useTypingAnimation();
   useBackgroundCycle(5000);
-  const heading = useTextReveal("Hi, I'm Boniface", 70, 300);
-  const quote1 = useTextReveal(quotes[0], 25, 1800);
-  const quote2 = useTextReveal(quotes[1], 25, 4500);
+  const heading = useTextReveal("Hi, I'm Boniface", 70, 300, true, 3000);
+  const [quote1Text, quote2Text] = useRotatingQuotes(12000);
 
   return (
     <>
@@ -40,13 +35,13 @@ export default function Home() {
           </Section>
           <Section delay={100}>
             <h1
-              className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.95]"
+              className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.95] group cursor-default"
               style={{ textWrap: "balance" as any }}
             >
               {heading.revealed.includes("I'm") ? (
                 <>
                   {heading.revealed.split("I'm ")[0]}I'm{" "}
-                  <span className="color-shift relative">
+                  <span className="text-primary transition-colors duration-500 group-hover:text-accent">
                     {heading.revealed.split("I'm ")[1]}
                     {heading.done && (
                       <span className="absolute -bottom-2 left-0 w-full h-1 rounded-full bg-gradient-to-r from-primary to-accent opacity-60" />
@@ -67,20 +62,18 @@ export default function Home() {
           </Section>
           <Section delay={350}>
             <p
-              className="mt-8 max-w-md text-sm text-muted-foreground leading-relaxed mx-auto"
+              className="mt-8 max-w-md text-sm text-muted-foreground leading-relaxed mx-auto transition-opacity duration-700"
               style={{ textWrap: "pretty" as any }}
             >
-              {quote1.revealed}
-              {!quote1.done && <span className="typing-cursor" />}
+              {quote1Text}
             </p>
           </Section>
           <Section delay={450}>
             <p
-              className="mt-4 max-w-md text-sm text-muted-foreground/80 leading-relaxed mx-auto italic"
+              className="mt-4 max-w-md text-sm text-muted-foreground/80 leading-relaxed mx-auto italic transition-opacity duration-700"
               style={{ textWrap: "pretty" as any }}
             >
-              {quote2.revealed}
-              {!quote2.done && quote1.done && <span className="typing-cursor" />}
+              {quote2Text}
             </p>
           </Section>
           <Section delay={500}>
