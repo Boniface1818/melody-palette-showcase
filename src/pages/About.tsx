@@ -2,7 +2,18 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
+import { useColorCycle } from "@/hooks/useColorCycle";
+import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
+import { useTextReveal } from "@/hooks/useTextReveal";
+import { useAnimatedSkills } from "@/hooks/useAnimatedSkills";
 import { Code2, Music, Layers, Terminal, Piano, Users } from "lucide-react";
+
+const aboutSubtitles = [
+  "A developer who thinks in algorithms and a musician who feels in harmonies.",
+  "Where structured logic meets creative expression — that's where I thrive.",
+  "Turning complex problems into elegant solutions, in code and in music.",
+  "Two passions, one purpose: creating things that resonate with people.",
+];
 
 const techSkills = [
   { name: "React / TypeScript", level: 90 },
@@ -19,8 +30,27 @@ const musicSkills = [
   { name: "Choir Direction", level: 80 },
 ];
 
+function AnimatedBar({ level, color }: { level: number; color: "primary" | "accent" }) {
+  const { ref, width } = useAnimatedSkills(level);
+  const gradientClass = color === "primary"
+    ? "bg-gradient-to-r from-primary to-primary/60"
+    : "bg-gradient-to-r from-accent to-accent/60";
+
+  return (
+    <div ref={ref} className="h-1.5 rounded-full bg-secondary overflow-hidden">
+      <div
+        className={`h-full rounded-full ${gradientClass}`}
+        style={{ width: `${width}%`, transition: "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)" }}
+      />
+    </div>
+  );
+}
+
 export default function About() {
   useBackgroundCycle(5000);
+  const headingColor = useColorCycle(3000);
+  const heading = useTextReveal("About Me", 80, 200, true, 60000);
+  const subtitle = useRotatingSubtitles(aboutSubtitles, 8000);
 
   return (
     <>
@@ -29,12 +59,13 @@ export default function About() {
         <Section>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center mt-12"
-            style={{ textWrap: "balance" as any }}
+            style={{ textWrap: "balance" as any, color: headingColor, transition: "color 1.5s ease" }}
           >
-            About Me
+            {heading.revealed}
+            {!heading.done && <span className="typing-cursor" />}
           </h1>
-          <p className="text-center text-muted-foreground text-sm mt-4 max-w-md mx-auto">
-            A developer who thinks in algorithms and a musician who feels in harmonies.
+          <p className="text-center text-muted-foreground text-sm mt-4 max-w-md mx-auto transition-opacity duration-700">
+            {subtitle}
           </p>
         </Section>
 
@@ -59,12 +90,7 @@ export default function About() {
                       <span className="text-foreground">{s.name}</span>
                       <span className="text-muted-foreground tabular-nums">{s.level}%</span>
                     </div>
-                    <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-primary to-primary/60 transition-all duration-1000"
-                        style={{ width: `${s.level}%` }}
-                      />
-                    </div>
+                    <AnimatedBar level={s.level} color="primary" />
                   </div>
                 ))}
               </div>
@@ -91,12 +117,7 @@ export default function About() {
                       <span className="text-foreground">{s.name}</span>
                       <span className="text-muted-foreground tabular-nums">{s.level}%</span>
                     </div>
-                    <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-accent to-accent/60 transition-all duration-1000"
-                        style={{ width: `${s.level}%` }}
-                      />
-                    </div>
+                    <AnimatedBar level={s.level} color="accent" />
                   </div>
                 ))}
               </div>

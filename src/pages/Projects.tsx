@@ -3,9 +3,19 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
+import { useColorCycle } from "@/hooks/useColorCycle";
+import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
+import { useTextReveal } from "@/hooks/useTextReveal";
 import { ExternalLink, Github, Music, Code2, Globe } from "lucide-react";
 
 type Category = "All" | "Tech" | "Music";
+
+const projectSubtitles = [
+  "A blend of code and composition.",
+  "Where software engineering meets musical artistry.",
+  "Each project tells a story — in logic or in melody.",
+  "From web apps to worship songs, crafted with care.",
+];
 
 const projects = [
   {
@@ -85,6 +95,9 @@ const filters: Category[] = ["All", "Tech", "Music"];
 export default function Projects() {
   useBackgroundCycle(5000);
   const [active, setActive] = useState<Category>("All");
+  const headingColor = useColorCycle(3000);
+  const heading = useTextReveal("Projects", 80, 200, true, 60000);
+  const subtitle = useRotatingSubtitles(projectSubtitles, 8000);
 
   const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
@@ -93,11 +106,15 @@ export default function Projects() {
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
         <Section>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center mt-12">
-            Projects
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center mt-12"
+            style={{ color: headingColor, transition: "color 1.5s ease" }}
+          >
+            {heading.revealed}
+            {!heading.done && <span className="typing-cursor" />}
           </h1>
-          <p className="text-center text-muted-foreground text-sm mt-4">
-            A blend of code and composition.
+          <p className="text-center text-muted-foreground text-sm mt-4 transition-opacity duration-700">
+            {subtitle}
           </p>
         </Section>
 
