@@ -3,13 +3,26 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
+import { useColorCycle } from "@/hooks/useColorCycle";
+import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
+import { useTextReveal } from "@/hooks/useTextReveal";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Send, Mail, MapPin, Phone, Github, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
+const contactSubtitles = [
+  "Got a project, composition idea, or just want to say hi? I'd love to hear from you.",
+  "Let's create something amazing together — in code or in music.",
+  "Whether it's a web app or a worship song, I'm ready to collaborate.",
+  "Your next great project starts with a conversation. Let's talk!",
+];
+
 export default function Contact() {
   useBackgroundCycle(5000);
   const [sending, setSending] = useState(false);
+  const headingColor = useColorCycle(3000);
+  const heading = useTextReveal("Get in Touch", 80, 200, true, 60000);
+  const subtitle = useRotatingSubtitles(contactSubtitles, 8000);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,11 +55,15 @@ export default function Contact() {
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
         <Section>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center mt-12">
-            Get in Touch
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center mt-12"
+            style={{ color: headingColor, transition: "color 1.5s ease" }}
+          >
+            {heading.revealed}
+            {!heading.done && <span className="typing-cursor" />}
           </h1>
-          <p className="text-center text-muted-foreground text-sm mt-4 max-w-sm mx-auto">
-            Got a project, composition idea, or just want to say hi? I'd love to hear from you.
+          <p className="text-center text-muted-foreground text-sm mt-4 max-w-sm mx-auto transition-opacity duration-700">
+            {subtitle}
           </p>
         </Section>
 
@@ -66,9 +83,14 @@ export default function Contact() {
               <div className="glass-card flex items-start gap-3">
                 <Phone size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Phone / WhatsApp</p>
-                  <p className="text-sm font-body text-foreground">0757 394 587</p>
-                  <p className="text-sm font-body text-foreground">0104 586 361</p>
+                  <p className="text-xs text-muted-foreground">Call Me</p>
+                  <a href="tel:+254757394587" className="text-sm font-body text-foreground hover:text-primary transition-colors block">
+                    0757 394 587
+                  </a>
+                  <a href="tel:+254104586361" className="text-sm font-body text-foreground hover:text-primary transition-colors block">
+                    0104 586 361
+                  </a>
+                  <p className="text-[10px] text-muted-foreground mt-1 italic">For calls only — not WhatsApp</p>
                 </div>
               </div>
             </Section>

@@ -3,16 +3,18 @@ import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { useRotatingQuotes } from "@/hooks/useRotatingQuotes";
+import { useColorCycle } from "@/hooks/useColorCycle";
 import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ArrowRight, Github, Music, Code2, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Github, Music, Code2, Sparkles, Zap, Heart, Shield, Users } from "lucide-react";
 
 export default function Home() {
   const typedText = useTypingAnimation();
   useBackgroundCycle(5000);
-  const heading = useTextReveal("Hi, I'm Boniface", 70, 300, true, 3000);
+  const heading = useTextReveal("Hi, I'm Boniface", 70, 300, true, 60000);
   const [quote1Text, quote2Text] = useRotatingQuotes(12000);
+  const headingColor = useColorCycle(3000);
 
   return (
     <>
@@ -35,23 +37,14 @@ export default function Home() {
           </Section>
           <Section delay={100}>
             <h1
-              className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.95] group cursor-default"
-              style={{ textWrap: "balance" as any }}
+              className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.95] cursor-default relative"
+              style={{ textWrap: "balance" as any, color: headingColor, transition: "color 1.5s ease" }}
             >
-              {heading.revealed.includes("I'm") ? (
-                <>
-                  {heading.revealed.split("I'm ")[0]}I'm{" "}
-                  <span className="text-primary transition-colors duration-500 group-hover:text-accent">
-                    {heading.revealed.split("I'm ")[1]}
-                    {heading.done && (
-                      <span className="absolute -bottom-2 left-0 w-full h-1 rounded-full bg-gradient-to-r from-primary to-accent opacity-60" />
-                    )}
-                  </span>
-                </>
-              ) : (
-                heading.revealed
-              )}
+              {heading.revealed}
               {!heading.done && <span className="typing-cursor" />}
+              {heading.done && (
+                <span className="absolute -bottom-2 left-0 w-full h-1 rounded-full opacity-60" style={{ background: `linear-gradient(90deg, ${headingColor}, hsl(36, 90%, 54%))`, transition: "background 1.5s ease" }} />
+              )}
             </h1>
           </Section>
           <Section delay={200}>
@@ -95,6 +88,38 @@ export default function Home() {
             </div>
           </Section>
         </section>
+
+        {/* Welcome / Why Choose Me */}
+        <Section delay={100}>
+          <div className="glass-card mt-12 text-center max-w-2xl mx-auto">
+            <div className="flex justify-center mb-4">
+              <Heart size={28} className="text-accent" />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-display font-bold mb-4">Welcome to My World</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+              I'm Boniface — a developer who thinks in code and a musician who feels in harmony. 
+              Whether you need a beautifully crafted web application or an original musical composition, 
+              I bring the same passion, precision, and creativity to every project.
+            </p>
+            <div className="grid sm:grid-cols-3 gap-4 mt-6">
+              <div className="p-4 rounded-xl bg-secondary/50">
+                <Shield size={20} className="mx-auto mb-2 text-primary" />
+                <p className="text-xs font-semibold text-foreground">Reliable & Dedicated</p>
+                <p className="text-[11px] text-muted-foreground mt-1">I deliver on time, every time</p>
+              </div>
+              <div className="p-4 rounded-xl bg-secondary/50">
+                <Sparkles size={20} className="mx-auto mb-2 text-accent" />
+                <p className="text-xs font-semibold text-foreground">Creative Vision</p>
+                <p className="text-[11px] text-muted-foreground mt-1">Unique blend of tech & art</p>
+              </div>
+              <div className="p-4 rounded-xl bg-secondary/50">
+                <Users size={20} className="mx-auto mb-2 text-primary" />
+                <p className="text-xs font-semibold text-foreground">Client-Focused</p>
+                <p className="text-[11px] text-muted-foreground mt-1">Your vision, my execution</p>
+              </div>
+            </div>
+          </div>
+        </Section>
 
         {/* Stats */}
         <Section delay={200}>
