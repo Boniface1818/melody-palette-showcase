@@ -41,6 +41,57 @@ export type Database = {
         }
         Relationships: []
       }
+      scores: {
+        Row: {
+          created_at: string
+          duration: string | null
+          ensemble_type: string | null
+          id: string
+          instruments: string | null
+          musescore_id: string
+          musescore_url: string
+          pages: number | null
+          parts: number | null
+          published_date: string | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          views: number | null
+        }
+        Insert: {
+          created_at?: string
+          duration?: string | null
+          ensemble_type?: string | null
+          id?: string
+          instruments?: string | null
+          musescore_id: string
+          musescore_url: string
+          pages?: number | null
+          parts?: number | null
+          published_date?: string | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          views?: number | null
+        }
+        Update: {
+          created_at?: string
+          duration?: string | null
+          ensemble_type?: string | null
+          id?: string
+          instruments?: string | null
+          musescore_id?: string
+          musescore_url?: string
+          pages?: number | null
+          parts?: number | null
+          published_date?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          views?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
