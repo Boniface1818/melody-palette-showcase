@@ -8,13 +8,13 @@ import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { Send, Mail, MapPin, Phone, Github, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Send, Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 const contactSubtitles = [
-  "Got a project, composition idea, or just want to say hi? I'd love to hear from you.",
-  "Let's create something amazing together — in code or in music.",
-  "Whether it's a web app or a worship song, I'm ready to collaborate.",
-  "Your next great project starts with a conversation. Let's talk!",
+  "Need a custom arrangement for your choir? Let's talk.",
+  "Commission a piece — from offertory hymns to full mass settings.",
+  "Whether it's a piano duo or a four-part harmony, I'm ready to compose for you.",
+  "Let's create music that moves your congregation.",
 ];
 
 export default function Contact() {
@@ -34,12 +34,7 @@ export default function Contact() {
     const subject = (formData.get("subject") as string).trim();
     const message = (formData.get("message") as string).trim();
 
-    const { error } = await supabase.from("contact_submissions").insert({
-      name,
-      email,
-      subject,
-      message,
-    });
+    const { error } = await supabase.from("contact_submissions").insert({ name, email, subject, message });
 
     setSending(false);
     if (error) {
@@ -68,7 +63,7 @@ export default function Contact() {
         </Section>
 
         <div className="grid md:grid-cols-5 gap-8 mt-16 max-w-4xl mx-auto">
-          {/* Sidebar info */}
+          {/* Sidebar */}
           <div className="md:col-span-2 flex flex-col gap-4">
             <Section delay={100}>
               <div className="glass-card flex items-start gap-3">
@@ -84,12 +79,8 @@ export default function Contact() {
                 <Phone size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
                   <p className="text-xs text-muted-foreground">Call Me</p>
-                  <a href="tel:+254757394587" className="text-sm font-body text-foreground hover:text-primary transition-colors block">
-                    0757 394 587
-                  </a>
-                  <a href="tel:+254104586361" className="text-sm font-body text-foreground hover:text-primary transition-colors block">
-                    0104 586 361
-                  </a>
+                  <a href="tel:+254757394587" className="text-sm font-body text-foreground hover:text-primary transition-colors block">0757 394 587</a>
+                  <a href="tel:+254104586361" className="text-sm font-body text-foreground hover:text-primary transition-colors block">0104 586 361</a>
                   <p className="text-[10px] text-muted-foreground mt-1 italic">For calls only — not WhatsApp</p>
                 </div>
               </div>
@@ -107,7 +98,6 @@ export default function Contact() {
               <div className="glass-card space-y-3">
                 <p className="text-xs text-muted-foreground">Find me online</p>
                 {[
-                  { href: "https://github.com/Boniface1818", icon: Github, label: "GitHub" },
                   { href: "https://musescore.com/user/108485503", icon: Music, label: "MuseScore" },
                   { href: "https://www.linkedin.com/in/BonifaceKagunda", icon: Linkedin, label: "LinkedIn" },
                   { href: "https://www.instagram.com/bonifacekagunda39/", icon: Instagram, label: "Instagram" },
@@ -125,55 +115,15 @@ export default function Contact() {
 
           {/* Form */}
           <Section delay={150} className="md:col-span-3">
-            <form
-              onSubmit={handleSubmit}
-              className="glass-card flex flex-col gap-5"
-            >
+            <form onSubmit={handleSubmit} className="glass-card flex flex-col gap-5">
               <div className="grid sm:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  required
-                  minLength={3}
-                  className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  required
-                  className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
-                />
+                <input type="text" name="name" placeholder="Your name" required minLength={3} className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow" />
+                <input type="email" name="email" placeholder="Your email" required className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow" />
               </div>
-              <input
-                type="text"
-                name="subject"
-                placeholder="Subject"
-                required
-                className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
-              />
-              <textarea
-                name="message"
-                placeholder="Your message..."
-                required
-                minLength={10}
-                rows={6}
-                className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow resize-none"
-              />
-              <button
-                type="submit"
-                disabled={sending}
-                className="btn-primary justify-center mt-1 group"
-              >
-                {sending ? (
-                  "Sending..."
-                ) : (
-                  <>
-                    Send Message
-                    <Send size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </>
-                )}
+              <input type="text" name="subject" placeholder="Subject (e.g. Commission request)" required className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow" />
+              <textarea name="message" placeholder="Tell me about the piece you'd like me to compose..." required minLength={10} rows={6} className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow resize-none" />
+              <button type="submit" disabled={sending} className="btn-primary justify-center mt-1 group">
+                {sending ? "Sending..." : (<>Send Message <Send size={14} className="transition-transform duration-300 group-hover:translate-x-1" /></>)}
               </button>
             </form>
           </Section>

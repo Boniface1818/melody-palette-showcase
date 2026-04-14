@@ -1,11 +1,11 @@
 import { NavLink as RouterNavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Music } from "lucide-react";
 
 const links = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
+  { to: "/compositions", label: "Compositions" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -16,8 +16,9 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-background/60 border-b border-border">
       <div className="container mx-auto flex items-center justify-between h-16 px-6">
-        <RouterNavLink to="/" className="font-display font-bold text-lg tracking-tight color-shift">
-          B.
+        <RouterNavLink to="/" className="font-display font-bold text-lg tracking-tight color-shift inline-flex items-center gap-2">
+          <Music size={18} />
+          BK Music
         </RouterNavLink>
 
         {/* Desktop */}

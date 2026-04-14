@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
 const phrases = [
-  "Full-Stack Developer",
   "Music Composer",
-  "Building Scalable Systems",
-  "Composing Digital Soundscapes",
-  "Tech × Music Creator",
+  "Choir Arranger",
+  "Piano Composer",
+  "Liturgical Music Creator",
+  "SATB Arrangement Specialist",
+  "Worship Music Artist",
 ];
 
 export function useTypingAnimation(speed = 80, pause = 2000) {

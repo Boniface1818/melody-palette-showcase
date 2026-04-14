@@ -6,40 +6,30 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { useAnimatedSkills } from "@/hooks/useAnimatedSkills";
-import { Code2, Music, Layers, Terminal, Piano, Users } from "lucide-react";
+import { Music, Piano, Users, BookOpen, HeartHandshake, Mic } from "lucide-react";
 
 const aboutSubtitles = [
-  "A developer who thinks in algorithms and a musician who feels in harmonies.",
-  "Where structured logic meets creative expression — that's where I thrive.",
-  "Turning complex problems into elegant solutions, in code and in music.",
-  "Two passions, one purpose: creating things that resonate with people.",
+  "A composer who thinks in harmonies and feels in rhythm.",
+  "Crafting sacred music that unites voices and lifts spirits.",
+  "From piano compositions to full choir arrangements — music is my calling.",
+  "Every score is a conversation between the composer and the congregation.",
 ];
 
-const techSkills = [
-  { name: "React / TypeScript", level: 90 },
-  { name: "Node.js / Express", level: 85 },
-  { name: "Tailwind CSS", level: 92 },
-  { name: "PostgreSQL / Supabase", level: 78 },
-  { name: "Git / CI-CD", level: 80 },
-];
-
-const musicSkills = [
-  { name: "SATB Arrangements", level: 95 },
-  { name: "Piano Composition", level: 85 },
-  { name: "MuseScore Notation", level: 90 },
+const skills = [
+  { name: "SATB Choral Arrangements", level: 95 },
+  { name: "Piano Composition", level: 88 },
+  { name: "MuseScore Notation", level: 92 },
+  { name: "Liturgical Music", level: 90 },
   { name: "Choir Direction", level: 80 },
+  { name: "String & Ensemble Writing", level: 85 },
 ];
 
-function AnimatedBar({ level, color }: { level: number; color: "primary" | "accent" }) {
+function AnimatedBar({ level }: { level: number }) {
   const { ref, width } = useAnimatedSkills(level);
-  const gradientClass = color === "primary"
-    ? "bg-gradient-to-r from-primary to-primary/60"
-    : "bg-gradient-to-r from-accent to-accent/60";
-
   return (
     <div ref={ref} className="h-1.5 rounded-full bg-secondary overflow-hidden">
       <div
-        className={`h-full rounded-full ${gradientClass}`}
+        className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
         style={{ width: `${width}%`, transition: "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)" }}
       />
     </div>
@@ -69,100 +59,71 @@ export default function About() {
           </p>
         </Section>
 
-        {/* Two pillars */}
-        <div className="grid md:grid-cols-2 gap-6 mt-16">
-          <Section delay={100}>
-            <div className="glass-card h-full">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-2.5 rounded-xl bg-primary/10">
-                  <Terminal size={20} className="text-primary" />
-                </div>
-                <h2 className="text-lg font-display font-semibold">Developer</h2>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                I build fast, accessible web applications with modern frameworks.
-                Clean architecture and user experience drive every decision I make.
-              </p>
-              <div className="space-y-3">
-                {techSkills.map((s) => (
-                  <div key={s.name}>
-                    <div className="flex justify-between text-xs mb-1">
-                      <span className="text-foreground">{s.name}</span>
-                      <span className="text-muted-foreground tabular-nums">{s.level}%</span>
-                    </div>
-                    <AnimatedBar level={s.level} color="primary" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Section>
-
-          <Section delay={200}>
-            <div className="glass-card h-full">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-2.5 rounded-xl bg-accent/10">
-                  <Music size={20} className="text-accent" />
-                </div>
-                <h2 className="text-lg font-display font-semibold">Musician</h2>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                I compose and arrange for choirs, piano, and ensembles. Music
-                sharpens my sense of structure and timing — skills that flow
-                directly into my code.
-              </p>
-              <div className="space-y-3">
-                {musicSkills.map((s) => (
-                  <div key={s.name}>
-                    <div className="flex justify-between text-xs mb-1">
-                      <span className="text-foreground">{s.name}</span>
-                      <span className="text-muted-foreground tabular-nums">{s.level}%</span>
-                    </div>
-                    <AnimatedBar level={s.level} color="accent" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Section>
-        </div>
-
-        {/* Where they meet */}
-        <Section delay={300}>
-          <div className="glass-card mt-6">
+        {/* Bio */}
+        <Section delay={100}>
+          <div className="glass-card mt-16 max-w-3xl mx-auto">
             <div className="flex items-center gap-3 mb-5">
               <div className="p-2.5 rounded-xl bg-primary/10">
-                <Layers size={20} className="text-primary" />
+                <Music size={20} className="text-primary" />
               </div>
-              <h2 className="text-lg font-display font-semibold">Where They Meet</h2>
+              <h2 className="text-lg font-display font-semibold">My Story</h2>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              I see rhythm in algorithms and patterns in melodies. Whether I'm
-              debugging a complex system or scoring a piece for four voices, I'm
-              solving creative problems — just in different languages. Both
-              demand patience, precision, and the courage to start over when
-              something doesn't feel right.
-            </p>
+            <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+              <p>
+                I'm Boniface Kagunda, a Kenyan composer and music arranger with a deep passion
+                for sacred and liturgical music. My journey began in the church choir, where I
+                discovered the power of well-crafted harmony to move hearts and elevate worship.
+              </p>
+              <p>
+                Today, I compose original works for piano, strings, and mixed vocal ensembles.
+                My repertoire spans piano duos, string duets, mixed trios, and quartets —
+                all written with care for the liturgical moment they serve.
+              </p>
+              <p>
+                Every composition I create is rooted in a desire to serve the sacred —
+                music that helps congregations pray, praise, and connect with something
+                greater than themselves.
+              </p>
+            </div>
           </div>
         </Section>
 
-        {/* Tools */}
-        <Section delay={400}>
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
+        {/* Skills */}
+        <Section delay={200}>
+          <div className="glass-card mt-6 max-w-3xl mx-auto">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-xl bg-accent/10">
+                <HeartHandshake size={20} className="text-accent" />
+              </div>
+              <h2 className="text-lg font-display font-semibold">Musical Skills</h2>
+            </div>
+            <div className="space-y-3">
+              {skills.map((s) => (
+                <div key={s.name}>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-foreground">{s.name}</span>
+                    <span className="text-muted-foreground tabular-nums">{s.level}%</span>
+                  </div>
+                  <AnimatedBar level={s.level} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* What I Offer */}
+        <Section delay={300}>
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {[
-              { icon: Code2, label: "VS Code" },
-              { icon: Terminal, label: "Linux / CLI" },
-              { icon: Layers, label: "Figma" },
-              { icon: Piano, label: "Piano" },
-              { icon: Music, label: "MuseScore" },
-              { icon: Users, label: "Choir Direction" },
+              { icon: Piano, label: "Piano Compositions" },
+              { icon: Users, label: "Choir Arrangements" },
+              { icon: Music, label: "String Ensembles" },
+              { icon: Mic, label: "Worship Music" },
+              { icon: BookOpen, label: "Mass Settings" },
+              { icon: HeartHandshake, label: "Custom Commissions" },
             ].map((t, i) => (
-              <div
-                key={i}
-                className="glass-card flex items-center gap-3 py-4 group cursor-default"
-              >
-                <t.icon
-                  size={18}
-                  className="text-primary transition-colors duration-300 group-hover:text-accent"
-                />
+              <div key={i} className="glass-card flex items-center gap-3 py-4 group cursor-default">
+                <t.icon size={18} className="text-primary transition-colors duration-300 group-hover:text-accent" />
                 <span className="text-sm font-body">{t.label}</span>
               </div>
             ))}
