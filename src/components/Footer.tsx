@@ -1,7 +1,6 @@
-import { Github, Music, Heart, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Music, Heart, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 const socials = [
-  { href: "https://github.com/Boniface1818", icon: Github, label: "GitHub" },
   { href: "https://musescore.com/user/108485503", icon: Music, label: "MuseScore" },
   { href: "https://www.linkedin.com/in/BonifaceKagunda", icon: Linkedin, label: "LinkedIn" },
   { href: "https://www.instagram.com/bonifacekagunda39/", icon: Instagram, label: "Instagram" },
@@ -15,7 +14,7 @@ export default function Footer() {
     <footer className="border-t border-border mt-24 py-8">
       <div className="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-muted-foreground text-xs flex items-center gap-1">
-          © {new Date().getFullYear()} Boniface Kagunda. Made with
+          © {new Date().getFullYear()} Boniface Kagunda Music. Made with
           <Heart size={12} className="text-accent" />
         </p>
         <div className="flex items-center gap-4 flex-wrap justify-center">
