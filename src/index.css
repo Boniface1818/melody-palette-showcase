@@ -164,4 +164,21 @@
     transform: translateY(0);
     filter: blur(0);
   }
+
+  @keyframes float-note {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: var(--note-opacity, 0.35);
+    }
+    90% {
+      opacity: var(--note-opacity, 0.35);
+    }
+    100% {
+      transform: translate3d(var(--drift, 0px), -120vh, 0) rotate(360deg);
+      opacity: 0;
+    }
+  }
 }
