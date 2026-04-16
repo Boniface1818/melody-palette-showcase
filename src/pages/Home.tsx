@@ -136,10 +136,11 @@ export default function Home() {
                 <p className="text-xs font-semibold text-foreground">Multi-Part Arrangements</p>
                 <p className="text-[11px] text-muted-foreground mt-1">SATB, duets, quartets & more</p>
               </div>
-              <div className="p-4 rounded-xl bg-secondary/50">
-                <Users size={20} className="mx-auto mb-2 text-primary" />
-                <p className="text-xs font-semibold text-foreground">Available for Commission</p>
-                <p className="text-[11px] text-muted-foreground mt-1">Custom pieces for your choir</p>
+                <div className="p-4 rounded-xl bg-secondary/50">
+                  <Users size={20} className="mx-auto mb-2 text-primary" />
+                  <p className="text-xs font-semibold text-foreground">Available for Commission</p>
+                  <p className="text-[11px] text-muted-foreground mt-1">Custom pieces for your choir</p>
+                </div>
               </div>
             </div>
           </div>
