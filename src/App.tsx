@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Compositions from "./pages/Compositions";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import FloatingNotes from "./components/FloatingNotes";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Sonner />
+      <FloatingNotes count={16} />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
