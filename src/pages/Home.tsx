@@ -8,6 +8,7 @@ import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, Music, Heart, Sparkles, Users, BookOpen, Piano } from "lucide-react";
+import logo from "@/assets/bk-logo.png";
 
 export default function Home() {
   const typedText = useTypingAnimation();
@@ -30,6 +31,16 @@ export default function Home() {
           </div>
 
           <Section>
+            <div className="relative mb-8 inline-block">
+              <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl" aria-hidden />
+              <img
+                src={logo}
+                alt="BK Music — Boniface Kagunda monogram in gold with treble clef and musical staff"
+                width={140}
+                height={140}
+                className="relative h-32 w-32 sm:h-36 sm:w-36 rounded-full object-cover ring-2 ring-primary/40 shadow-2xl mx-auto"
+              />
+            </div>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6 font-body">
               Composer · Arranger · Musician
             </p>
