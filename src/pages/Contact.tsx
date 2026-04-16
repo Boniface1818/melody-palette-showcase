@@ -1,4 +1,3 @@
-import { useState, FormEvent } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
@@ -6,9 +5,16 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { Send, Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube, Sparkles, Church, Heart, Calendar } from "lucide-react";
+import {
+  Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
+  Sparkles, Heart, Award, Clock, CheckCircle2, Flame, ArrowRight,
+} from "lucide-react";
+import serviceLiturgical from "@/assets/service-liturgical.jpg";
+import serviceFestivals from "@/assets/service-festivals.jpg";
+import servicePsalms from "@/assets/service-psalms.jpg";
+import serviceArrangements from "@/assets/service-arrangements.jpg";
+import serviceWeddings from "@/assets/service-weddings.jpg";
+import serviceCommissions from "@/assets/service-commissions.jpg";
 
 const contactSubtitles = [
   "Need a custom arrangement for your choir? Let's talk.",
@@ -18,45 +24,62 @@ const contactSubtitles = [
 ];
 
 const services = [
-  { icon: Church, title: "Catholic Liturgical Music", desc: "Mass settings, offertory hymns, communion pieces & responsorial psalms tailored to the liturgical calendar." },
-  { icon: Calendar, title: "Festivals & Special Events", desc: "Custom compositions for Easter, Christmas, Marian feasts, weddings, ordinations & jubilees." },
-  { icon: Heart, title: "Choir Arrangements", desc: "SATB, SAB, and unison arrangements crafted for your choir's voice ranges and skill level." },
-  { icon: Sparkles, title: "Original Commissions", desc: "Bespoke pieces from solo instruments to full ensembles — bring your vision to life through music." },
+  {
+    image: serviceLiturgical,
+    title: "Catholic Liturgical Music",
+    desc: "Mass settings, communion hymns, offertory pieces, and entrance antiphons crafted to follow the rhythm of the liturgy and elevate every part of the celebration.",
+    tags: ["Mass Settings", "Offertory", "Communion", "Entrance"],
+  },
+  {
+    image: servicePsalms,
+    title: "Responsorial Psalms",
+    desc: "Sunday-by-Sunday responsorial psalms set to fresh, singable melodies — written so the cantor leads with confidence and the assembly responds with joy.",
+    tags: ["Cantor", "Assembly", "Lectionary-aligned"],
+  },
+  {
+    image: serviceFestivals,
+    title: "Festival & Feast Day Pieces",
+    desc: "Bold, joyful compositions for Easter, Christmas, Marian feasts, patronal days, ordinations, and parish jubilees — music that turns a celebration into a memory.",
+    tags: ["Easter", "Christmas", "Marian", "Jubilees"],
+  },
+  {
+    image: serviceArrangements,
+    title: "SATB & Multi-Part Arrangements",
+    desc: "Existing hymns reimagined for SATB, SAB, SSA, or unison voices — arranged thoughtfully around your choir's actual voice ranges and skill level.",
+    tags: ["SATB", "SAB", "SSA", "Unison"],
+  },
+  {
+    image: serviceWeddings,
+    title: "Weddings & Sacraments",
+    desc: "Music for weddings, baptisms, confirmations, and funerals — tender, dignified, and shaped to the personal story behind the moment.",
+    tags: ["Weddings", "Baptism", "Funerals"],
+  },
+  {
+    image: serviceCommissions,
+    title: "Original Commissions",
+    desc: "Bespoke compositions written from the ground up — solo piano, chamber ensembles, full choir works. Bring me your vision and I'll bring it to life on the page.",
+    tags: ["Original", "Custom", "Any Ensemble"],
+  },
+];
+
+const reasons = [
+  { icon: Award, title: "Trained Composer & Arranger", desc: "Years of dedicated study in harmony, counterpoint, and the Catholic liturgical tradition." },
+  { icon: Heart, title: "Deep Love for Sacred Music", desc: "Every note is written prayerfully — music isn't just a craft, it's an offering." },
+  { icon: Clock, title: "Reliable Turnaround", desc: "Clear timelines, regular drafts, and finished scores delivered when you need them." },
+  { icon: CheckCircle2, title: "Tailored to Your Choir", desc: "I write to your singers' actual ranges and ability — never too high, never too thin." },
 ];
 
 export default function Contact() {
   useBackgroundCycle(5000);
-  const [sending, setSending] = useState(false);
   const headingColor = useColorCycle(3000);
-  const heading = useTextReveal("Get in Touch", 80, 200, true, 60000);
+  const heading = useTextReveal("Let's Make Music Together", 70, 200, true, 60000);
   const subtitle = useRotatingSubtitles(contactSubtitles, 8000);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSending(true);
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const name = (formData.get("name") as string).trim();
-    const subject = (formData.get("subject") as string).trim();
-    const message = (formData.get("message") as string).trim();
-    // Email is optional now — users are encouraged to email directly via the mailto link
-    const email = `${name.toLowerCase().replace(/\s+/g, ".")}@no-reply.bkmusic.local`;
-
-    const { error } = await supabase.from("contact_submissions").insert({ name, email, subject, message });
-
-    setSending(false);
-    if (error) {
-      toast.error("Something went wrong. Please try again.");
-      return;
-    }
-    toast.success("Message sent! I'll get back to you soon.");
-    form.reset();
-  };
 
   return (
     <>
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
+        {/* Hero */}
         <Section>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center mt-12"
@@ -65,114 +88,210 @@ export default function Contact() {
             {heading.revealed}
             {!heading.done && <span className="typing-cursor" />}
           </h1>
-          <p className="text-center text-muted-foreground text-sm mt-4 max-w-sm mx-auto transition-opacity duration-700">
+          <p className="text-center text-muted-foreground text-sm mt-4 max-w-md mx-auto transition-opacity duration-700">
             {subtitle}
           </p>
         </Section>
 
-        <div className="grid md:grid-cols-5 gap-8 mt-16 max-w-4xl mx-auto">
-          {/* Sidebar */}
-          <div className="md:col-span-2 flex flex-col gap-4">
-            <Section delay={100}>
-              <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=Music%20Commission%20Inquiry"
-                target="_blank"
-                rel="noreferrer"
-                className="glass-card flex items-start gap-3 hover:border-primary/50 transition-all group"
-              >
-                <Mail size={18} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Email — click to open Gmail</p>
-                  <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors break-all">Kagundaboniface98@gmail.com</p>
-                </div>
-              </a>
-            </Section>
-            <Section delay={150}>
-              <div className="glass-card flex items-start gap-3">
-                <Phone size={18} className="text-primary mt-0.5 shrink-0" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Call Me</p>
-                  <a href="tel:+254104586361" className="text-sm font-body text-foreground hover:text-primary transition-colors block">0104 586 361</a>
-                </div>
+        {/* Quick Contact Cards */}
+        <div className="grid sm:grid-cols-3 gap-4 mt-12 max-w-4xl mx-auto">
+          <Section delay={100}>
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=Music%20Commission%20Inquiry"
+              target="_blank"
+              rel="noreferrer"
+              className="glass-card flex items-start gap-3 hover:border-primary/50 transition-all group h-full"
+            >
+              <Mail size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+              <div>
+                <p className="text-xs text-muted-foreground">Email — opens Gmail</p>
+                <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors break-all">Kagundaboniface98@gmail.com</p>
               </div>
-            </Section>
-            <Section delay={200}>
-              <div className="glass-card flex items-start gap-3">
-                <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Location</p>
-                  <p className="text-sm font-body text-foreground">Kenya</p>
-                </div>
+            </a>
+          </Section>
+          <Section delay={150}>
+            <div className="glass-card flex items-start gap-3 h-full">
+              <Phone size={20} className="text-primary mt-0.5 shrink-0" />
+              <div>
+                <p className="text-xs text-muted-foreground">Call Me</p>
+                <a href="tel:+254104586361" className="text-sm font-body text-foreground hover:text-primary transition-colors block">0104 586 361</a>
               </div>
-            </Section>
-            <Section delay={300}>
-              <div className="glass-card space-y-3">
-                <p className="text-xs text-muted-foreground">Find me online</p>
-                {[
-                  { href: "https://musescore.com/user/108485503", icon: Music, label: "MuseScore" },
-                  { href: "https://www.linkedin.com/in/BonifaceKagunda", icon: Linkedin, label: "LinkedIn" },
-                  { href: "https://www.instagram.com/bonifacekagunda39/", icon: Instagram, label: "Instagram" },
-                  { href: "https://www.facebook.com/profile.php?id=61550230027573", icon: Facebook, label: "Facebook" },
-                  { href: "https://www.youtube.com/@BonifaceKagunda006", icon: Youtube, label: "YouTube" },
-                  { href: "https://www.tiktok.com/@b.o.n.i.5090", icon: Music, label: "TikTok" },
-                ].map((s) => (
-                  <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm color-shift">
-                    <s.icon size={16} /> {s.label}
-                  </a>
-                ))}
+            </div>
+          </Section>
+          <Section delay={200}>
+            <div className="glass-card flex items-start gap-3 h-full">
+              <MapPin size={20} className="text-primary mt-0.5 shrink-0" />
+              <div>
+                <p className="text-xs text-muted-foreground">Based In</p>
+                <p className="text-sm font-body text-foreground">Kenya · Available Worldwide</p>
               </div>
-            </Section>
-          </div>
-
-          {/* Form */}
-          <Section delay={150} className="md:col-span-3">
-            <form onSubmit={handleSubmit} className="glass-card flex flex-col gap-5">
-              <input type="text" name="name" placeholder="Your name" required minLength={3} className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow" />
-              <input type="text" name="subject" placeholder="Subject (e.g. Catholic festival hymn, wedding mass...)" required className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow" />
-              <textarea name="message" placeholder="Tell me about the piece you'd like me to compose — the occasion, ensemble, mood, and any specific requirements..." required minLength={10} rows={7} className="w-full px-4 py-3.5 rounded-xl bg-secondary border border-border text-foreground text-base font-body placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow resize-none" />
-              <button type="submit" disabled={sending} className="btn-primary justify-center mt-1 group">
-                {sending ? "Sending..." : (<>Send Message <Send size={14} className="transition-transform duration-300 group-hover:translate-x-1" /></>)}
-              </button>
-              <p className="text-[11px] text-muted-foreground text-center">
-                Prefer email? <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com" target="_blank" rel="noreferrer" className="text-primary hover:underline">Open Gmail directly</a>
-              </p>
-            </form>
+            </div>
           </Section>
         </div>
 
-        {/* Services / What I Offer */}
-        <Section delay={200}>
-          <div className="mt-24 max-w-5xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-center mb-3" style={{ color: headingColor, transition: "color 1.5s ease" }}>
+        {/* Services with images */}
+        <Section delay={150}>
+          <div className="mt-24 max-w-6xl mx-auto">
+            <h2
+              className="text-3xl sm:text-4xl font-display font-bold text-center mb-3"
+              style={{ color: headingColor, transition: "color 1.5s ease" }}
+            >
               Music Crafted for Every Sacred Moment
             </h2>
             <p className="text-center text-muted-foreground text-sm max-w-2xl mx-auto mb-12">
-              From the solemn beauty of a Catholic mass to the joyful celebration of a festival, I compose music that elevates the moment and touches the soul.
+              From the solemn beauty of a Sunday Mass to the joyful explosion of a feast day —
+              here's what I compose, arrange, and bring to life for you.
             </p>
-            <div className="grid sm:grid-cols-2 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((s, i) => (
-                <Section key={s.title} delay={i * 100}>
-                  <div className="glass-card glow-border h-full flex items-start gap-4 group">
-                    <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                      <s.icon size={22} className="text-primary group-hover:scale-110 transition-transform" />
+                <Section key={s.title} delay={i * 80}>
+                  <article className="glass-card glow-border h-full flex flex-col overflow-hidden p-0 group">
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <img
+                        src={s.image}
+                        alt={s.title}
+                        loading="lazy"
+                        width={1024}
+                        height={640}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                    </div>
+                    <div className="p-5 flex flex-col gap-3 flex-1">
+                      <h3 className="font-display font-semibold text-lg leading-tight">{s.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+                      <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
+                        {s.tags.map((t) => (
+                          <span key={t} className="text-[10px] px-2 py-1 rounded-full bg-primary/10 text-primary font-body tracking-wide">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                </Section>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* Why Choose Me */}
+        <Section delay={150}>
+          <div className="mt-24 max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-body tracking-wide mb-4">
+                <Sparkles size={12} /> Why Choose Me
+              </div>
+              <h2
+                className="text-3xl sm:text-4xl font-display font-bold mb-3"
+                style={{ color: headingColor, transition: "color 1.5s ease" }}
+              >
+                Music Written With Devotion, Delivered With Care
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+                You're not just hiring a composer — you're partnering with someone who treats
+                your liturgy and your choir with the reverence they deserve.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {reasons.map((r, i) => (
+                <Section key={r.title} delay={i * 100}>
+                  <div className="glass-card flex items-start gap-4 h-full">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 shrink-0">
+                      <r.icon size={22} className="text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-display font-semibold text-base mb-1.5">{s.title}</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+                      <h3 className="font-display font-semibold text-base mb-1">{r.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{r.desc}</p>
                     </div>
                   </div>
                 </Section>
               ))}
             </div>
-            <div className="text-center mt-10">
-              <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=Music%20Commission%20Inquiry"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-primary inline-flex"
-              >
-                <Sparkles size={14} /> Start Your Commission Today
-              </a>
+          </div>
+        </Section>
+
+        {/* Passion / Story */}
+        <Section delay={150}>
+          <div className="mt-24 max-w-4xl mx-auto">
+            <div className="glass-card glow-border relative overflow-hidden">
+              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+              <div className="relative">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body tracking-wide mb-4">
+                  <Flame size={12} /> My Passion for Choir
+                </div>
+                <h2
+                  className="text-2xl sm:text-3xl font-display font-bold mb-5"
+                  style={{ color: headingColor, transition: "color 1.5s ease" }}
+                >
+                  The Choir is Where Heaven Touches Earth
+                </h2>
+                <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                  <p>
+                    There's a moment, just before the choir takes a breath together, when the
+                    whole church seems to lean in. That's the moment I write for. Choral music
+                    isn't background — it's <span className="text-foreground font-semibold">prayer made audible</span>,
+                    a community lifting one voice from many.
+                  </p>
+                  <p>
+                    I grew up surrounded by Catholic hymnody, and I've spent years studying
+                    how harmony, text, and silence work together to carry the soul. Whether
+                    it's a young parish choir finding its sound or a seasoned ensemble preparing
+                    for a great feast, my goal is the same: write music they love to sing and
+                    the assembly never forgets.
+                  </p>
+                  <p className="text-foreground italic">
+                    "When the choir sings well, the congregation prays twice." — and that
+                    second prayer is what I'm composing for, every single time.
+                  </p>
+                </div>
+                <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=Music%20Commission%20Inquiry"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-primary group"
+                  >
+                    <Sparkles size={14} /> Start Your Commission
+                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </a>
+                  <a
+                    href="tel:+254104586361"
+                    className="btn-primary"
+                    style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
+                  >
+                    <Phone size={14} /> Call 0104 586 361
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        {/* Socials */}
+        <Section delay={200}>
+          <div className="mt-16 max-w-3xl mx-auto text-center">
+            <p className="text-xs text-muted-foreground tracking-wide uppercase mb-4">Find me online</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {[
+                { href: "https://musescore.com/user/108485503", icon: Music, label: "MuseScore" },
+                { href: "https://www.linkedin.com/in/BonifaceKagunda", icon: Linkedin, label: "LinkedIn" },
+                { href: "https://www.instagram.com/bonifacekagunda39/", icon: Instagram, label: "Instagram" },
+                { href: "https://www.facebook.com/profile.php?id=61550230027573", icon: Facebook, label: "Facebook" },
+                { href: "https://www.youtube.com/@BonifaceKagunda006", icon: Youtube, label: "YouTube" },
+                { href: "https://www.tiktok.com/@b.o.n.i.5090", icon: Music, label: "TikTok" },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="glass-card flex items-center gap-2 text-sm color-shift px-4 py-2.5"
+                >
+                  <s.icon size={16} /> {s.label}
+                </a>
+              ))}
             </div>
           </div>
         </Section>
