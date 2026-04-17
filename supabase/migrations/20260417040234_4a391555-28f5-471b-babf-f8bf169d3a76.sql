@@ -1,0 +1,1 @@
+DELETE FROM public.scores WHERE title = 'MISA YA MTAKATIFU CLEMENT-EDDIE EUGENE' OR musescore_id = '33306086';
