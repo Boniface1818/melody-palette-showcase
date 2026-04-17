@@ -15,6 +15,26 @@ interface ScoreData {
   duration: string | null;
   views: number;
   published_date: string | null;
+  story?: string | null;
+  mood?: string | null;
+}
+
+// Auto-generate a short story + mood from a score's title and ensemble.
+// Used only for newly discovered scores so manually-curated stories are preserved.
+function generateStory(title: string, ensemble: string | null): { story: string; mood: string } {
+  const t = title.toUpperCase();
+  const ens = ensemble ?? "ensemble";
+
+  if (t.startsWith("MISA")) return { mood: "Reverent", story: `A complete Mass setting — "${title}" — voiced for ${ens.toLowerCase()}, weaving liturgy and East African melody into one prayer.` };
+  if (t.includes("HALELUYA") || t.includes("ALLELUIA")) return { mood: "Joyful", story: `A radiant Gospel acclamation lifting the assembly with bright harmonies and a steady, dancing pulse.` };
+  if (t.includes("SADAKA")) return { mood: "Devotional", story: `An offertory piece — bread, wine, and song carried slowly toward the altar in quiet devotion.` };
+  if (t.includes("SIFA") || t.includes("UTUKUFU") || t.includes("GLORIA")) return { mood: "Radiant", story: `A burst of praise and glory, compact yet luminous — perfect as a festive interlude.` };
+  if (t.includes("NJONI") || t.includes("KARIBU")) return { mood: "Welcoming", story: `An entrance hymn that gathers the faithful at the threshold of worship with warm, inviting voices.` };
+  if (t.includes("HEKO") || t.includes("ASANTE")) return { mood: "Tender", story: `A heartfelt thanksgiving — voices answering one another like a soul in quiet gratitude.` };
+  if (t.includes("BWANA") || t.includes("MUNGU")) return { mood: "Contemplative", story: `A prayerful meditation lifting the name of the Lord through layered, unhurried lines.` };
+  if (t.includes("MARIA")) return { mood: "Serene", story: `A Marian devotion — gentle, flowing, and luminous as candlelight at a side altar.` };
+
+  return { mood: "Soulful", story: `"${title}" — a sacred miniature for ${ens.toLowerCase()}, crafted with devotion and a love for liturgical beauty.` };
 }
 
 function parseScoresFromHtml(html: string): ScoreData[] {
