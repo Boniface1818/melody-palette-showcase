@@ -291,8 +291,13 @@ export default function Compositions() {
                   </div>
 
                   {score.instruments && (
-                    <p className="text-xs text-muted-foreground mb-3">{score.instruments}</p>
+                    <p className="text-xs text-muted-foreground mb-2">{score.instruments}</p>
                   )}
+
+                  {/* Story blurb — gives each score a marketable narrative */}
+                  <p className="text-xs text-muted-foreground/90 italic leading-relaxed mb-3 border-l-2 border-accent/40 pl-3">
+                    {storyFor(score)}
+                  </p>
 
                   <div className="mt-auto pt-2">
                     <span className="color-shift text-sm font-medium inline-flex items-center gap-1.5 group/link">
