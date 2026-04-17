@@ -46,13 +46,16 @@ export type Database = {
           created_at: string
           duration: string | null
           ensemble_type: string | null
+          featured: boolean
           id: string
           instruments: string | null
+          mood: string | null
           musescore_id: string
           musescore_url: string
           pages: number | null
           parts: number | null
           published_date: string | null
+          story: string | null
           thumbnail_url: string | null
           title: string
           updated_at: string
@@ -62,13 +65,16 @@ export type Database = {
           created_at?: string
           duration?: string | null
           ensemble_type?: string | null
+          featured?: boolean
           id?: string
           instruments?: string | null
+          mood?: string | null
           musescore_id: string
           musescore_url: string
           pages?: number | null
           parts?: number | null
           published_date?: string | null
+          story?: string | null
           thumbnail_url?: string | null
           title: string
           updated_at?: string
@@ -78,13 +84,16 @@ export type Database = {
           created_at?: string
           duration?: string | null
           ensemble_type?: string | null
+          featured?: boolean
           id?: string
           instruments?: string | null
+          mood?: string | null
           musescore_id?: string
           musescore_url?: string
           pages?: number | null
           parts?: number | null
           published_date?: string | null
+          story?: string | null
           thumbnail_url?: string | null
           title?: string
           updated_at?: string
