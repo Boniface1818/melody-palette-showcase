@@ -7,7 +7,7 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, Music, RefreshCw, Loader2 } from "lucide-react";
+import { ExternalLink, Music, Loader2 } from "lucide-react";
 
 interface Score {
   id: string;
@@ -42,7 +42,6 @@ export default function Compositions() {
 
   const [scores, setScores] = useState<Score[]>([]);
   const [loading, setLoading] = useState(true);
-  const [syncing, setSyncing] = useState(false);
   const [active, setActive] = useState<Filter>("All");
 
   const fetchScores = async () => {
@@ -54,24 +53,8 @@ export default function Compositions() {
     setLoading(false);
   };
 
-  const syncScores = async () => {
-    setSyncing(true);
-    try {
-      await supabase.functions.invoke("sync-musescore");
-      await fetchScores();
-    } catch (e) {
-      console.error("Sync failed", e);
-    }
-    setSyncing(false);
-  };
-
   useEffect(() => {
-    fetchScores().then(() => {
-      // Auto-sync on first visit if no scores
-      supabase.from("scores").select("id", { count: "exact", head: true }).then(({ count }) => {
-        if (count === 0) syncScores();
-      });
-    });
+    fetchScores();
   }, []);
 
   const filtered = active === "All" ? scores : scores.filter((s) => s.ensemble_type === active);
@@ -109,15 +92,6 @@ export default function Compositions() {
                 {f}
               </button>
             ))}
-            <button
-              onClick={syncScores}
-              disabled={syncing}
-              className="px-4 py-2 rounded-full text-xs font-body tracking-wide bg-accent/10 text-accent hover:bg-accent/20 transition-all duration-300 inline-flex items-center gap-1.5 disabled:opacity-50"
-              title="Sync latest scores from MuseScore"
-            >
-              {syncing ? <Loader2 size={12} className="animate-spin" /> : <RefreshCw size={12} />}
-              Sync
-            </button>
           </div>
         </Section>
 
@@ -128,7 +102,7 @@ export default function Compositions() {
         ) : filtered.length === 0 ? (
           <Section delay={200}>
             <p className="text-center text-muted-foreground mt-20">
-              No compositions found. Click "Sync" to fetch the latest from MuseScore.
+              No compositions yet. The catalog auto-updates daily.
             </p>
           </Section>
         ) : (

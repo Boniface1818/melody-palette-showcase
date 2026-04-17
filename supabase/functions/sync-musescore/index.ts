@@ -19,8 +19,6 @@ interface ScoreData {
 
 function parseScoresFromHtml(html: string): ScoreData[] {
   const scores: ScoreData[] = [];
-
-  // Match score cards - each score links to /user/108485503/scores/XXXXX
   const scorePattern = /href="(https:\/\/musescore\.com\/user\/108485503\/scores\/(\d+))"/g;
   const scoreUrls = new Map<string, string>();
   let match;
@@ -28,48 +26,19 @@ function parseScoresFromHtml(html: string): ScoreData[] {
     scoreUrls.set(match[2], match[1]);
   }
 
-  // Parse structured data from the page
-  // Look for score thumbnails and metadata
-  const thumbnailPattern = /src="(https:\/\/cdn\.ustatik\.com\/musescore\/scoredata\/[^"]+)"/g;
-  const thumbnails: string[] = [];
-  while ((match = thumbnailPattern.exec(html)) !== null) {
-    thumbnails.push(match[1]);
-  }
-
-  // Extract score blocks using title patterns
-  const titlePattern = /class="[^"]*"[^>]*>([^<]+(?:–[^<]+)?)<\/a>\s*<\/h/gi;
-
-  // Simpler approach: parse the text content for metadata patterns
-  const textContent = html.replace(/<[^>]+>/g, "\n").replace(/\n{2,}/g, "\n");
-  const lines = textContent.split("\n").map((l) => l.trim()).filter(Boolean);
-
-  let thumbIdx = 0;
   for (const [scoreId, scoreUrl] of scoreUrls) {
-    // Find title near this score URL in the HTML
     const urlIdx = html.indexOf(scoreUrl);
     if (urlIdx === -1) continue;
-
-    // Extract nearby title
     const nearbyHtml = html.substring(Math.max(0, urlIdx - 500), urlIdx + 1000);
     const titleMatch = nearbyHtml.match(/>([A-Z][A-Z\s\u2013\u2014–-]+(?:\s*–\s*[^<]+)?)<\/a>/);
     if (!titleMatch) continue;
-
     const title = titleMatch[1].replace(/\s*–\s*KAGUNDA\s*$/, "").trim();
     if (!title || title.length < 2) continue;
-
-    // Check if already added (dedup)
     if (scores.find((s) => s.musescore_id === scoreId)) continue;
 
-    // Extract metadata from nearby text
     const metaMatch = nearbyHtml.match(/(\d+)\s*parts?\s*[•·]\s*(\d+)\s*pages?\s*[•·]\s*([\d:]+)\s*[•·]\s*([^•·<]+)\s*[•·]\s*(\d+)\s*views?/i);
-
-    // Extract ensemble type
     const ensembleMatch = nearbyHtml.match(/(Mixed Quartet|Piano Duo|String Duet|Mixed Trio|Church Choir|Mixed Ensemble|SATB|Solo)/i);
-
-    // Extract instruments
     const instrumentMatch = nearbyHtml.match(/(Piano|Bass guitar|Strings group|Violin|Oboe)[^<]*/i);
-
-    // Get thumbnail
     const thumbMatch = nearbyHtml.match(/src="(https:\/\/cdn\.ustatik\.com\/musescore\/scoredata\/[^"]+)"/);
 
     scores.push({
@@ -95,12 +64,43 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
+  // Authorization: only cron / authenticated admins may trigger this function.
+  // The cron job sends the SYNC_SECRET via the `x-sync-secret` header.
+  const expectedSecret = Deno.env.get("SYNC_SECRET");
+  const providedSecret = req.headers.get("x-sync-secret");
+  const authHeader = req.headers.get("Authorization");
+
+  let authorized = false;
+
+  if (expectedSecret && providedSecret && providedSecret === expectedSecret) {
+    authorized = true;
+  } else if (authHeader?.startsWith("Bearer ")) {
+    try {
+      const supabaseAuth = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_ANON_KEY")!,
+        { global: { headers: { Authorization: authHeader } } },
+      );
+      const token = authHeader.replace("Bearer ", "");
+      const { data, error } = await supabaseAuth.auth.getClaims(token);
+      if (!error && data?.claims?.sub) authorized = true;
+    } catch (_) {
+      // fall through to unauthorized
+    }
+  }
+
+  if (!authorized) {
+    return new Response(
+      JSON.stringify({ success: false, error: "Unauthorized" }),
+      { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
+  }
+
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Fetch MuseScore profile page
     const response = await fetch(MUSESCORE_USER_URL, {
       headers: {
         "User-Agent": "Mozilla/5.0 (compatible; ScoreSync/1.0)",
@@ -116,7 +116,6 @@ Deno.serve(async (req) => {
     const scores = parseScoresFromHtml(html);
 
     if (scores.length === 0) {
-      // Fallback: use known scores if parsing fails
       const fallbackScores: ScoreData[] = [
         { title: "HALELUYA", musescore_id: "28959626", musescore_url: "https://musescore.com/user/108485503/scores/28959626", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/1c0006c9355526855fdddd53fa994c33c6ccd8e6/score_0.png@500x660?no-cache=1770885292&bgclr=ffffff", ensemble_type: "Mixed Quartet", instruments: "Bass guitar, Strings group", parts: 4, pages: 1, duration: "00:31", views: 17, published_date: "Nov 1, 2025" },
         { title: "HEKO", musescore_id: "29658509", musescore_url: "https://musescore.com/user/108485503/scores/29658509", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/269f49578a6f2ec4513778e31ca00a679ec894e3/score_0.png@500x660?no-cache=1775565757&bgclr=ffffff", ensemble_type: "Piano Duo", instruments: "Piano", parts: 2, pages: 2, duration: "01:04", views: 30, published_date: "Nov 24, 2025" },
@@ -133,11 +132,10 @@ Deno.serve(async (req) => {
 
       return new Response(
         JSON.stringify({ success: true, synced: fallbackScores.length, source: "fallback" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
-    // Upsert scores
     let synced = 0;
     for (const score of scores) {
       const { error } = await supabase
@@ -148,13 +146,14 @@ Deno.serve(async (req) => {
 
     return new Response(
       JSON.stringify({ success: true, synced, total: scores.length }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (error) {
+    // Log full error server-side, return generic message to client
     console.error("Sync error:", error);
     return new Response(
-      JSON.stringify({ success: false, error: (error as Error).message }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({ success: false, error: "Sync failed. Please try again later." }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   }
 });
