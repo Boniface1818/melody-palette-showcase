@@ -310,6 +310,27 @@ export default function Compositions() {
             ))}
           </div>
         )}
+
+        {/* Commission CTA — marketable conversion point */}
+        {!loading && scores.length > 0 && (
+          <Section delay={120}>
+            <div className="glass-card mt-16 max-w-2xl mx-auto text-center relative overflow-hidden">
+              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden />
+              <Sparkles size={26} className="mx-auto mb-3 text-accent" />
+              <h3 className="font-display text-xl sm:text-2xl font-semibold mb-2">
+                Need a piece written for <span className="text-primary">your</span> choir?
+              </h3>
+              <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+                Custom arrangements, original compositions, and engraving for liturgies, weddings, and concerts.
+                Let's create something your singers will remember.
+              </p>
+              <Link to="/contact" className="btn-primary inline-flex">
+                <Mail size={15} />
+                Commission a Composition
+              </Link>
+            </div>
+          </Section>
+        )}
       </main>
       <Footer />
     </>
