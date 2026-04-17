@@ -61,6 +61,7 @@ export default function Compositions() {
   }, []);
 
   const filtered = active === "All" ? scores : scores.filter((s) => s.ensemble_type === active);
+  const featured = scores.find((s) => s.featured) ?? scores[0];
 
   return (
     <>
