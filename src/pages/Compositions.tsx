@@ -7,7 +7,39 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, Music, Loader2 } from "lucide-react";
+import { ExternalLink, Music, Loader2, Sparkles, Quote, Star, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
+
+// Marketable narrative snippets — picked deterministically per score so each card tells a story.
+const storyByEnsemble: Record<string, string[]> = {
+  "Piano Duo": [
+    "Two pianists, four hands, one shared breath — written for the intimacy of liturgy and the thrill of concert stages alike.",
+    "A conversation between two players, where harmony becomes prayer and counterpoint becomes communion.",
+  ],
+  "String Duet": [
+    "Bow meets bow in a dialogue carved from silence — ideal for weddings, vigils, and reflective moments of worship.",
+    "Two strings, infinite warmth: a piece that lingers long after the final note fades.",
+  ],
+  "Mixed Quartet": [
+    "Four distinct voices woven into one tapestry — full-bodied sound designed to fill sanctuaries and lift congregations.",
+    "Crafted for choirs that crave both depth and clarity, this piece balances rich harmony with singable lines.",
+  ],
+  "Mixed Trio": [
+    "A nimble trio setting — perfect for small ensembles seeking polished, performance-ready repertoire.",
+    "Three voices, intricately interlocked, written to shine in chapels, recitals, and recording sessions.",
+  ],
+  default: [
+    "A composition shaped by years of liturgical service — written to be sung, played, and prayed.",
+    "Music born from devotion, refined for performance, and shared freely with the choirs who need it.",
+  ],
+};
+
+const storyFor = (score: Score) => {
+  const pool = storyByEnsemble[score.ensemble_type ?? ""] ?? storyByEnsemble.default;
+  // Stable index from musescore_id so the blurb never changes between renders
+  const seed = (score.musescore_id || score.id).split("").reduce((a, c) => a + c.charCodeAt(0), 0);
+  return pool[seed % pool.length];
+};
 
 interface Score {
   id: string;
@@ -58,6 +90,8 @@ export default function Compositions() {
   }, []);
 
   const filtered = active === "All" ? scores : scores.filter((s) => s.ensemble_type === active);
+  const featured = scores[0]; // newest by created_at
+  const totalViews = scores.reduce((sum, s) => sum + (s.views || 0), 0);
 
   return (
     <>
