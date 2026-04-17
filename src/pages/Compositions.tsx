@@ -110,7 +110,101 @@ export default function Compositions() {
           </p>
         </Section>
 
-        {/* Filter pills + sync button */}
+
+        {/* The Story Behind the Catalog */}
+        <Section delay={80}>
+          <div className="glass-card mt-10 max-w-3xl mx-auto relative overflow-hidden">
+            <div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
+            <div className="absolute -bottom-12 -left-12 w-44 h-44 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden />
+            <div className="relative">
+              <div className="flex items-center gap-2 mb-3">
+                <Quote size={18} className="text-accent" />
+                <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">The Story</span>
+              </div>
+              <h2 className="font-display text-xl sm:text-2xl font-semibold mb-3 leading-snug">
+                A catalog built one prayer at a time.
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                Every score in this collection began the same way — at a piano, late at night, with a melody that
+                refused to leave. Some were written for a specific liturgy. Others arrived as gifts for choirs
+                searching for something <span className="text-foreground">honest, singable, and unmistakably sacred</span>.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                What you'll find here is a living catalog: piano duos, string duets, mixed quartets, and full
+                arrangements — each one engraved with care, free to download, and ready for your next service or recital.
+              </p>
+              {scores.length > 0 && (
+                <div className="grid grid-cols-3 gap-3 mt-5 pt-5 border-t border-border/50">
+                  <div className="text-center">
+                    <p className="font-display text-lg font-bold text-primary tabular-nums">{scores.length}</p>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">Scores</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="font-display text-lg font-bold text-accent tabular-nums">
+                      {new Set(scores.map((s) => s.ensemble_type).filter(Boolean)).size}
+                    </p>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">Ensembles</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="font-display text-lg font-bold text-primary tabular-nums">{totalViews}+</p>
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">Listens</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </Section>
+
+        {/* Featured Composition spotlight (newest) */}
+        {featured && (
+          <Section delay={140}>
+            <a
+              href={featured.musescore_url}
+              target="_blank"
+              rel="noreferrer"
+              className="glass-card glow-border mt-8 max-w-4xl mx-auto block group relative overflow-hidden"
+            >
+              <div className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/15 border border-accent/30">
+                <Star size={11} className="text-accent fill-accent" />
+                <span className="text-[10px] uppercase tracking-widest text-accent font-semibold">Featured · Newest</span>
+              </div>
+              <div className="grid md:grid-cols-[200px,1fr] gap-6 items-center">
+                {featured.thumbnail_url ? (
+                  <div className="rounded-xl overflow-hidden bg-secondary/50">
+                    <img
+                      src={featured.thumbnail_url}
+                      alt={`${featured.title} — featured composition preview`}
+                      className="w-full h-44 md:h-48 object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : (
+                  <div className="rounded-xl bg-secondary/50 h-44 md:h-48 flex items-center justify-center">
+                    <Music size={48} className="text-primary/50" />
+                  </div>
+                )}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles size={14} className="text-primary" />
+                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Latest release</span>
+                  </div>
+                  <h3 className="font-display text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+                    {featured.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                    {storyFor(featured)}
+                  </p>
+                  <span className="color-shift text-sm font-medium inline-flex items-center gap-1.5">
+                    Listen & download free
+                    <ExternalLink size={13} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                  </span>
+                </div>
+              </div>
+            </a>
+          </Section>
+        )}
+
+        {/* Filter pills */}
         <Section delay={100}>
           <div className="flex flex-wrap items-center justify-center gap-3 mt-10">
             {filters.map((f) => (
