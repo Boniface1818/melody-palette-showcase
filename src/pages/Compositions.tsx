@@ -7,7 +7,7 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, Music, Loader2 } from "lucide-react";
+import { ExternalLink, Music, Loader2, Sparkles, Quote } from "lucide-react";
 
 interface Score {
   id: string;
@@ -22,6 +22,9 @@ interface Score {
   duration: string | null;
   views: number;
   published_date: string | null;
+  story: string | null;
+  mood: string | null;
+  featured: boolean;
 }
 
 const compositionSubtitles = [
@@ -58,6 +61,7 @@ export default function Compositions() {
   }, []);
 
   const filtered = active === "All" ? scores : scores.filter((s) => s.ensemble_type === active);
+  const featured = scores.find((s) => s.featured) ?? scores[0];
 
   return (
     <>
@@ -76,7 +80,46 @@ export default function Compositions() {
           </p>
         </Section>
 
-        {/* Filter pills + sync button */}
+        {/* Featured Story of the Week */}
+        {featured && (
+          <Section delay={80}>
+            <a
+              href={featured.musescore_url}
+              target="_blank"
+              rel="noreferrer"
+              className="glass-card glow-border block mt-12 grid md:grid-cols-[200px_1fr] gap-6 group"
+            >
+              {featured.thumbnail_url && (
+                <div className="rounded-xl overflow-hidden bg-secondary/50">
+                  <img
+                    src={featured.thumbnail_url}
+                    alt={`${featured.title} featured sheet music`}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    loading="eager"
+                  />
+                </div>
+              )}
+              <div className="flex flex-col justify-center">
+                <div className="flex items-center gap-2 text-accent text-[10px] uppercase tracking-[0.2em] mb-3">
+                  <Sparkles size={14} /> Featured Story
+                </div>
+                <h2 className="font-display text-2xl md:text-3xl font-semibold mb-3">{featured.title}</h2>
+                {featured.story && (
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed flex gap-2">
+                    <Quote size={16} className="text-primary shrink-0 mt-1" />
+                    <span>{featured.story}</span>
+                  </p>
+                )}
+                <span className="color-shift text-sm font-medium inline-flex items-center gap-1.5 mt-4">
+                  Listen on MuseScore
+                  <ExternalLink size={13} />
+                </span>
+              </div>
+            </a>
+          </Section>
+        )}
+
+        {/* Filter pills */}
         <Section delay={100}>
           <div className="flex flex-wrap items-center justify-center gap-3 mt-10">
             {filters.map((f) => (
@@ -164,6 +207,18 @@ export default function Compositions() {
 
                   {score.instruments && (
                     <p className="text-xs text-muted-foreground mb-3">{score.instruments}</p>
+                  )}
+
+                  {score.story && (
+                    <p className="text-xs text-foreground/75 italic leading-relaxed mb-3 line-clamp-3">
+                      "{score.story}"
+                    </p>
+                  )}
+
+                  {score.mood && (
+                    <span className="self-start text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-md bg-primary/10 text-primary mb-2">
+                      {score.mood}
+                    </span>
                   )}
 
                   <div className="mt-auto pt-2">
