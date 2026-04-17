@@ -209,6 +209,18 @@ export default function Compositions() {
                     <p className="text-xs text-muted-foreground mb-3">{score.instruments}</p>
                   )}
 
+                  {score.story && (
+                    <p className="text-xs text-foreground/75 italic leading-relaxed mb-3 line-clamp-3">
+                      "{score.story}"
+                    </p>
+                  )}
+
+                  {score.mood && (
+                    <span className="self-start text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-md bg-primary/10 text-primary mb-2">
+                      {score.mood}
+                    </span>
+                  )}
+
                   <div className="mt-auto pt-2">
                     <span className="color-shift text-sm font-medium inline-flex items-center gap-1.5 group/link">
                       Listen on MuseScore
