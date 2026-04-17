@@ -158,9 +158,31 @@ Deno.serve(async (req) => {
 
     let synced = 0;
     for (const score of scores) {
+      // Check if score already exists; preserve curated story/mood if so.
+      const { data: existing } = await supabase
+        .from("scores")
+        .select("id, story, mood")
+        .eq("musescore_id", score.musescore_id)
+        .maybeSingle();
+
+      const payload: ScoreData & { updated_at: string } = {
+        ...score,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (!existing) {
+        const generated = generateStory(score.title, score.ensemble_type);
+        payload.story = generated.story;
+        payload.mood = generated.mood;
+      } else {
+        // Don't overwrite curated narrative content on re-sync.
+        delete (payload as Record<string, unknown>).story;
+        delete (payload as Record<string, unknown>).mood;
+      }
+
       const { error } = await supabase
         .from("scores")
-        .upsert({ ...score, updated_at: new Date().toISOString() }, { onConflict: "musescore_id" });
+        .upsert(payload, { onConflict: "musescore_id" });
       if (!error) synced++;
     }
 
