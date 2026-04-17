@@ -7,7 +7,7 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, Music, Loader2 } from "lucide-react";
+import { ExternalLink, Music, Loader2, Sparkles, Quote } from "lucide-react";
 
 interface Score {
   id: string;
@@ -22,6 +22,9 @@ interface Score {
   duration: string | null;
   views: number;
   published_date: string | null;
+  story: string | null;
+  mood: string | null;
+  featured: boolean;
 }
 
 const compositionSubtitles = [
