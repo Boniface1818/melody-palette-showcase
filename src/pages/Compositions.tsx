@@ -80,7 +80,46 @@ export default function Compositions() {
           </p>
         </Section>
 
-        {/* Filter pills + sync button */}
+        {/* Featured Story of the Week */}
+        {featured && (
+          <Section delay={80}>
+            <a
+              href={featured.musescore_url}
+              target="_blank"
+              rel="noreferrer"
+              className="glass-card glow-border block mt-12 grid md:grid-cols-[200px_1fr] gap-6 group"
+            >
+              {featured.thumbnail_url && (
+                <div className="rounded-xl overflow-hidden bg-secondary/50">
+                  <img
+                    src={featured.thumbnail_url}
+                    alt={`${featured.title} featured sheet music`}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    loading="eager"
+                  />
+                </div>
+              )}
+              <div className="flex flex-col justify-center">
+                <div className="flex items-center gap-2 text-accent text-[10px] uppercase tracking-[0.2em] mb-3">
+                  <Sparkles size={14} /> Featured Story
+                </div>
+                <h2 className="font-display text-2xl md:text-3xl font-semibold mb-3">{featured.title}</h2>
+                {featured.story && (
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed flex gap-2">
+                    <Quote size={16} className="text-primary shrink-0 mt-1" />
+                    <span>{featured.story}</span>
+                  </p>
+                )}
+                <span className="color-shift text-sm font-medium inline-flex items-center gap-1.5 mt-4">
+                  Listen on MuseScore
+                  <ExternalLink size={13} />
+                </span>
+              </div>
+            </a>
+          </Section>
+        )}
+
+        {/* Filter pills */}
         <Section delay={100}>
           <div className="flex flex-wrap items-center justify-center gap-3 mt-10">
             {filters.map((f) => (
