@@ -1,0 +1,11 @@
+UPDATE public.scores SET story = 'Born during a late-night vigil rehearsal when the choir was too tired to sing, this Alleluia began as four whispered voices around a single candle. By dawn it had become a four-part jubilation — written so that every section, from the youngest soprano to the oldest bass, could carry the same cry of joy. It is the song that wakes the assembly to meet the Gospel.' WHERE title = 'HALELUYA';
+
+UPDATE public.scores SET story = 'I wrote HEKO the morning after my grandmother''s burial, sitting alone at the parish piano. The right hand asks a question, the left hand answers gently — the way she used to comfort me when words failed. It became my Communion piece: two hands speaking the gratitude a heart cannot.' WHERE title = 'HEKO';
+
+UPDATE public.scores SET story = 'Anthony was a tenor in our choir, a friend who sang every Mass with his whole chest. When he passed suddenly, the choir asked me for "something we can sing for him." This trio Mass is my answer — three voices weaving over piano, the way we used to weave around his lead. The Sanctus is for him; the Agnus Dei is for us, the ones still learning to let go.' WHERE title = 'MISA ANTHONY';
+
+UPDATE public.scores SET story = 'NJONI TUINGIE — "Come, let us enter" — was born on a rainy Sunday when half the choir arrived late and breathless. I wanted an entrance hymn that gathers people slowly, like a hand on the shoulder, instead of rushing them into worship. The bass walks ahead like a steady elder; the strings open the door behind.' WHERE title = 'NJONI TUINGIE';
+
+UPDATE public.scores SET story = 'A young couple in our parish lost their harvest to floods and still brought their last tin of maize to the offertory. I could not stop watching them walk up the aisle. SADAKA TAKATIFU is that walk, set in strings — slow, deliberate, holy. Every offering, no matter how small, deserves a melody that honors the courage it took to bring it.' WHERE title = 'SADAKA TAKATIFU';
+
+UPDATE public.scores SET story = 'SIFA NA UTUKUFU started as a finger-warm-up I played before Sunday Mass and would not leave my head all week. The kids in the front pew began humming it back to me. I shaped it into a piano duo — bright, festive, short enough for a Gloria interlude, joyful enough that even the shy ones in the congregation start to smile.' WHERE title = 'SIFA NA UTUKUFU';
