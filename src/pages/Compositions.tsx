@@ -210,9 +210,9 @@ export default function Compositions() {
                   )}
 
                   {score.story && (
-                    <p className="text-xs text-foreground/75 italic leading-relaxed mb-3 line-clamp-3">
-                      "{score.story}"
-                    </p>
+                    <blockquote className="text-xs text-foreground/80 italic leading-relaxed mb-3 border-l-2 border-primary/40 pl-3">
+                      {score.story}
+                    </blockquote>
                   )}
 
                   {score.mood && (
