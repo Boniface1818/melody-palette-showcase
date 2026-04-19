@@ -5,7 +5,8 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
-import { Music, Piano, Users, BookOpen, HeartHandshake, Mic, Feather, Sparkles, MapPin, Quote } from "lucide-react";
+import { useAnimatedSkills } from "@/hooks/useAnimatedSkills";
+import { Music, Piano, Users, BookOpen, HeartHandshake, Mic } from "lucide-react";
 
 const aboutSubtitles = [
   "A composer who thinks in harmonies and feels in rhythm.",
@@ -14,29 +15,26 @@ const aboutSubtitles = [
   "Every score is a conversation between the composer and the congregation.",
 ];
 
-const chapters = [
-  {
-    icon: MapPin,
-    tag: "The Beginning",
-    title: "A boy, a choir loft, and a question",
-    body:
-      "Long before I knew the word 'composer,' I knew the feeling of a choir locking into harmony — that sudden hush in a parish when voices align and the room itself seems to listen. I grew up in that hush, in Kenyan choir lofts where hymns were rehearsed by candlelight and improvised by ear.",
-  },
-  {
-    icon: Feather,
-    tag: "The Apprenticeship",
-    title: "Learning the grammar of sacred sound",
-    body:
-      "The questions came next. Why does this cadence feel like surrender? Why does that suspension feel like prayer? Years of choral study, liturgical training, and stubborn late-night notation taught me the grammar — voice leading, modal color, the geometry of SATB writing — without dulling the wonder that started it all.",
-  },
-  {
-    icon: Sparkles,
-    tag: "The Calling",
-    title: "Writing music a parish can actually sing",
-    body:
-      "Today, every score I publish is built around one quiet test: can an ordinary choir, on an ordinary Sunday, sing this and mean it? I write for breath, for budget, for rehearsal time that's always too short — and for the moment a congregation forgets it's listening and begins to pray.",
-  },
+const skills = [
+  { name: "SATB Choral Arrangements", level: 95 },
+  { name: "Piano Composition", level: 88 },
+  { name: "MuseScore Notation", level: 92 },
+  { name: "Liturgical Music", level: 90 },
+  { name: "Choir Direction", level: 80 },
+  { name: "String & Ensemble Writing", level: 85 },
 ];
+
+function AnimatedBar({ level }: { level: number }) {
+  const { ref, width } = useAnimatedSkills(level);
+  return (
+    <div ref={ref} className="h-1.5 rounded-full bg-secondary overflow-hidden">
+      <div
+        className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+        style={{ width: `${width}%`, transition: "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)" }}
+      />
+    </div>
+  );
+}
 
 export default function About() {
   useBackgroundCycle(5000);
@@ -61,59 +59,60 @@ export default function About() {
           </p>
         </Section>
 
-        {/* Story header */}
+        {/* Bio */}
         <Section delay={100}>
-          <div className="glass-card mt-16 max-w-3xl mx-auto relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
-            <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
-              <Feather size={12} /> The Long Version
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
-              Three chapters, one <span className="text-primary">vocation</span>.
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Every composer's path is part inheritance, part stubbornness, part grace. Here is mine — told in three short chapters,
-              the way I'd tell it to a friend over coffee after a Sunday rehearsal.
-            </p>
+          <div className="glass-card mt-16 max-w-3xl mx-auto">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-xl bg-primary/10">
+                <Music size={20} className="text-primary" />
+              </div>
+              <h2 className="text-lg font-display font-semibold">My Story</h2>
+            </div>
+            <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+              <p>
+                I'm Boniface Kagunda, a Kenyan composer and music arranger with a deep passion
+                for sacred and liturgical music. My journey began in the church choir, where I
+                discovered the power of well-crafted harmony to move hearts and elevate worship.
+              </p>
+              <p>
+                Today, I compose original works for piano, strings, and mixed vocal ensembles.
+                My repertoire spans piano duos, string duets, mixed trios, and quartets —
+                all written with care for the liturgical moment they serve.
+              </p>
+              <p>
+                Every composition I create is rooted in a desire to serve the sacred —
+                music that helps congregations pray, praise, and connect with something
+                greater than themselves.
+              </p>
+            </div>
           </div>
         </Section>
 
-        {/* Chapters */}
-        <Section delay={180}>
-          <ol className="mt-6 max-w-3xl mx-auto space-y-4">
-            {chapters.map((c, i) => (
-              <li key={c.tag} className="glass-card relative">
-                <div className="absolute top-6 left-6 text-5xl font-display font-bold text-primary/10 leading-none select-none" aria-hidden>
-                  0{i + 1}
-                </div>
-                <div className="relative pl-14">
-                  <div className="flex items-center gap-2 mb-2">
-                    <c.icon size={14} className="text-accent" />
-                    <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{c.tag}</span>
-                  </div>
-                  <h3 className="font-display font-semibold text-base sm:text-lg mb-2 text-foreground">{c.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{c.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Section>
-
-        {/* Closing quote */}
-        <Section delay={260}>
+        {/* Skills */}
+        <Section delay={200}>
           <div className="glass-card mt-6 max-w-3xl mx-auto">
-            <blockquote className="flex gap-3 items-start">
-              <Quote size={20} className="text-primary shrink-0 mt-1" />
-              <p className="text-sm sm:text-base italic text-foreground/90 leading-relaxed">
-                "I'm not chasing applause. I'm chasing that one breath a choir takes together,
-                right before the first chord — when everyone in the room remembers why they came."
-              </p>
-            </blockquote>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-xl bg-accent/10">
+                <HeartHandshake size={20} className="text-accent" />
+              </div>
+              <h2 className="text-lg font-display font-semibold">Musical Skills</h2>
+            </div>
+            <div className="space-y-3">
+              {skills.map((s) => (
+                <div key={s.name}>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-foreground">{s.name}</span>
+                    <span className="text-muted-foreground tabular-nums">{s.level}%</span>
+                  </div>
+                  <AnimatedBar level={s.level} />
+                </div>
+              ))}
+            </div>
           </div>
         </Section>
 
         {/* What I Offer */}
-        <Section delay={320}>
+        <Section delay={300}>
           <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {[
               { icon: Piano, label: "Piano Compositions" },
