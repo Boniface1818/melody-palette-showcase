@@ -210,14 +210,9 @@ export default function Compositions() {
                   )}
 
                   {score.story && (
-                    <div className="mb-3 p-3 rounded-lg bg-secondary/40 border-l-2 border-primary/60">
-                      <p className="text-[10px] uppercase tracking-widest text-primary mb-1.5 inline-flex items-center gap-1.5">
-                        <Quote size={10} /> The True Story
-                      </p>
-                      <p className="text-xs text-foreground/80 italic leading-relaxed whitespace-pre-line">
-                        {score.story}
-                      </p>
-                    </div>
+                    <p className="text-xs text-foreground/75 italic leading-relaxed mb-3 line-clamp-3">
+                      "{score.story}"
+                    </p>
                   )}
 
                   {score.mood && (
