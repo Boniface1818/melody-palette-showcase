@@ -7,7 +7,7 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, Music, Loader2, Sparkles, Quote } from "lucide-react";
+import { ExternalLink, Music, Loader2, Sparkles, Quote, Flame } from "lucide-react";
 
 interface Score {
   id: string;
@@ -90,18 +90,28 @@ export default function Compositions() {
               className="glass-card glow-border block mt-12 grid md:grid-cols-[200px_1fr] gap-6 group"
             >
               {featured.thumbnail_url && (
-                <div className="rounded-xl overflow-hidden bg-secondary/50">
+                <div className="relative rounded-xl overflow-hidden bg-secondary/50">
                   <img
                     src={featured.thumbnail_url}
                     alt={`${featured.title} featured sheet music`}
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     loading="eager"
                   />
+                  {featured.title?.toUpperCase().includes("MISA ANTHONY") && (
+                    <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-md border border-primary/30 shadow-lg">
+                      <Flame size={12} className="text-accent animate-pulse" />
+                      <span className="text-[9px] uppercase tracking-[0.15em] text-foreground/90 font-medium">In Memoriam</span>
+                    </div>
+                  )}
                 </div>
               )}
               <div className="flex flex-col justify-center">
                 <div className="flex items-center gap-2 text-accent text-[10px] uppercase tracking-[0.2em] mb-3">
-                  <Sparkles size={14} /> Featured Story
+                  {featured.title?.toUpperCase().includes("MISA ANTHONY") ? (
+                    <><Flame size={14} className="animate-pulse" /> A Dedication</>
+                  ) : (
+                    <><Sparkles size={14} /> Featured Story</>
+                  )}
                 </div>
                 <h2 className="font-display text-2xl md:text-3xl font-semibold mb-3">{featured.title}</h2>
                 {featured.story && (
@@ -160,13 +170,19 @@ export default function Compositions() {
                 >
                   {/* Thumbnail */}
                   {score.thumbnail_url && (
-                    <div className="rounded-xl overflow-hidden mb-4 bg-secondary/50">
+                    <div className="relative rounded-xl overflow-hidden mb-4 bg-secondary/50">
                       <img
                         src={score.thumbnail_url}
                         alt={`${score.title} sheet music preview`}
                         className="w-full h-48 object-cover object-top transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
+                      {score.title?.toUpperCase().includes("MISA ANTHONY") && (
+                        <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-md border border-primary/30 shadow-lg">
+                          <Flame size={11} className="text-accent animate-pulse" />
+                          <span className="text-[9px] uppercase tracking-[0.15em] text-foreground/90 font-medium">In Memoriam</span>
+                        </div>
+                      )}
                     </div>
                   )}
 
