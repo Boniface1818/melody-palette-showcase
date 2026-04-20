@@ -63,10 +63,10 @@ const services = [
 ];
 
 const reasons = [
-  { icon: Award, title: "A Composer Who Reads the Room", desc: "I write for the choir you actually have — not the one a textbook imagines. Voicings sit where your singers live, and the assembly's part is always within reach." },
-  { icon: Heart, title: "Liturgy First, Always", desc: "Every piece is built around the moment it serves — entrance, offertory, communion, recessional. The music carries the rite; it never competes with it." },
-  { icon: Clock, title: "Honest Timelines, Clean Scores", desc: "You'll get a clear schedule, drafts you can react to, and final PDFs that print cleanly with sensible page turns. No surprises before Sunday." },
-  { icon: CheckCircle2, title: "Built to Be Sung Again", desc: "I compose pieces a parish can return to for years — singable on the first rehearsal, still meaningful on the fiftieth Sunday. Lasting music, not novelty." },
+  { icon: Award, title: "A Composer Who Reads the Room", desc: "I write for the choir you actually have — not the one a textbook imagines. Every voicing sits where your singers truly live, and the assembly's part is always within reach of the back pew." },
+  { icon: Heart, title: "Liturgy First, Ego Never", desc: "The rite leads; the music follows. My name vanishes the moment the assembly opens its mouth — and that is exactly the success I'm chasing on every commission." },
+  { icon: Clock, title: "Honest Timelines, Clean Scores", desc: "You receive a clear schedule, drafts you can react to, and final PDFs that print cleanly with sensible page turns. No surprises the Saturday before Sunday." },
+  { icon: CheckCircle2, title: "Built to Be Sung Again", desc: "I write pieces a parish can return to for years — singable on the first rehearsal, still meaningful on the fiftieth Sunday. Lasting music, not novelty." },
 ];
 
 export default function Contact() {
