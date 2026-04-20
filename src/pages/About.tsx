@@ -17,21 +17,21 @@ const aboutSubtitles = [
 const chapters = [
   {
     icon: BookOpen,
-    label: "The Boy Who Listened",
+    label: "The Listener",
     text:
-      "Before I owned a single manuscript book, I owned a pew. I learned music sideways — by watching the old cantor close her eyes on the second verse, by noticing which hymns the men in the back actually opened their mouths for. That quiet apprenticeship still shapes every bar I write today.",
+      "Long before I wrote a single note, I was a listener — sitting in the pews, paying attention to which hymns made the assembly lean forward and which ones lost them by the second verse. That ear, trained in real Sunday liturgies, is still the one I trust most when I compose.",
   },
   {
     icon: PenLine,
-    label: "The Hand at the Desk",
+    label: "The Craftsman",
     text:
-      "My desk is plain: a lamp, a pencil, a worn missal, a metronome that ticks slightly slow. I write longhand first, then engrave. I sing every voice part myself before a choir ever sees it. If a phrase cannot survive my own untrained throat at midnight, it does not deserve a Sunday morning.",
+      "I treat every score as a piece of work that has to function — singable ranges, honest harmonies, page turns that don't betray the choir mid-phrase. Composition, for me, is craftsmanship in service of prayer; the music must hold up on the eighth Sunday of Ordinary Time, not just on opening night.",
   },
   {
     icon: Church,
-    label: "The Servant in the Loft",
+    label: "The Servant",
     text:
-      "I do not consider myself an artist with a parish audience. I consider myself a parish servant who happens to write music. The choir is my employer. The liturgy is my brief. The congregation is the only review I read. When the assembly walks out humming the hymn and forgetting my name — that is the highest honour the work can earn.",
+      "My name will not be on the lips of the congregation, and that is exactly as it should be. The composer's job is to disappear behind the prayer of the Church. If the assembly leaves singing the hymn instead of remembering the composer, the score has done its work.",
   },
 ];
 
