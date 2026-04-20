@@ -211,7 +211,7 @@ export default function Contact() {
           </div>
         </Section>
 
-        {/* Passion / Story */}
+        {/* Passion / What Drives Me */}
         <Section delay={150}>
           <div className="mt-24 max-w-4xl mx-auto">
             <div className="glass-card glow-border relative overflow-hidden">
@@ -219,34 +219,35 @@ export default function Contact() {
               <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
               <div className="relative">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body tracking-wide mb-4">
-                  <Flame size={12} /> My Passion for Choir
+                  <Flame size={12} /> My Passion · What Drives Me
                 </div>
                 <h2
                   className="text-2xl sm:text-3xl font-display font-bold mb-5"
                   style={{ color: headingColor, transition: "color 1.5s ease" }}
                 >
-                  Why I Write for the Choir
+                  The Hymn the Assembly Carries Home
                 </h2>
                 <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                   <p>
-                    I write for the choir because the choir is where the parish learns to pray
-                    together. Long before the homily lands or the readings take root, the
-                    assembly has already been formed by what it has just sung. That is a
-                    serious responsibility, and I treat it that way.
+                    What drives me is a small, stubborn picture: a mother walking out of Mass with
+                    a melody still folded in her chest — humming it later that afternoon while she
+                    cooks, while she scolds a child, while she prays in the dark. <span className="text-foreground font-semibold">That hum is the
+                    real concert hall.</span> Every score I write is built to survive that journey home.
                   </p>
                   <p>
-                    My passion is not for music in the abstract — it is for the
-                    <span className="text-foreground font-semibold"> specific Sunday</span>, the
-                    specific psalm, the specific congregation that will carry a melody home
-                    in their pockets. I want to write pieces that outlive a single performance:
-                    music a parish chooses again next year, and the year after that.
+                    My passion is not for music in the abstract. It is for the
+                    <span className="text-foreground"> specific Sunday</span>, the specific psalm,
+                    the specific choir of seven faithful people who keep showing up. I write so the
+                    cantor breathes easily, the alto trusts the line, the bass finds the note without
+                    a piano, and the assembly is invited — never ambushed.
                   </p>
                   <p className="text-foreground italic">
                     "Cantare amantis est." — Singing belongs to the one who loves. (St. Augustine)
                   </p>
                   <p>
-                    That is the standard I hold myself to. Every commission I take on is an
-                    invitation to add one more piece of love to the Church's long song.
+                    Every commission you trust me with becomes one more thread in that long, quiet
+                    song the Church has been singing for two thousand years. I do not take that lightly.
+                    I take it as a privilege.
                   </p>
                 </div>
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -269,6 +270,53 @@ export default function Contact() {
                 </div>
               </div>
             </div>
+          </div>
+        </Section>
+
+        {/* Thank You Note to Commissioners */}
+        <Section delay={150}>
+          <div className="mt-16 max-w-3xl mx-auto">
+            <article className="glass-card relative overflow-hidden text-center">
+              <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-56 h-56 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden />
+              <div className="relative">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-body tracking-wide mb-5">
+                  <Heart size={12} /> A Note of Thanks
+                </div>
+                <h2
+                  className="text-2xl sm:text-3xl font-display font-bold mb-4"
+                  style={{ color: headingColor, transition: "color 1.5s ease" }}
+                >
+                  To the One Who Commissions a Song
+                </h2>
+                <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  <p>
+                    If you have ever entrusted me with a piece — a Mass setting, a wedding hymn,
+                    a quiet psalm for a funeral, a song for a feast no one outside the parish
+                    will ever hear — <span className="text-foreground font-semibold">thank you</span>.
+                    Truly. You did not have to choose me, and you did.
+                  </p>
+                  <p>
+                    A commission is not a transaction. It is a small act of faith: you handed me
+                    a moment that mattered to you and asked me to clothe it in sound. I have
+                    carried each one of those moments to the desk like a candle, hands cupped,
+                    afraid of the wind.
+                  </p>
+                  <blockquote className="border-l-2 border-accent pl-4 italic text-foreground/90 text-left max-w-xl mx-auto my-4">
+                    "Every song you commission outlives the cheque. It becomes someone's first
+                    Communion, someone's last farewell, someone's quiet Tuesday in the car. You
+                    paid for paper — but you gifted a parish a memory."
+                  </blockquote>
+                  <p>
+                    So from this small desk in Kenya, with a pencil that has seen better days
+                    and a heart that has not stopped being grateful — <span className="text-primary font-semibold">asante sana</span>.
+                    May the music serve you long after the last bar is sung.
+                  </p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground/70 pt-2">
+                    — Boniface Kagunda
+                  </p>
+                </div>
+              </div>
+            </article>
           </div>
         </Section>
 
