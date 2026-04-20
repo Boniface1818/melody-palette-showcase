@@ -109,25 +109,28 @@ export default function Home() {
                 <Hand size={26} className="text-accent" style={{ animation: "wave 2.4s ease-in-out infinite", transformOrigin: "70% 70%" }} />
                 <Heart size={22} className="text-primary" />
               </div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">Karibu · Welcome</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">Karibu · Welcome Home</p>
               <h2 className="text-2xl sm:text-3xl font-display font-bold mb-4">
-                Step in. Sit down. <span className="text-primary">Listen a while.</span>
+                You came in quietly. <span className="text-primary">Stay a while.</span>
               </h2>
               <blockquote className="text-sm sm:text-base text-foreground/90 italic leading-relaxed mb-3 max-w-lg mx-auto">
-                "Music is the language in which God has spoken to us before the foundation of the world."
+                "He who sings, prays twice." — St. Augustine
               </blockquote>
-              <p className="text-[11px] uppercase tracking-widest text-muted-foreground/70 mb-6">— a thought I keep on my desk</p>
+              <p className="text-[11px] uppercase tracking-widest text-muted-foreground/70 mb-6">— the line that began this whole catalogue</p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — a composer
-                writing for parishes, choirs, and the kind of Sundays that don't make headlines but make
-                <span className="text-primary"> souls quieter</span>.
+                Whoever you are — a choir director with a tired Sunday ahead, a cantor hunting
+                for next week's psalm, a stranger who simply wandered in — <span className="text-foreground font-semibold">you are welcome here</span>.
+                This is a small room with the door propped open and the lights left on.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                Every piece on this site was written for someone, somewhere, who needed a song before they had words.
-                You're welcome to listen, to download, to commission — and most of all, to pray.
+                I'm <span className="text-foreground font-semibold">Boniface Kagunda</span>, and every score
+                on this site was written by hand, for a real moment, with a real choir in mind. Listen.
+                Download. Sing. Pray. <span className="text-primary">Take what serves you</span> — that is
+                why it is here.
               </p>
               <blockquote className="text-xs sm:text-sm text-accent italic mb-5 max-w-md mx-auto">
-                "When the choir sings well, the congregation prays twice."
+                "The music does not belong to me. It belongs to the Sunday it was written for —
+                and to whoever still needs it."
               </blockquote>
               <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-foreground/70 mb-2">
                 <RefreshCw size={10} className="text-primary" />
