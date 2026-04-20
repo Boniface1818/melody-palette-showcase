@@ -5,7 +5,7 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
-import { Music, Feather, Quote, Flame, Compass, Sparkles, HandHeart, Headphones, Award, Clock, Globe2, Hand } from "lucide-react";
+import { Music, Feather, Quote, Flame, Compass, Sparkles } from "lucide-react";
 
 const aboutSubtitles = [
   "A composer who thinks in harmonies and feels in rhythm.",
@@ -145,118 +145,6 @@ export default function About() {
               </ol>
             </div>
           </article>
-        </Section>
-
-        {/* Karibu — Welcome */}
-        <Section delay={250}>
-          <div className="glass-card mt-6 max-w-3xl mx-auto text-center relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
-            <div className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden />
-            <div className="relative">
-              <div className="flex justify-center mb-3 gap-2 items-center">
-                <Hand size={24} className="text-accent" style={{ animation: "wave 2.4s ease-in-out infinite", transformOrigin: "70% 70%" }} />
-                <span className="text-[10px] uppercase tracking-[0.3em] text-primary">Karibu</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-3">
-                Pull up a chair. <span className="text-primary">The kettle is on.</span>
-              </h2>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                Most websites greet you with a résumé. I would rather greet you the way my mother
-                greets every guest at the door — with both hands, a small bow, and the quiet
-                promise that you will not leave hungry. So: <span className="text-foreground">karibu</span>.
-                Stay as long as you like. The music here was written for someone exactly like you.
-              </p>
-            </div>
-          </div>
-        </Section>
-
-        {/* My Passion */}
-        <Section delay={300}>
-          <div className="glass-card mt-6 max-w-3xl mx-auto">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="p-2.5 rounded-xl bg-accent/10">
-                <HandHeart size={20} className="text-accent" />
-              </div>
-              <h2 className="text-lg font-display font-semibold">My Passion</h2>
-            </div>
-            <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
-              <p>
-                I am quietly obsessed with the moment a congregation stops <span className="text-foreground">listening</span> to
-                a song and starts <span className="text-foreground">becoming</span> it — when the printed notes
-                disappear and what remains is one breath, one heart, one rising sound.
-              </p>
-              <p>
-                That moment is what I chase every time I sit down to write. Not applause, not
-                streams, not perfect counterpoint — just that holy hush right before the room
-                opens its mouth and sings something it did not know it knew.
-              </p>
-              <p className="text-foreground/90 italic">
-                Sacred music, for me, is not a genre. It is a form of hospitality — making room
-                in sound for everyone who walks in.
-              </p>
-            </div>
-          </div>
-        </Section>
-
-        {/* Why Choose Me */}
-        <Section delay={400}>
-          <div className="mt-6 max-w-3xl mx-auto">
-            <div className="text-center mb-5">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-2">Why work with me</p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold">
-                Five reasons your choir will <span className="text-accent">thank you</span>.
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                {
-                  Icon: Headphones,
-                  title: "Singable on the first Sunday",
-                  text: "Every voicing is tested in real choir lofts — not just on a screen. Your sopranos will reach the high notes; your basses will not need oxygen.",
-                },
-                {
-                  Icon: Globe2,
-                  title: "Rooted in African worship",
-                  text: "Swahili lyricism, call-and-response instincts, and parish realities are baked into the score — not bolted on as decoration.",
-                },
-                {
-                  Icon: Award,
-                  title: "Liturgically faithful",
-                  text: "Every Mass setting respects the rite — Kyrie, Gloria, Sanctus, Agnus Dei — so your celebrant never has to apologise for the music.",
-                },
-                {
-                  Icon: Clock,
-                  title: "Delivered on time, every time",
-                  text: "Commission a piece for Easter and you will rehearse it in Lent — not on Holy Saturday morning. Promised.",
-                },
-                {
-                  Icon: HandHeart,
-                  title: "Personal, not pre-packaged",
-                  text: "Tell me about your choir, your patron saint, your grieving family, your wedding couple. I will write the piece that belongs only to that moment.",
-                },
-                {
-                  Icon: Sparkles,
-                  title: "Free MuseScore parts forever",
-                  text: "Every commissioned score includes downloadable individual parts for every voice and instrument — keep them, share them, sing them again next year.",
-                },
-              ].map((r, i) => (
-                <div
-                  key={i}
-                  className="glass-card group hover:border-primary/40 transition-colors"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-primary/10 shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <r.Icon size={18} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-display font-semibold text-sm mb-1.5">{r.title}</p>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{r.text}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </Section>
       </main>
       <Footer />
