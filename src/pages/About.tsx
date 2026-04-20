@@ -5,33 +5,33 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
-import { Music, Feather, Quote, Flame, Compass, Sparkles } from "lucide-react";
+import { Music, Feather, Quote, BookOpen, PenLine, Church } from "lucide-react";
 
 const aboutSubtitles = [
-  "A composer who thinks in harmonies and feels in rhythm.",
-  "Crafting sacred music that unites voices and lifts spirits.",
-  "From piano compositions to full choir arrangements — music is my calling.",
-  "Every score is a conversation between the composer and the congregation.",
+  "A Kenyan composer writing music the Church can actually sing.",
+  "Sacred harmony, shaped for real choirs and real congregations.",
+  "From the parish loft to the printed page — this is where I work.",
+  "Liturgy first. Craft second. Ego, never.",
 ];
 
 const chapters = [
   {
-    icon: Flame,
-    label: "The Spark",
+    icon: BookOpen,
+    label: "The Listener",
     text:
-      "It began in a small parish loft in Kenya — a boy too short to see over the choir stand, mouthing harmonies he could not yet name. The hymns came home with me, lived in my chest, and quietly asked to be written down.",
+      "Long before I wrote a single note, I was a listener — sitting in the pews, paying attention to which hymns made the assembly lean forward and which ones lost them by the second verse. That ear, trained in real Sunday liturgies, is still the one I trust most when I compose.",
   },
   {
-    icon: Compass,
-    label: "The Search",
+    icon: PenLine,
+    label: "The Craftsman",
     text:
-      "Years of training, late-night MuseScore sessions, and stubborn experiments with SATB voicing taught me what every choirmaster already knows: a score only matters when ordinary voices can sing it on the first Sunday they try.",
+      "I treat every score as a piece of work that has to function — singable ranges, honest harmonies, page turns that don't betray the choir mid-phrase. Composition, for me, is craftsmanship in service of prayer; the music must hold up on the eighth Sunday of Ordinary Time, not just on opening night.",
   },
   {
-    icon: Sparkles,
-    label: "The Calling",
+    icon: Church,
+    label: "The Servant",
     text:
-      "Today I write for the assembly more than for the page — Mass settings, offertories, piano duos, string duets — each one shaped by a person, a parish, or a moment that refused to leave me until it became music.",
+      "My name will not be on the lips of the congregation, and that is exactly as it should be. The composer's job is to disappear behind the prayer of the Church. If the assembly leaves singing the hymn instead of remembering the composer, the score has done its work.",
   },
 ];
 
@@ -58,36 +58,40 @@ export default function About() {
           </p>
         </Section>
 
-        {/* Bio */}
+        {/* Bio — Who I Am */}
         <Section delay={100}>
           <div className="glass-card mt-16 max-w-3xl mx-auto">
             <div className="flex items-center gap-3 mb-5">
               <div className="p-2.5 rounded-xl bg-primary/10">
                 <Music size={20} className="text-primary" />
               </div>
-              <h2 className="text-lg font-display font-semibold">My Story</h2>
+              <h2 className="text-lg font-display font-semibold">Who I Am</h2>
             </div>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
               <p>
-                I'm Boniface Kagunda, a Kenyan composer and music arranger with a deep passion
-                for sacred and liturgical music. My journey began in the church choir, where I
-                discovered the power of well-crafted harmony to move hearts and elevate worship.
+                I am <span className="text-foreground font-semibold">Boniface Kagunda</span> — a Kenyan
+                composer and arranger working primarily in sacred and liturgical music.
+                My catalogue includes Mass settings, responsorial psalms, offertory and
+                communion pieces, piano duos, string duets, and SATB arrangements written
+                for parishes, choirs, and ordinary Sundays.
               </p>
               <p>
-                Today, I compose original works for piano, strings, and mixed vocal ensembles.
-                My repertoire spans piano duos, string duets, mixed trios, and quartets —
-                all written with care for the liturgical moment they serve.
+                I do not write for stages. I write for the gathered assembly — for the
+                cantor who has fifteen minutes to learn the psalm, for the four singers
+                who carry the parish choir on their shoulders, for the congregation that
+                will only ever hear the piece sung once. Every score is engineered to
+                survive that reality and still sound beautiful.
               </p>
               <p>
-                Every composition I create is rooted in a desire to serve the sacred —
-                music that helps congregations pray, praise, and connect with something
-                greater than themselves.
+                My approach is simple: clarity before cleverness, prayer before performance,
+                the choir before the composer. If a piece of mine helps a parish pray more
+                deeply on a single Sunday, the work has earned its place.
               </p>
             </div>
           </div>
         </Section>
 
-        {/* Mirrored Story — A Composer's Confession */}
+        {/* Mirrored Story — Notes from the Desk */}
         <Section delay={200}>
           <article
             className="glass-card mt-6 max-w-3xl mx-auto relative overflow-hidden"
@@ -98,32 +102,34 @@ export default function About() {
 
             <div className="relative">
               <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2 font-body inline-flex items-center gap-2">
-                <Feather size={12} /> A Composer's Confession
+                <Feather size={12} /> Notes from the Desk
               </p>
               <h2
                 id="confession-heading"
                 className="text-2xl sm:text-3xl font-display font-bold mb-5 leading-tight"
               >
-                Music chose me <span className="text-primary">long before</span> I learned
-                to <span className="text-accent">choose music</span>.
+                I write for the <span className="text-primary">eighth Sunday</span>,
+                not the <span className="text-accent">opening night</span>.
               </h2>
 
               <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
                 <p>
-                  Most of my pieces did not start at a desk. They began in the in-between moments —
-                  walking home after a vigil, sitting at a piano nobody else was using, listening
-                  to a grieving family hum a tune they did not know they were inventing.
+                  Most composers I admire share one quiet conviction: the score is not
+                  finished when it looks beautiful on the page — it is finished when an
+                  ordinary parish choir, with one rehearsal and tired voices, can lift it
+                  on a Sunday morning and sound like themselves.
                 </p>
                 <p>
-                  I think of composition less as <span className="text-foreground">writing</span> and more as
-                  <span className="text-foreground"> remembering</span> — recovering melodies the moment already carried,
-                  and giving them a shape a choir can hold.
+                  That is the standard I hold every piece to. I revise for the alto who
+                  always sits second from the left. I voice chords for the bass who reads
+                  by ear. I leave breathing room where the assembly will need it.
+                  <span className="text-foreground"> The work is invisible when it works.</span>
                 </p>
                 <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/90 flex gap-2">
                   <Quote size={16} className="text-primary shrink-0 mt-1" />
                   <span>
-                    "If a single soul in the pew breathes a little deeper because of a chord I wrote,
-                    the score has done its job."
+                    "Liturgical music is not the composer's art on display —
+                    it is the assembly's prayer, given a shape they can carry."
                   </span>
                 </blockquote>
               </div>

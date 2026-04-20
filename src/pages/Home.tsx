@@ -109,18 +109,26 @@ export default function Home() {
                 <Hand size={26} className="text-accent" style={{ animation: "wave 2.4s ease-in-out infinite", transformOrigin: "70% 70%" }} />
                 <Heart size={22} className="text-primary" />
               </div>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-3">
-                Karibu — Welcome, Friend.
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">Karibu · Welcome</p>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-4">
+                Step in. Sit down. <span className="text-primary">Listen a while.</span>
               </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — a composer and arranger
-                shaping music that <span className="text-primary">serves worship</span>, <span className="text-accent">unites voices</span>,
-                and glorifies God.
+              <blockquote className="text-sm sm:text-base text-foreground/90 italic leading-relaxed mb-3 max-w-lg mx-auto">
+                "Music is the language in which God has spoken to us before the foundation of the world."
+              </blockquote>
+              <p className="text-[11px] uppercase tracking-widest text-muted-foreground/70 mb-6">— a thought I keep on my desk</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+                I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — a composer
+                writing for parishes, choirs, and the kind of Sundays that don't make headlines but make
+                <span className="text-primary"> souls quieter</span>.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                From intimate piano duos to full mass settings, every piece is crafted with devotion,
-                precision, and a deep love for sacred music. Make yourself at home.
+                Every piece on this site was written for someone, somewhere, who needed a song before they had words.
+                You're welcome to listen, to download, to commission — and most of all, to pray.
               </p>
+              <blockquote className="text-xs sm:text-sm text-accent italic mb-5 max-w-md mx-auto">
+                "When the choir sings well, the congregation prays twice."
+              </blockquote>
               <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-foreground/70 mb-2">
                 <RefreshCw size={10} className="text-primary" />
                 New compositions appear here automatically
@@ -131,11 +139,11 @@ export default function Home() {
                   <p className="text-xs font-semibold text-foreground">Original Compositions</p>
                   <p className="text-[11px] text-muted-foreground mt-1">Sacred & liturgical works</p>
                 </div>
-              <div className="p-4 rounded-xl bg-secondary/50">
-                <Sparkles size={20} className="mx-auto mb-2 text-accent" />
-                <p className="text-xs font-semibold text-foreground">Multi-Part Arrangements</p>
-                <p className="text-[11px] text-muted-foreground mt-1">SATB, duets, quartets & more</p>
-              </div>
+                <div className="p-4 rounded-xl bg-secondary/50">
+                  <Sparkles size={20} className="mx-auto mb-2 text-accent" />
+                  <p className="text-xs font-semibold text-foreground">Multi-Part Arrangements</p>
+                  <p className="text-[11px] text-muted-foreground mt-1">SATB, duets, quartets & more</p>
+                </div>
                 <div className="p-4 rounded-xl bg-secondary/50">
                   <Users size={20} className="mx-auto mb-2 text-primary" />
                   <p className="text-xs font-semibold text-foreground">Available for Commission</p>

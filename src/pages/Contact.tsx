@@ -63,10 +63,10 @@ const services = [
 ];
 
 const reasons = [
-  { icon: Award, title: "Trained Composer & Arranger", desc: "Years of dedicated study in harmony, counterpoint, and the Catholic liturgical tradition." },
-  { icon: Heart, title: "Deep Love for Sacred Music", desc: "Every note is written prayerfully — music isn't just a craft, it's an offering." },
-  { icon: Clock, title: "Reliable Turnaround", desc: "Clear timelines, regular drafts, and finished scores delivered when you need them." },
-  { icon: CheckCircle2, title: "Tailored to Your Choir", desc: "I write to your singers' actual ranges and ability — never too high, never too thin." },
+  { icon: Award, title: "A Composer Who Reads the Room", desc: "I write for the choir you actually have — not the one a textbook imagines. Voicings sit where your singers live, and the assembly's part is always within reach." },
+  { icon: Heart, title: "Liturgy First, Always", desc: "Every piece is built around the moment it serves — entrance, offertory, communion, recessional. The music carries the rite; it never competes with it." },
+  { icon: Clock, title: "Honest Timelines, Clean Scores", desc: "You'll get a clear schedule, drafts you can react to, and final PDFs that print cleanly with sensible page turns. No surprises before Sunday." },
+  { icon: CheckCircle2, title: "Built to Be Sung Again", desc: "I compose pieces a parish can return to for years — singable on the first rehearsal, still meaningful on the fiftieth Sunday. Lasting music, not novelty." },
 ];
 
 export default function Contact() {
@@ -225,25 +225,28 @@ export default function Contact() {
                   className="text-2xl sm:text-3xl font-display font-bold mb-5"
                   style={{ color: headingColor, transition: "color 1.5s ease" }}
                 >
-                  The Choir is Where Heaven Touches Earth
+                  Why I Write for the Choir
                 </h2>
                 <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                   <p>
-                    There's a moment, just before the choir takes a breath together, when the
-                    whole church seems to lean in. That's the moment I write for. Choral music
-                    isn't background — it's <span className="text-foreground font-semibold">prayer made audible</span>,
-                    a community lifting one voice from many.
+                    I write for the choir because the choir is where the parish learns to pray
+                    together. Long before the homily lands or the readings take root, the
+                    assembly has already been formed by what it has just sung. That is a
+                    serious responsibility, and I treat it that way.
                   </p>
                   <p>
-                    I grew up surrounded by Catholic hymnody, and I've spent years studying
-                    how harmony, text, and silence work together to carry the soul. Whether
-                    it's a young parish choir finding its sound or a seasoned ensemble preparing
-                    for a great feast, my goal is the same: write music they love to sing and
-                    the assembly never forgets.
+                    My passion is not for music in the abstract — it is for the
+                    <span className="text-foreground font-semibold"> specific Sunday</span>, the
+                    specific psalm, the specific congregation that will carry a melody home
+                    in their pockets. I want to write pieces that outlive a single performance:
+                    music a parish chooses again next year, and the year after that.
                   </p>
                   <p className="text-foreground italic">
-                    "When the choir sings well, the congregation prays twice." — and that
-                    second prayer is what I'm composing for, every single time.
+                    "Cantare amantis est." — Singing belongs to the one who loves. (St. Augustine)
+                  </p>
+                  <p>
+                    That is the standard I hold myself to. Every commission I take on is an
+                    invitation to add one more piece of love to the Church's long song.
                   </p>
                 </div>
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
