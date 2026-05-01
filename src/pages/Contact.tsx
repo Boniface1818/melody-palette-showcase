@@ -7,8 +7,9 @@ import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
-  Sparkles, Heart, Award, Clock, CheckCircle2, Flame, ArrowRight,
+  Sparkles, Heart, Award, Clock, CheckCircle2, Flame, ArrowRight, Mic, Quote, Compass, Feather,
 } from "lucide-react";
+import CommissionForm from "@/components/CommissionForm";
 import serviceLiturgical from "@/assets/service-liturgical.jpg";
 import serviceFestivals from "@/assets/service-festivals.jpg";
 import servicePsalms from "@/assets/service-psalms.jpg";
@@ -67,6 +68,15 @@ const reasons = [
   { icon: Heart, title: "Liturgy First, Always", desc: "Every piece is built around the moment it serves — entrance, offertory, communion, recessional. The music carries the rite; it never competes with it." },
   { icon: Clock, title: "Honest Timelines, Clean Scores", desc: "You'll get a clear schedule, drafts you can react to, and final PDFs that print cleanly with sensible page turns. No surprises before Sunday." },
   { icon: CheckCircle2, title: "Built to Be Sung Again", desc: "I compose pieces a parish can return to for years — singable on the first rehearsal, still meaningful on the fiftieth Sunday. Lasting music, not novelty." },
+  { icon: Mic, title: "A Friend to the Solo Artist", desc: "Solo Catholic singers get more than a score — you get a song shaped to your voice, your range, your story. Backing track and chord chart included." },
+  { icon: Sparkles, title: "Bilingual by Heart", desc: "Kiswahili, Latin, English — or all three weaving together. I write sacred music that sounds like the Church in Africa, faithful to Rome and rooted at home." },
+];
+
+const drivers = [
+  { icon: Heart, title: "Love for the Liturgy", desc: "The Mass is the most beautiful thing this side of heaven. Every note I write tries — humbly — to be worthy of standing inside it." },
+  { icon: Compass, title: "The Parish I Grew Up In", desc: "The choir loft, the wooden pews, the cantor who never had formal training but sang like an angel. Every commission begins by remembering that room." },
+  { icon: Feather, title: "Words That Already Pray", desc: "I love the Psalms, the Marian antiphons, the Swahili lyrics that fold scripture into everyday speech. My job is to give those words a melody worthy of carrying them." },
+  { icon: Flame, title: "The Singer Nobody Sees", desc: "The alto in the back row, the soloist learning your song before sunrise — they're the real audience. If the music serves them, it will serve God." },
 ];
 
 export default function Contact() {
@@ -211,6 +221,42 @@ export default function Contact() {
           </div>
         </Section>
 
+        {/* What Drives My Compositions */}
+        <Section delay={150}>
+          <div className="mt-24 max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body tracking-wide mb-4">
+                <Compass size={12} /> What Drives My Compositions
+              </div>
+              <h2
+                className="text-3xl sm:text-4xl font-display font-bold mb-3"
+                style={{ color: headingColor, transition: "color 1.5s ease" }}
+              >
+                The four quiet things behind every score
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+                A composition is never accidental. Every melody on this site was shaped by one
+                of these — and most of them, by all four at once.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {drivers.map((d, i) => (
+                <Section key={d.title} delay={i * 90}>
+                  <div className="glass-card flex items-start gap-4 h-full">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-accent/15 to-primary/15 shrink-0">
+                      <d.icon size={22} className="text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="font-display font-semibold text-base mb-1">{d.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{d.desc}</p>
+                    </div>
+                  </div>
+                </Section>
+              ))}
+            </div>
+          </div>
+        </Section>
+
         {/* Passion / Story */}
         <Section delay={150}>
           <div className="mt-24 max-w-4xl mx-auto">
@@ -219,21 +265,27 @@ export default function Contact() {
               <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
               <div className="relative">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body tracking-wide mb-4">
-                  <Flame size={12} /> My Passion for Choir
+                  <Flame size={12} /> My Passion
                 </div>
                 <h2
                   className="text-2xl sm:text-3xl font-display font-bold mb-5"
                   style={{ color: headingColor, transition: "color 1.5s ease" }}
                 >
-                  Why I Write for the Choir
+                  Why I Write — for the Choir, for the Soloist, for the Sunday Pew
                 </h2>
                 <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                   <p>
-                    I write for the choir because the choir is where the parish learns to pray
-                    together. Long before the homily lands or the readings take root, the
-                    assembly has already been formed by what it has just sung. That is a
-                    serious responsibility, and I treat it that way.
+                    I write because the choir is where the parish learns to pray together.
+                    I write because the solo Catholic artist deserves a song that fits her
+                    voice, not a hand-me-down. I write because somewhere, someone is preparing
+                    a Sunday liturgy with one rehearsal and a full heart — and they need
+                    music that <span className="text-foreground font-semibold">works</span>.
                   </p>
+                  <blockquote className="border-l-2 border-accent pl-4 italic text-foreground/90 my-2">
+                    <Quote size={14} className="inline text-accent mr-1 -mt-1" />
+                    "Anayeimba, anasali mara mbili." — He who sings, prays twice.
+                    <span className="block text-xs text-muted-foreground not-italic mt-1">— Mt. Augustino</span>
+                  </blockquote>
                   <p>
                     My passion is not for music in the abstract — it is for the
                     <span className="text-foreground font-semibold"> specific Sunday</span>, the
@@ -241,34 +293,36 @@ export default function Contact() {
                     in their pockets. I want to write pieces that outlive a single performance:
                     music a parish chooses again next year, and the year after that.
                   </p>
-                  <p className="text-foreground italic">
-                    "Cantare amantis est." — Singing belongs to the one who loves. (St. Augustine)
-                  </p>
                   <p>
-                    That is the standard I hold myself to. Every commission I take on is an
-                    invitation to add one more piece of love to the Church's long song.
+                    Every commission I take on — whether for a full SATB choir or a single
+                    Catholic artist with a microphone — is an invitation to add one more
+                    piece of love to the Church's long song.
                   </p>
-                </div>
-                <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                  <a
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=Music%20Commission%20Inquiry"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-primary group"
-                  >
-                    <Sparkles size={14} /> Start Your Commission
-                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </a>
-                  <a
-                    href="tel:+254104586361"
-                    className="btn-primary"
-                    style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
-                  >
-                    <Phone size={14} /> Call 0104 586 361
-                  </a>
                 </div>
               </div>
             </div>
+          </div>
+        </Section>
+
+        {/* Commission Form */}
+        <Section delay={150}>
+          <div className="mt-24 max-w-3xl mx-auto" id="commission">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-body tracking-wide mb-4">
+                <Sparkles size={12} /> Commission a Song
+              </div>
+              <h2
+                className="text-3xl sm:text-4xl font-display font-bold mb-3"
+                style={{ color: headingColor, transition: "color 1.5s ease" }}
+              >
+                Tell me about the song you need
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-xl mx-auto">
+                Choirs, soloists, parishes — fill this in and you'll get a personal thank-you
+                note in your inbox right away. I reply within 48 hours, always.
+              </p>
+            </div>
+            <CommissionForm />
           </div>
         </Section>
 

@@ -7,8 +7,15 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ArrowRight, Music, Heart, Sparkles, Users, BookOpen, Piano, Hand, RefreshCw } from "lucide-react";
+import { ArrowRight, Music, Heart, Sparkles, Users, BookOpen, Piano, Hand, RefreshCw, Mic, Quote } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
+
+const swahiliQuotes = [
+  { sw: "Bwana ni mchungaji wangu, sitapungukiwa na kitu.", en: "The Lord is my shepherd; I shall not want.", attr: "Zaburi 23" },
+  { sw: "Mtumikieni Bwana kwa furaha; njoni mbele zake kwa kuimba.", en: "Serve the Lord with gladness; come before Him with singing.", attr: "Zaburi 100" },
+  { sw: "Anayeimba, anasali mara mbili.", en: "He who sings, prays twice.", attr: "Mt. Augustino" },
+  { sw: "Cantare amantis est — kuimba ni kwa yule anayependa.", en: "Singing belongs to the one who loves.", attr: "St. Augustine" },
+];
 
 export default function Home() {
   const typedText = useTypingAnimation();
@@ -32,13 +39,13 @@ export default function Home() {
 
           <Section>
             <div className="relative mb-8 inline-block">
-              <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl" aria-hidden />
+              <div className="absolute inset-0 rounded-full bg-primary/30 blur-3xl animate-pulse" aria-hidden />
               <img
                 src={logo}
                 alt="BK Music — Boniface Kagunda monogram in gold with treble clef and musical staff"
-                width={140}
-                height={140}
-                className="relative h-32 w-32 sm:h-36 sm:w-36 rounded-full object-cover ring-2 ring-primary/40 shadow-2xl mx-auto"
+                width={160}
+                height={160}
+                className="relative h-36 w-36 sm:h-40 sm:w-40 rounded-full object-cover ring-2 ring-primary/50 shadow-2xl mx-auto"
               />
             </div>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4">
@@ -51,7 +58,7 @@ export default function Home() {
               </span>
             </div>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6 font-body">
-              Composer · Arranger · Musician
+              Composer · Arranger · Sacred Music for the Catholic Church
             </p>
           </Section>
           <Section delay={100}>
@@ -99,40 +106,48 @@ export default function Home() {
           </Section>
         </section>
 
-        {/* Welcome */}
+        {/* Welcome — Karibu */}
         <Section delay={100}>
-          <div className="glass-card mt-12 text-center max-w-2xl mx-auto relative overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden />
+          <div className="glass-card mt-12 text-center max-w-3xl mx-auto relative overflow-hidden">
+            <div className="absolute -top-20 -right-20 w-56 h-56 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
+            <div className="absolute -bottom-20 -left-20 w-56 h-56 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden />
             <div className="relative">
               <div className="flex justify-center mb-4 gap-2 items-center">
-                <Hand size={26} className="text-accent" style={{ animation: "wave 2.4s ease-in-out infinite", transformOrigin: "70% 70%" }} />
+                <Hand size={28} className="text-accent" style={{ animation: "wave 2.4s ease-in-out infinite", transformOrigin: "70% 70%" }} />
                 <Heart size={22} className="text-primary" />
               </div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">Karibu · Welcome</p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-4">
-                Step in. Sit down. <span className="text-primary">Listen a while.</span>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">Karibu sana · Welcome</p>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-5 leading-tight">
+                Step in, sit a while, and let the <span className="text-primary">music speak</span>.
               </h2>
-              <blockquote className="text-sm sm:text-base text-foreground/90 italic leading-relaxed mb-3 max-w-lg mx-auto">
-                "Music is the language in which God has spoken to us before the foundation of the world."
+
+              <blockquote className="text-base sm:text-lg text-foreground/90 italic leading-relaxed mb-2 max-w-xl mx-auto">
+                "Mtumikieni Bwana kwa furaha; njoni mbele zake kwa kuimba."
               </blockquote>
-              <p className="text-[11px] uppercase tracking-widest text-muted-foreground/70 mb-6">— a thought I keep on my desk</p>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — a composer
-                writing for parishes, choirs, and the kind of Sundays that don't make headlines but make
-                <span className="text-primary"> souls quieter</span>.
+              <p className="text-xs text-accent mb-6 tracking-wide">
+                Serve the Lord with gladness; come before Him with singing. — <span className="text-muted-foreground">Zaburi 100</span>
               </p>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                Every piece on this site was written for someone, somewhere, who needed a song before they had words.
+
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3">
+                I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — a Kenyan composer
+                writing music for parishes, choirs, soloists, and the kind of Sundays that don't make headlines but
+                <span className="text-primary"> quiet the soul</span>. Every score on this site was written for someone, somewhere, who needed a song before they had words.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                 You're welcome to listen, to download, to commission — and most of all, to pray.
               </p>
-              <blockquote className="text-xs sm:text-sm text-accent italic mb-5 max-w-md mx-auto">
-                "When the choir sings well, the congregation prays twice."
+
+              <blockquote className="border-l-2 border-accent pl-4 italic text-foreground/80 text-sm max-w-md mx-auto text-left mb-5">
+                <Quote size={14} className="text-accent inline -mt-1 mr-1" />
+                "Anayeimba, anasali mara mbili." — He who sings, prays twice.
+                <span className="block text-[11px] text-muted-foreground not-italic mt-1">— Mt. Augustino</span>
               </blockquote>
+
               <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-foreground/70 mb-2">
                 <RefreshCw size={10} className="text-primary" />
-                New compositions appear here automatically
+                New compositions appear here automatically every day
               </div>
+
               <div className="grid sm:grid-cols-3 gap-4 mt-6">
                 <div className="p-4 rounded-xl bg-secondary/50 hover:bg-secondary/70 transition-colors">
                   <Music size={20} className="mx-auto mb-2 text-primary" />
@@ -145,12 +160,26 @@ export default function Home() {
                   <p className="text-[11px] text-muted-foreground mt-1">SATB, duets, quartets & more</p>
                 </div>
                 <div className="p-4 rounded-xl bg-secondary/50">
-                  <Users size={20} className="mx-auto mb-2 text-primary" />
-                  <p className="text-xs font-semibold text-foreground">Available for Commission</p>
-                  <p className="text-[11px] text-muted-foreground mt-1">Custom pieces for your choir</p>
+                  <Mic size={20} className="mx-auto mb-2 text-primary" />
+                  <p className="text-xs font-semibold text-foreground">Solo Catholic Artists</p>
+                  <p className="text-[11px] text-muted-foreground mt-1">Custom songs in your voice & key</p>
                 </div>
               </div>
             </div>
+          </div>
+        </Section>
+
+        {/* Rotating Swahili wisdom */}
+        <Section delay={150}>
+          <div className="grid sm:grid-cols-2 gap-4 mt-8 max-w-4xl mx-auto">
+            {swahiliQuotes.slice(0, 2).map((q) => (
+              <div key={q.sw} className="glass-card text-center">
+                <Quote size={16} className="text-primary mx-auto mb-3 opacity-60" />
+                <p className="text-sm text-foreground italic leading-relaxed">"{q.sw}"</p>
+                <p className="text-xs text-muted-foreground mt-2">{q.en}</p>
+                <p className="text-[10px] uppercase tracking-widest text-accent mt-2">— {q.attr}</p>
+              </div>
+            ))}
           </div>
         </Section>
 

@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      commission_inquiries: {
+        Row: {
+          created_at: string
+          deadline: string | null
+          email: string
+          ensemble: string | null
+          id: string
+          message: string
+          name: string
+          occasion: string | null
+          voice_type: string | null
+        }
+        Insert: {
+          created_at?: string
+          deadline?: string | null
+          email: string
+          ensemble?: string | null
+          id?: string
+          message: string
+          name: string
+          occasion?: string | null
+          voice_type?: string | null
+        }
+        Update: {
+          created_at?: string
+          deadline?: string | null
+          email?: string
+          ensemble?: string | null
+          id?: string
+          message?: string
+          name?: string
+          occasion?: string | null
+          voice_type?: string | null
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
