@@ -7,8 +7,9 @@ import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
-  Sparkles, Heart, Award, Clock, CheckCircle2, Flame, ArrowRight,
+  Sparkles, Heart, Award, Clock, CheckCircle2, Flame, ArrowRight, Mic, Quote, Compass, Feather,
 } from "lucide-react";
+import CommissionForm from "@/components/CommissionForm";
 import serviceLiturgical from "@/assets/service-liturgical.jpg";
 import serviceFestivals from "@/assets/service-festivals.jpg";
 import servicePsalms from "@/assets/service-psalms.jpg";
@@ -67,6 +68,15 @@ const reasons = [
   { icon: Heart, title: "Liturgy First, Always", desc: "Every piece is built around the moment it serves — entrance, offertory, communion, recessional. The music carries the rite; it never competes with it." },
   { icon: Clock, title: "Honest Timelines, Clean Scores", desc: "You'll get a clear schedule, drafts you can react to, and final PDFs that print cleanly with sensible page turns. No surprises before Sunday." },
   { icon: CheckCircle2, title: "Built to Be Sung Again", desc: "I compose pieces a parish can return to for years — singable on the first rehearsal, still meaningful on the fiftieth Sunday. Lasting music, not novelty." },
+  { icon: Mic, title: "A Friend to the Solo Artist", desc: "Solo Catholic singers get more than a score — you get a song shaped to your voice, your range, your story. Backing track and chord chart included." },
+  { icon: Sparkles, title: "Bilingual by Heart", desc: "Kiswahili, Latin, English — or all three weaving together. I write sacred music that sounds like the Church in Africa, faithful to Rome and rooted at home." },
+];
+
+const drivers = [
+  { icon: Heart, title: "Love for the Liturgy", desc: "The Mass is the most beautiful thing this side of heaven. Every note I write tries — humbly — to be worthy of standing inside it." },
+  { icon: Compass, title: "The Parish I Grew Up In", desc: "The choir loft, the wooden pews, the cantor who never had formal training but sang like an angel. Every commission begins by remembering that room." },
+  { icon: Feather, title: "Words That Already Pray", desc: "I love the Psalms, the Marian antiphons, the Swahili lyrics that fold scripture into everyday speech. My job is to give those words a melody worthy of carrying them." },
+  { icon: Flame, title: "The Singer Nobody Sees", desc: "The alto in the back row, the soloist learning your song before sunrise — they're the real audience. If the music serves them, it will serve God." },
 ];
 
 export default function Contact() {
