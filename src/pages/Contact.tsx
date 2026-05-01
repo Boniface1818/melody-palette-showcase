@@ -221,6 +221,42 @@ export default function Contact() {
           </div>
         </Section>
 
+        {/* What Drives My Compositions */}
+        <Section delay={150}>
+          <div className="mt-24 max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body tracking-wide mb-4">
+                <Compass size={12} /> What Drives My Compositions
+              </div>
+              <h2
+                className="text-3xl sm:text-4xl font-display font-bold mb-3"
+                style={{ color: headingColor, transition: "color 1.5s ease" }}
+              >
+                The four quiet things behind every score
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+                A composition is never accidental. Every melody on this site was shaped by one
+                of these — and most of them, by all four at once.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {drivers.map((d, i) => (
+                <Section key={d.title} delay={i * 90}>
+                  <div className="glass-card flex items-start gap-4 h-full">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-accent/15 to-primary/15 shrink-0">
+                      <d.icon size={22} className="text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="font-display font-semibold text-base mb-1">{d.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{d.desc}</p>
+                    </div>
+                  </div>
+                </Section>
+              ))}
+            </div>
+          </div>
+        </Section>
+
         {/* Passion / Story */}
         <Section delay={150}>
           <div className="mt-24 max-w-4xl mx-auto">
@@ -229,21 +265,27 @@ export default function Contact() {
               <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
               <div className="relative">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body tracking-wide mb-4">
-                  <Flame size={12} /> My Passion for Choir
+                  <Flame size={12} /> My Passion
                 </div>
                 <h2
                   className="text-2xl sm:text-3xl font-display font-bold mb-5"
                   style={{ color: headingColor, transition: "color 1.5s ease" }}
                 >
-                  Why I Write for the Choir
+                  Why I Write — for the Choir, for the Soloist, for the Sunday Pew
                 </h2>
                 <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                   <p>
-                    I write for the choir because the choir is where the parish learns to pray
-                    together. Long before the homily lands or the readings take root, the
-                    assembly has already been formed by what it has just sung. That is a
-                    serious responsibility, and I treat it that way.
+                    I write because the choir is where the parish learns to pray together.
+                    I write because the solo Catholic artist deserves a song that fits her
+                    voice, not a hand-me-down. I write because somewhere, someone is preparing
+                    a Sunday liturgy with one rehearsal and a full heart — and they need
+                    music that <span className="text-foreground font-semibold">works</span>.
                   </p>
+                  <blockquote className="border-l-2 border-accent pl-4 italic text-foreground/90 my-2">
+                    <Quote size={14} className="inline text-accent mr-1 -mt-1" />
+                    "Anayeimba, anasali mara mbili." — He who sings, prays twice.
+                    <span className="block text-xs text-muted-foreground not-italic mt-1">— Mt. Augustino</span>
+                  </blockquote>
                   <p>
                     My passion is not for music in the abstract — it is for the
                     <span className="text-foreground font-semibold"> specific Sunday</span>, the
@@ -251,34 +293,36 @@ export default function Contact() {
                     in their pockets. I want to write pieces that outlive a single performance:
                     music a parish chooses again next year, and the year after that.
                   </p>
-                  <p className="text-foreground italic">
-                    "Cantare amantis est." — Singing belongs to the one who loves. (St. Augustine)
-                  </p>
                   <p>
-                    That is the standard I hold myself to. Every commission I take on is an
-                    invitation to add one more piece of love to the Church's long song.
+                    Every commission I take on — whether for a full SATB choir or a single
+                    Catholic artist with a microphone — is an invitation to add one more
+                    piece of love to the Church's long song.
                   </p>
-                </div>
-                <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                  <a
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=Music%20Commission%20Inquiry"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-primary group"
-                  >
-                    <Sparkles size={14} /> Start Your Commission
-                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-                  </a>
-                  <a
-                    href="tel:+254104586361"
-                    className="btn-primary"
-                    style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
-                  >
-                    <Phone size={14} /> Call 0104 586 361
-                  </a>
                 </div>
               </div>
             </div>
+          </div>
+        </Section>
+
+        {/* Commission Form */}
+        <Section delay={150}>
+          <div className="mt-24 max-w-3xl mx-auto" id="commission">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-body tracking-wide mb-4">
+                <Sparkles size={12} /> Commission a Song
+              </div>
+              <h2
+                className="text-3xl sm:text-4xl font-display font-bold mb-3"
+                style={{ color: headingColor, transition: "color 1.5s ease" }}
+              >
+                Tell me about the song you need
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-xl mx-auto">
+                Choirs, soloists, parishes — fill this in and you'll get a personal thank-you
+                note in your inbox right away. I reply within 48 hours, always.
+              </p>
+            </div>
+            <CommissionForm />
           </div>
         </Section>
 
