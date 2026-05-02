@@ -18,8 +18,9 @@ export default function SyncScoresButton({ onSynced, label = "Refresh Catalog", 
     try {
       const { data, error } = await supabase.functions.invoke("sync-musescore", { body: {} });
       if (error) throw error;
-      const count = (data as any)?.scoresUpdated ?? (data as any)?.count ?? 0;
-      setMessage(count ? `Synced ${count} new/updated scores` : "Catalog is already up to date");
+      const synced = (data as any)?.synced ?? 0;
+      const total = (data as any)?.total ?? 0;
+      setMessage(synced ? `Synced ${synced} scores · ${total} total` : `Catalog up to date · ${total} scores`);
       setState("done");
       onSynced?.();
       setTimeout(() => setState("idle"), 3500);
