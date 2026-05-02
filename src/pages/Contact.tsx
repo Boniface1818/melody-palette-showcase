@@ -7,9 +7,8 @@ import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
-  Sparkles, Heart, Award, Clock, CheckCircle2, Flame, ArrowRight, Mic, Quote, Compass, Feather,
+  Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
 } from "lucide-react";
-import CommissionForm from "@/components/CommissionForm";
 import serviceLiturgical from "@/assets/service-liturgical.jpg";
 import serviceFestivals from "@/assets/service-festivals.jpg";
 import servicePsalms from "@/assets/service-psalms.jpg";
@@ -18,10 +17,10 @@ import serviceWeddings from "@/assets/service-weddings.jpg";
 import serviceCommissions from "@/assets/service-commissions.jpg";
 
 const contactSubtitles = [
-  "Need a custom arrangement for your choir? Let's talk.",
-  "Commission a piece — from offertory hymns to full mass settings.",
-  "Whether it's a piano duo or a four-part harmony, I'm ready to compose for you.",
-  "Let's create music that moves your congregation.",
+  "Open for collaborations — reach out any time, any zone.",
+  "Choirs, cantors, soloists, parishes — there's a song for you here.",
+  "Have a melody in mind? Hum it. Send it. I'll write it.",
+  "Music shaped to your voice, your moment, your prayer.",
 ];
 
 const services = [
@@ -34,13 +33,13 @@ const services = [
   {
     image: servicePsalms,
     title: "Responsorial Psalms",
-    desc: "Sunday-by-Sunday responsorial psalms set to fresh, singable melodies — written so the cantor leads with confidence and the assembly responds with joy.",
-    tags: ["Cantor", "Assembly", "Lectionary-aligned"],
+    desc: "Fresh, singable psalm settings — written so the cantor leads with confidence and the assembly answers with joy.",
+    tags: ["Cantor", "Assembly", "Lectionary"],
   },
   {
     image: serviceFestivals,
     title: "Festival & Feast Day Pieces",
-    desc: "Bold, joyful compositions for Easter, Christmas, Marian feasts, patronal days, ordinations, and parish jubilees — music that turns a celebration into a memory.",
+    desc: "Bold, joyful compositions for Easter, Christmas, Marian feasts, ordinations, and parish jubilees — music that turns a celebration into a memory.",
     tags: ["Easter", "Christmas", "Marian", "Jubilees"],
   },
   {
@@ -57,27 +56,59 @@ const services = [
   },
   {
     image: serviceCommissions,
-    title: "Original Commissions",
-    desc: "Bespoke compositions written from the ground up — solo piano, chamber ensembles, full choir works. Bring me your vision and I'll bring it to life on the page.",
-    tags: ["Original", "Custom", "Any Ensemble"],
+    title: "Solo Catholic Artists",
+    desc: "Bespoke songs for solo artists carrying the gospel through their own voice — custom-pitched to your range, with sheet music, chord chart, backing track and guide vocal included.",
+    tags: ["Custom Key", "Chord Chart", "Backing Track", "Guide Vocal"],
   },
 ];
 
-const reasons = [
-  { icon: Award, title: "A Composer Who Reads the Room", desc: "I write for the choir you actually have — not the one a textbook imagines. Voicings sit where your singers live, and the assembly's part is always within reach." },
-  { icon: Heart, title: "Liturgy First, Always", desc: "Every piece is built around the moment it serves — entrance, offertory, communion, recessional. The music carries the rite; it never competes with it." },
-  { icon: Clock, title: "Honest Timelines, Clean Scores", desc: "You'll get a clear schedule, drafts you can react to, and final PDFs that print cleanly with sensible page turns. No surprises before Sunday." },
-  { icon: CheckCircle2, title: "Built to Be Sung Again", desc: "I compose pieces a parish can return to for years — singable on the first rehearsal, still meaningful on the fiftieth Sunday. Lasting music, not novelty." },
-  { icon: Mic, title: "A Friend to the Solo Artist", desc: "Solo Catholic singers get more than a score — you get a song shaped to your voice, your range, your story. Backing track and chord chart included." },
-  { icon: Sparkles, title: "Bilingual by Heart", desc: "Kiswahili, Latin, English — or all three weaving together. I write sacred music that sounds like the Church in Africa, faithful to Rome and rooted at home." },
+const audiences = [
+  {
+    icon: Users,
+    color: "text-primary",
+    title: "Are you a Choir Director?",
+    body: "I write SATB, SAB, and SSA arrangements that respect your singers' actual ranges. You'll get clean PDFs, sensible page turns, and rehearsal-ready voicings — not textbook fantasies.",
+    cta: "Commission a choir piece",
+  },
+  {
+    icon: Crown,
+    color: "text-accent",
+    title: "Are you a Cantor needing a Psalm?",
+    body: "Responsorial psalms set to fresh, lyrical melodies — easy for the assembly to grasp on the first hearing, dignified enough to carry the Word. I tailor it to your voice and the day's reading.",
+    cta: "Request a custom psalm",
+  },
+  {
+    icon: Mic,
+    color: "text-primary",
+    title: "Are you a Solo Catholic Artist?",
+    body: "Tell me your story, your voice type, your favourite scripture. You'll receive a song built for you — sheet music in your key, chord chart, backing track, and a guide vocal to learn from.",
+    cta: "Order your song",
+  },
+  {
+    icon: BookOpen,
+    color: "text-accent",
+    title: "Are you a Parish or Movement?",
+    body: "Jubilees, ordinations, novenas, patronal feasts — I compose pieces your community will return to year after year. Bilingual welcome: Kiswahili, Latin, English, or all three at once.",
+    cta: "Commission a parish piece",
+  },
+  {
+    icon: Headphones,
+    color: "text-primary",
+    title: "Have a melody already in your head?",
+    body: "Hum it into your phone. Sing it badly. Sketch the chords on paper. Send it to me and I'll turn that whisper into a finished, beautifully notated score with full harmony.",
+    cta: "Send your melody",
+  },
+  {
+    icon: Handshake,
+    color: "text-accent",
+    title: "Looking to collaborate?",
+    body: "Composers, lyricists, producers, choirs, schools of music — I'm always open to writing with others. If you have a project that needs a sacred touch, let's talk.",
+    cta: "Start a collaboration",
+  },
 ];
 
-const drivers = [
-  { icon: Heart, title: "Love for the Liturgy", desc: "The Mass is the most beautiful thing this side of heaven. Every note I write tries — humbly — to be worthy of standing inside it." },
-  { icon: Compass, title: "The Parish I Grew Up In", desc: "The choir loft, the wooden pews, the cantor who never had formal training but sang like an angel. Every commission begins by remembering that room." },
-  { icon: Feather, title: "Words That Already Pray", desc: "I love the Psalms, the Marian antiphons, the Swahili lyrics that fold scripture into everyday speech. My job is to give those words a melody worthy of carrying them." },
-  { icon: Flame, title: "The Singer Nobody Sees", desc: "The alto in the back row, the soloist learning your song before sunrise — they're the real audience. If the music serves them, it will serve God." },
-];
+const gmailLink = (subject: string) =>
+  `https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=${encodeURIComponent(subject)}`;
 
 export default function Contact() {
   useBackgroundCycle(5000);
@@ -103,11 +134,38 @@ export default function Contact() {
           </p>
         </Section>
 
+        {/* Availability banner */}
+        <Section delay={80}>
+          <div className="mt-10 max-w-4xl mx-auto rounded-3xl p-6 sm:p-8 border border-primary/30 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 text-center relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-primary/20 blur-3xl" aria-hidden />
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-accent/20 blur-3xl" aria-hidden />
+            <div className="relative flex flex-col sm:flex-row items-center justify-center gap-6">
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-primary" />
+                </span>
+                <p className="text-sm sm:text-base font-display font-semibold">Open for collaborations</p>
+              </div>
+              <span className="hidden sm:block w-px h-6 bg-border" />
+              <div className="flex items-center gap-2 text-sm">
+                <Clock size={16} className="text-accent" />
+                <span className="text-foreground">Available 24 hours · Worldwide</span>
+              </div>
+              <span className="hidden sm:block w-px h-6 bg-border" />
+              <div className="flex items-center gap-2 text-sm">
+                <Handshake size={16} className="text-primary" />
+                <span className="text-foreground">Choirs · Cantors · Soloists · Parishes</span>
+              </div>
+            </div>
+          </div>
+        </Section>
+
         {/* Quick Contact Cards */}
-        <div className="grid sm:grid-cols-3 gap-4 mt-12 max-w-4xl mx-auto">
+        <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-4xl mx-auto">
           <Section delay={100}>
             <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=Music%20Commission%20Inquiry"
+              href={gmailLink("Music Inquiry")}
               target="_blank"
               rel="noreferrer"
               className="glass-card flex items-start gap-3 hover:border-primary/50 transition-all group h-full"
@@ -120,13 +178,13 @@ export default function Contact() {
             </a>
           </Section>
           <Section delay={150}>
-            <div className="glass-card flex items-start gap-3 h-full">
-              <Phone size={20} className="text-primary mt-0.5 shrink-0" />
+            <a href="tel:+254104586361" className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group">
+              <Phone size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
               <div>
-                <p className="text-xs text-muted-foreground">Call Me</p>
-                <a href="tel:+254104586361" className="text-sm font-body text-foreground hover:text-primary transition-colors block">0104 586 361</a>
+                <p className="text-xs text-muted-foreground">Call (voice only)</p>
+                <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">0104 586 361</p>
               </div>
-            </div>
+            </a>
           </Section>
           <Section delay={200}>
             <div className="glass-card flex items-start gap-3 h-full">
@@ -142,16 +200,20 @@ export default function Contact() {
         {/* Services with images */}
         <Section delay={150}>
           <div className="mt-24 max-w-6xl mx-auto">
-            <h2
-              className="text-3xl sm:text-4xl font-display font-bold text-center mb-3"
-              style={{ color: headingColor, transition: "color 1.5s ease" }}
-            >
-              Music Crafted for Every Sacred Moment
-            </h2>
-            <p className="text-center text-muted-foreground text-sm max-w-2xl mx-auto mb-12">
-              From the solemn beauty of a Sunday Mass to the joyful explosion of a feast day —
-              here's what I compose, arrange, and bring to life for you.
-            </p>
+            <div className="text-center mb-10">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
+                <Sparkles size={12} /> What I Offer
+              </p>
+              <h2
+                className="text-3xl sm:text-4xl font-display font-bold mb-3"
+                style={{ color: headingColor, transition: "color 1.5s ease" }}
+              >
+                Music Crafted for Every Sacred Moment
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+                A complete catalogue of services — from full Mass settings to a single song shaped to your voice.
+              </p>
+            </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((s, i) => (
                 <Section key={s.title} delay={i * 80}>
@@ -185,150 +247,81 @@ export default function Contact() {
           </div>
         </Section>
 
-        {/* Why Choose Me */}
+        {/* Got a melody? */}
         <Section delay={150}>
-          <div className="mt-24 max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-body tracking-wide mb-4">
-                <Sparkles size={12} /> Why Choose Me
+          <div className="mt-20 max-w-4xl mx-auto glass-card glow-border relative overflow-hidden">
+            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-primary/15 blur-3xl pointer-events-none" aria-hidden />
+            <div className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-accent/15 blur-3xl pointer-events-none" aria-hidden />
+            <div className="relative grid md:grid-cols-[auto_1fr] gap-6 items-center">
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 inline-flex w-fit mx-auto md:mx-0">
+                <Headphones size={36} className="text-primary" />
               </div>
-              <h2
-                className="text-3xl sm:text-4xl font-display font-bold mb-3"
-                style={{ color: headingColor, transition: "color 1.5s ease" }}
-              >
-                Music Written With Devotion, Delivered With Care
-              </h2>
-              <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-                You're not just hiring a composer — you're partnering with someone who treats
-                your liturgy and your choir with the reverence they deserve.
-              </p>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-5">
-              {reasons.map((r, i) => (
-                <Section key={r.title} delay={i * 100}>
-                  <div className="glass-card flex items-start gap-4 h-full">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 shrink-0">
-                      <r.icon size={22} className="text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-display font-semibold text-base mb-1">{r.title}</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{r.desc}</p>
-                    </div>
-                  </div>
-                </Section>
-              ))}
+              <div className="text-center md:text-left">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2">Got a tune in your head?</p>
+                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">
+                  If you already have a melody you want — <span className="text-primary">I'll bring it to life.</span>
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Hum it into your phone, sing it on a voice note, sketch it on paper, or describe it in words.
+                  I'll arrange it, harmonise it, and deliver a finished score with backing track — fully yours.
+                </p>
+                <a href={gmailLink("I have a melody — please help me build it")} target="_blank" rel="noreferrer" className="btn-primary inline-flex">
+                  <Mail size={14} /> Send Me Your Melody
+                </a>
+              </div>
             </div>
           </div>
         </Section>
 
-        {/* What Drives My Compositions */}
+        {/* Audience advertisements */}
         <Section delay={150}>
-          <div className="mt-24 max-w-5xl mx-auto">
+          <div className="mt-20 max-w-6xl mx-auto">
             <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body tracking-wide mb-4">
-                <Compass size={12} /> What Drives My Compositions
-              </div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <Feather size={12} /> Who I Write For
+              </p>
               <h2
                 className="text-3xl sm:text-4xl font-display font-bold mb-3"
                 style={{ color: headingColor, transition: "color 1.5s ease" }}
               >
-                The four quiet things behind every score
+                Find your invitation below.
               </h2>
               <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-                A composition is never accidental. Every melody on this site was shaped by one
-                of these — and most of them, by all four at once.
+                Pick the line that sounds like you — and let's begin.
               </p>
             </div>
+
             <div className="grid sm:grid-cols-2 gap-5">
-              {drivers.map((d, i) => (
-                <Section key={d.title} delay={i * 90}>
-                  <div className="glass-card flex items-start gap-4 h-full">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-accent/15 to-primary/15 shrink-0">
-                      <d.icon size={22} className="text-accent" />
-                    </div>
-                    <div>
-                      <h3 className="font-display font-semibold text-base mb-1">{d.title}</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{d.desc}</p>
+              {audiences.map((a, i) => (
+                <Section key={a.title} delay={i * 80}>
+                  <div className="glass-card h-full flex flex-col group hover:-translate-y-1 transition-transform duration-500">
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 shrink-0">
+                        <a.icon size={22} className={a.color} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-display font-semibold text-base mb-2">{a.title}</h3>
+                        <p className="text-xs text-muted-foreground leading-relaxed mb-3">{a.body}</p>
+                        <a
+                          href={gmailLink(a.title)}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs color-shift inline-flex items-center gap-1.5 font-body tracking-wide"
+                        >
+                          {a.cta} →
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </Section>
               ))}
             </div>
-          </div>
-        </Section>
-
-        {/* Passion / Story */}
-        <Section delay={150}>
-          <div className="mt-24 max-w-4xl mx-auto">
-            <div className="glass-card glow-border relative overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
-              <div className="relative">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-body tracking-wide mb-4">
-                  <Flame size={12} /> My Passion
-                </div>
-                <h2
-                  className="text-2xl sm:text-3xl font-display font-bold mb-5"
-                  style={{ color: headingColor, transition: "color 1.5s ease" }}
-                >
-                  Why I Write — for the Choir, for the Soloist, for the Sunday Pew
-                </h2>
-                <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-                  <p>
-                    I write because the choir is where the parish learns to pray together.
-                    I write because the solo Catholic artist deserves a song that fits her
-                    voice, not a hand-me-down. I write because somewhere, someone is preparing
-                    a Sunday liturgy with one rehearsal and a full heart — and they need
-                    music that <span className="text-foreground font-semibold">works</span>.
-                  </p>
-                  <blockquote className="border-l-2 border-accent pl-4 italic text-foreground/90 my-2">
-                    <Quote size={14} className="inline text-accent mr-1 -mt-1" />
-                    "Anayeimba, anasali mara mbili." — He who sings, prays twice.
-                    <span className="block text-xs text-muted-foreground not-italic mt-1">— Mt. Augustino</span>
-                  </blockquote>
-                  <p>
-                    My passion is not for music in the abstract — it is for the
-                    <span className="text-foreground font-semibold"> specific Sunday</span>, the
-                    specific psalm, the specific congregation that will carry a melody home
-                    in their pockets. I want to write pieces that outlive a single performance:
-                    music a parish chooses again next year, and the year after that.
-                  </p>
-                  <p>
-                    Every commission I take on — whether for a full SATB choir or a single
-                    Catholic artist with a microphone — is an invitation to add one more
-                    piece of love to the Church's long song.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        {/* Commission Form */}
-        <Section delay={150}>
-          <div className="mt-24 max-w-3xl mx-auto" id="commission">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-body tracking-wide mb-4">
-                <Sparkles size={12} /> Commission a Song
-              </div>
-              <h2
-                className="text-3xl sm:text-4xl font-display font-bold mb-3"
-                style={{ color: headingColor, transition: "color 1.5s ease" }}
-              >
-                Tell me about the song you need
-              </h2>
-              <p className="text-muted-foreground text-sm max-w-xl mx-auto">
-                Choirs, soloists, parishes — fill this in and you'll get a personal thank-you
-                note in your inbox right away. I reply within 48 hours, always.
-              </p>
-            </div>
-            <CommissionForm />
           </div>
         </Section>
 
         {/* Socials */}
         <Section delay={200}>
-          <div className="mt-16 max-w-3xl mx-auto text-center">
+          <div className="mt-20 max-w-3xl mx-auto text-center">
             <p className="text-xs text-muted-foreground tracking-wide uppercase mb-4">Find me online</p>
             <div className="flex flex-wrap justify-center gap-3">
               {[
@@ -349,6 +342,32 @@ export default function Contact() {
                   <s.icon size={16} /> {s.label}
                 </a>
               ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* Asante — bottom thank-you */}
+        <Section delay={250}>
+          <div className="mt-20 max-w-3xl mx-auto text-center relative">
+            <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 blur-2xl" aria-hidden />
+            <div className="rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md p-8 sm:p-10">
+              <Heart size={28} className="text-accent mx-auto mb-3" />
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3">Asante sana · Thank you</p>
+              <h3 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
+                For visiting, for listening, for singing along.
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xl mx-auto">
+                Whether you came to download a score, commission a piece, or simply to listen — your presence here means more than you know.
+                Every note on this site exists because someone, somewhere, decided that prayer deserved a melody. Thank you for being part of that long, beautiful song.
+              </p>
+              <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/85 text-sm max-w-md mx-auto text-left">
+                <Quote size={14} className="inline text-primary mr-1 -mt-1" />
+                "Mungu hupenda anayetoa kwa furaha." — God loves a cheerful giver.
+                <span className="block text-[11px] text-muted-foreground not-italic mt-1">— 2 Wakorintho 9:7</span>
+              </blockquote>
+              <p className="mt-6 text-xs text-muted-foreground">
+                — With gratitude, <span className="text-foreground font-display font-semibold">Boniface Kagunda</span>
+              </p>
             </div>
           </div>
         </Section>
