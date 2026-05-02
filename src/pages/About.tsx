@@ -5,12 +5,13 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
-import { Music, Feather, Quote, BookOpen, PenLine, Church, Mic, Heart } from "lucide-react";
+import SyncScoresButton from "@/components/SyncScoresButton";
+import { Music, Feather, Quote, BookOpen, PenLine, Church, Heart, Sparkles, RefreshCw } from "lucide-react";
 
 const aboutSubtitles = [
-  "A Kenyan composer writing music the Church can actually sing.",
-  "Sacred harmony, shaped for real choirs and real congregations.",
-  "From the parish loft to the printed page — this is where I work.",
+  "A Kenyan composer crafting music for the universal Church.",
+  "Sacred harmony, shaped for real choirs and real voices.",
+  "From the quiet desk to the singing assembly — this is where I work.",
   "Liturgia kwanza. Ubunifu wa pili. Kiburi, kamwe.",
 ];
 
@@ -19,19 +20,19 @@ const chapters = [
     icon: BookOpen,
     label: "Msikilizaji · The Listener",
     text:
-      "Long before I wrote a single note, I was a listener — sitting in the pews, paying attention to which hymns made the assembly lean forward and which ones lost them by the second verse. That ear, trained in real Sunday liturgies, is still the one I trust most when I compose.",
+      "Before I ever wrote a note, I was a listener — paying attention to which melodies made hearts lean in, and which ones drifted past unnoticed. That ear, trained in living worship, is still the one I trust most when I compose.",
   },
   {
     icon: PenLine,
     label: "Mfundi · The Craftsman",
     text:
-      "I treat every score as a piece of work that has to function — singable ranges, honest harmonies, page turns that don't betray the choir mid-phrase. Composition, for me, is craftsmanship in service of prayer; the music must hold up on the eighth Sunday of Ordinary Time, not just on opening night.",
+      "I treat each score as honest work — singable lines, kind harmonies, page turns that respect the singer. Composition, for me, is craftsmanship in service of prayer; the music must hold up the hundredth time it's sung, not just the first.",
   },
   {
     icon: Church,
     label: "Mtumishi · The Servant",
     text:
-      "My name will not be on the lips of the congregation, and that is exactly as it should be. The composer's job is to disappear behind the prayer of the Church. If the assembly leaves singing the hymn instead of remembering the composer, the score has done its work.",
+      "My name will not be on the lips of the assembly, and that is exactly as it should be. The composer's job is to disappear behind the prayer of the Church — if people leave singing the song instead of remembering the writer, the score has done its work.",
   },
 ];
 
@@ -58,7 +59,7 @@ export default function About() {
           </p>
         </Section>
 
-        {/* Welcome / Karibu */}
+        {/* Karibu — opening scripture */}
         <Section delay={80}>
           <div className="glass-card mt-12 max-w-3xl mx-auto text-center relative overflow-hidden">
             <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
@@ -78,137 +79,111 @@ export default function About() {
           </div>
         </Section>
 
-        {/* Bio — Who I Am */}
-        <Section delay={100}>
-          <div className="glass-card mt-6 max-w-3xl mx-auto">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="p-2.5 rounded-xl bg-primary/10">
-                <Music size={20} className="text-primary" />
-              </div>
-              <h2 className="text-lg font-display font-semibold">Who I Am</h2>
-            </div>
-            <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>
-                I am <span className="text-foreground font-semibold">Boniface Kagunda</span> — a Kenyan
-                composer and arranger working primarily in sacred and liturgical music.
-                My catalogue includes Mass settings, responsorial psalms, offertory and
-                communion pieces, piano duos, string duets, SATB arrangements, and bespoke songs
-                for solo Catholic artists who carry the gospel in their own voice.
-              </p>
-              <p>
-                I do not write for stages. I write for the gathered assembly — for the
-                cantor who has fifteen minutes to learn the psalm, for the four singers
-                who carry the parish choir on their shoulders, for the soloist who needs
-                a piece in <em>her</em> key, for the congregation that will only ever hear
-                the piece sung once. Every score is engineered to survive that reality
-                and still sound beautiful.
-              </p>
-              <p>
-                My approach is simple: <span className="text-foreground">clarity before cleverness</span>,
-                prayer before performance, the choir before the composer. If a piece of mine
-                helps a parish pray more deeply on a single Sunday, the work has earned its place.
-              </p>
-            </div>
+        {/* Pull quote — designed feature */}
+        <Section delay={120}>
+          <div className="mt-10 max-w-4xl mx-auto text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4 inline-flex items-center gap-2">
+              <Sparkles size={12} /> Elegance In Every Note
+            </p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight max-w-3xl mx-auto">
+              I write quiet music for <span className="text-primary">loud souls</span>,
+              and brave music for <span className="text-accent">tender ones</span>.
+            </h2>
           </div>
         </Section>
 
-        {/* Are you a Solo Catholic Artist? */}
+        {/* Bio — split layout */}
         <Section delay={150}>
-          <div className="glass-card glow-border mt-6 max-w-3xl mx-auto relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-primary/15 blur-3xl pointer-events-none" aria-hidden />
-            <div className="relative">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-2 font-body inline-flex items-center gap-2">
-                <Mic size={12} /> For Solo Catholic Artists
+          <div className="mt-10 max-w-5xl mx-auto grid md:grid-cols-[1fr_2fr] gap-6">
+            {/* Left identity card */}
+            <div className="glass-card glow-border flex flex-col justify-center text-center md:text-left">
+              <div className="p-2.5 rounded-xl bg-primary/10 inline-flex w-fit mx-auto md:mx-0 mb-4">
+                <Music size={22} className="text-primary" />
+              </div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2">The short version</p>
+              <h3 className="text-xl font-display font-bold mb-2">Boniface Kagunda</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Kenyan composer. Sacred music. Choirs, cantors, soloists, and seekers — all welcome.
               </p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold mb-4 leading-tight">
-                Are you a solo Catholic artist looking for <span className="text-primary">a song that's truly yours</span>?
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                If you carry the gospel through your own voice — at adoration, at gatherings,
-                on your channel, or on a stage — I'd love to write for you. Here's what you get:
-              </p>
-              <ul className="grid sm:grid-cols-2 gap-3 text-sm">
-                {[
-                  { t: "A song in YOUR key", d: "Custom-pitched to your voice — soprano, tenor, baritone — never strained." },
-                  { t: "Original lyrics or your own", d: "Bring me your verse, or I'll write words that match the song you imagine." },
-                  { t: "Sheet music + chord chart", d: "Professional PDF score plus a guitar/piano chord chart for live use." },
-                  { t: "Backing track + guide vocal", d: "Studio-quality MP3 backing track and a guide melody to learn from." },
-                  { t: "Bilingual welcome", d: "Kiswahili, English, or both — sacred music that sounds like home." },
-                  { t: "Free of stage ego", d: "Liturgically faithful, theologically sound, never showy. Built to lift souls." },
-                ].map((i) => (
-                  <li key={i.t} className="p-3 rounded-xl bg-secondary/40 border border-border/50">
-                    <p className="text-foreground font-semibold text-sm">{i.t}</p>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{i.d}</p>
-                  </li>
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {["Composer", "Arranger", "Cantor", "Catholic"].map((t) => (
+                  <span key={t} className="text-[10px] px-2 py-1 rounded-full bg-secondary text-foreground/80">{t}</span>
                 ))}
-              </ul>
-              <p className="mt-5 text-xs italic text-accent text-center">
-                "Mungu hupenda anayetoa kwa furaha." — God loves a cheerful giver. (2 Wakor. 9:7)
-              </p>
+              </div>
+            </div>
+
+            {/* Right narrative */}
+            <div className="glass-card">
+              <h2 className="text-lg font-display font-semibold mb-4">Who I Am</h2>
+              <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                <p>
+                  I am <span className="text-foreground font-semibold">Boniface Kagunda</span> — a Kenyan
+                  composer and arranger working primarily in sacred and liturgical music.
+                  My catalogue spans Mass settings, responsorial psalms, offertory and communion pieces,
+                  piano duos, string duets, SATB arrangements, and bespoke songs for soloists who carry the gospel in their own voice.
+                </p>
+                <p>
+                  I do not write for the spotlight. I write for the gathered assembly, for the cantor with little time and a big heart, for the four singers who are the parish choir, for the soloist who needs a piece in <em>her</em> key. Every score is engineered to survive that reality and still sound beautiful.
+                </p>
+                <p>
+                  My approach is simple: <span className="text-foreground">clarity before cleverness</span>,
+                  prayer before performance, the singer before the composer.
+                </p>
+              </div>
             </div>
           </div>
         </Section>
 
-        {/* Mirrored Story — Notes from the Desk */}
+        {/* Three Chapters */}
         <Section delay={200}>
-          <article
-            className="glass-card mt-6 max-w-3xl mx-auto relative overflow-hidden"
-            aria-labelledby="confession-heading"
-          >
-            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden />
-            <div className="absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
-
-            <div className="relative">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2 font-body inline-flex items-center gap-2">
+          <article className="mt-10 max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
                 <Feather size={12} /> Notes from the Desk
               </p>
-              <h2
-                id="confession-heading"
-                className="text-2xl sm:text-3xl font-display font-bold mb-5 leading-tight"
-              >
-                I write for the <span className="text-primary">eighth Sunday</span>,
-                not the <span className="text-accent">opening night</span>.
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                Three faces of the same vocation.
               </h2>
-
-              <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
-                <p>
-                  Most composers I admire share one quiet conviction: the score is not
-                  finished when it looks beautiful on the page — it is finished when an
-                  ordinary parish choir, with one rehearsal and tired voices, can lift it
-                  on a Sunday morning and sound like themselves.
-                </p>
-                <p>
-                  That is the standard I hold every piece to. I revise for the alto who
-                  always sits second from the left. I voice chords for the bass who reads
-                  by ear. I leave breathing room where the assembly will need it.
-                  <span className="text-foreground"> The work is invisible when it works.</span>
-                </p>
-                <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/90 flex gap-2">
-                  <Quote size={16} className="text-primary shrink-0 mt-1" />
-                  <span>
-                    "Cantare amantis est." — Singing belongs to the one who loves.
-                    <span className="block text-xs text-muted-foreground not-italic mt-1">— Mt. Augustino wa Hippo</span>
-                  </span>
-                </blockquote>
-              </div>
-
-              {/* Three Chapters */}
-              <ol className="mt-7 grid sm:grid-cols-3 gap-3">
-                {chapters.map((c) => (
-                  <li
-                    key={c.label}
-                    className="p-4 rounded-xl bg-secondary/40 border border-border/50 hover:border-primary/40 transition-colors"
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <c.icon size={14} className="text-primary" />
-                      <p className="text-[10px] uppercase tracking-widest text-primary">{c.label}</p>
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{c.text}</p>
-                  </li>
-                ))}
-              </ol>
             </div>
+
+            <ol className="grid sm:grid-cols-3 gap-4">
+              {chapters.map((c, i) => (
+                <li
+                  key={c.label}
+                  className="glass-card relative group hover:-translate-y-1 transition-transform duration-500"
+                >
+                  <span className="absolute top-4 right-4 text-4xl font-display font-bold text-primary/20 leading-none">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="flex items-center gap-2 mb-3">
+                    <c.icon size={16} className="text-primary" />
+                    <p className="text-[10px] uppercase tracking-widest text-primary">{c.label}</p>
+                  </div>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{c.text}</p>
+                </li>
+              ))}
+            </ol>
+
+            <blockquote className="mt-8 border-l-2 border-primary pl-4 italic text-foreground/85 max-w-2xl mx-auto flex gap-2">
+              <Quote size={16} className="text-primary shrink-0 mt-1" />
+              <span>
+                "Cantare amantis est." — Singing belongs to the one who loves.
+                <span className="block text-xs text-muted-foreground not-italic mt-1">— Mt. Augustino wa Hippo</span>
+              </span>
+            </blockquote>
           </article>
+        </Section>
+
+        {/* Refresh catalog from About */}
+        <Section delay={250}>
+          <div className="mt-12 max-w-3xl mx-auto glass-card text-center">
+            <RefreshCw size={20} className="text-primary mx-auto mb-3" />
+            <h3 className="font-display font-semibold text-base mb-2">Fresh scores, always</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed mb-4 max-w-md mx-auto">
+              The catalogue updates automatically every day. If you'd rather pull the newest scores right now, give it a tap.
+            </p>
+            <SyncScoresButton label="Update Catalog Now" />
+          </div>
         </Section>
       </main>
       <Footer />
