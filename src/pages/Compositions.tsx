@@ -7,8 +7,10 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library } from "lucide-react";
+import { ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown } from "lucide-react";
 import SyncScoresButton from "@/components/SyncScoresButton";
+
+type SortKey = "newest" | "oldest" | "views" | "title";
 
 interface Score {
   id: string;
@@ -47,6 +49,8 @@ export default function Compositions() {
   const [scores, setScores] = useState<Score[]>([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<Filter>("All");
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<SortKey>("newest");
 
   const fetchScores = async () => {
     const { data } = await supabase
@@ -61,7 +65,28 @@ export default function Compositions() {
     fetchScores();
   }, []);
 
-  const filtered = active === "All" ? scores : scores.filter((s) => s.ensemble_type === active);
+  const filtered = scores
+    .filter((s) => active === "All" || s.ensemble_type === active)
+    .filter((s) => {
+      if (!query.trim()) return true;
+      const q = query.toLowerCase();
+      return (
+        s.title.toLowerCase().includes(q) ||
+        (s.instruments ?? "").toLowerCase().includes(q) ||
+        (s.mood ?? "").toLowerCase().includes(q) ||
+        (s.ensemble_type ?? "").toLowerCase().includes(q)
+      );
+    })
+    .sort((a, b) => {
+      switch (sort) {
+        case "oldest": return (a.published_date ?? "").localeCompare(b.published_date ?? "");
+        case "views": return (b.views ?? 0) - (a.views ?? 0);
+        case "title": return a.title.localeCompare(b.title);
+        case "newest":
+        default:
+          return 0; // already newest-first from query
+      }
+    });
   const featured = scores.find((s) => s.featured) ?? scores[0];
 
   return (
@@ -158,6 +183,35 @@ export default function Compositions() {
           </div>
         </Section>
 
+        {/* Search + Sort */}
+        <Section delay={140}>
+          <div className="mt-6 max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
+            <div className="flex-1 relative">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search by title, instrument, mood…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 rounded-full bg-background/40 backdrop-blur-sm border border-border/50 text-sm font-body focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30 transition"
+              />
+            </div>
+            <div className="relative">
+              <ArrowUpDown size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value as SortKey)}
+                className="appearance-none pl-10 pr-8 py-3 rounded-full bg-background/40 backdrop-blur-sm border border-border/50 text-sm font-body focus:outline-none focus:border-primary/60 cursor-pointer"
+              >
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="views">Most viewed</option>
+                <option value="title">Title (A–Z)</option>
+              </select>
+            </div>
+          </div>
+        </Section>
+
         {loading ? (
           <div className="flex justify-center mt-20">
             <Loader2 size={32} className="animate-spin text-primary" />
@@ -165,7 +219,7 @@ export default function Compositions() {
         ) : filtered.length === 0 ? (
           <Section delay={200}>
             <p className="text-center text-muted-foreground mt-20">
-              No compositions yet. The catalog auto-updates daily.
+              No compositions match your search. Try a different filter.
             </p>
           </Section>
         ) : (
@@ -233,12 +287,6 @@ export default function Compositions() {
 
                   {score.instruments && (
                     <p className="text-xs text-muted-foreground mb-3">{score.instruments}</p>
-                  )}
-
-                  {score.story && (
-                    <blockquote className="text-xs text-foreground/80 italic leading-relaxed mb-3 border-l-2 border-primary/40 pl-3">
-                      {score.story}
-                    </blockquote>
                   )}
 
                   {score.mood && (

@@ -2,6 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2/cors";
 
 const MUSESCORE_USER_URL = "https://musescore.com/user/108485503";
+const FIRECRAWL_ENDPOINT = "https://api.firecrawl.dev/v2/scrape";
 
 interface ScoreData {
   title: string;
@@ -19,12 +20,9 @@ interface ScoreData {
   mood?: string | null;
 }
 
-// Auto-generate a short story + mood from a score's title and ensemble.
-// Used only for newly discovered scores so manually-curated stories are preserved.
 function generateStory(title: string, ensemble: string | null): { story: string; mood: string } {
   const t = title.toUpperCase();
   const ens = ensemble ?? "ensemble";
-
   if (t.startsWith("MISA")) return { mood: "Reverent", story: `A complete Mass setting — "${title}" — voiced for ${ens.toLowerCase()}, weaving liturgy and East African melody into one prayer.` };
   if (t.includes("HALELUYA") || t.includes("ALLELUIA")) return { mood: "Joyful", story: `A radiant Gospel acclamation lifting the assembly with bright harmonies and a steady, dancing pulse.` };
   if (t.includes("SADAKA")) return { mood: "Devotional", story: `An offertory piece — bread, wine, and song carried slowly toward the altar in quiet devotion.` };
@@ -33,50 +31,107 @@ function generateStory(title: string, ensemble: string | null): { story: string;
   if (t.includes("HEKO") || t.includes("ASANTE")) return { mood: "Tender", story: `A heartfelt thanksgiving — voices answering one another like a soul in quiet gratitude.` };
   if (t.includes("BWANA") || t.includes("MUNGU")) return { mood: "Contemplative", story: `A prayerful meditation lifting the name of the Lord through layered, unhurried lines.` };
   if (t.includes("MARIA")) return { mood: "Serene", story: `A Marian devotion — gentle, flowing, and luminous as candlelight at a side altar.` };
-
   return { mood: "Soulful", story: `"${title}" — a sacred miniature for ${ens.toLowerCase()}, crafted with devotion and a love for liturgical beauty.` };
 }
 
-function parseScoresFromHtml(html: string): ScoreData[] {
+// Parse scores from Firecrawl markdown. Each score appears as a sequence:
+//   [![ALT](thumb_url)](score_url)
+//   [TITLE](score_url)
+//   [KAGUNDA](user_url)
+//   N parts • N pages • MM:SS • Date • N views
+//   [Ensemble](...)
+//   [Instrument](...), [Instrument](...)
+function parseScoresFromMarkdown(md: string): ScoreData[] {
   const scores: ScoreData[] = [];
-  const scorePattern = /href="(https:\/\/musescore\.com\/user\/108485503\/scores\/(\d+))"/g;
-  const scoreUrls = new Map<string, string>();
-  let match;
-  while ((match = scorePattern.exec(html)) !== null) {
-    scoreUrls.set(match[2], match[1]);
-  }
+  const seen = new Set<string>();
 
-  for (const [scoreId, scoreUrl] of scoreUrls) {
-    const urlIdx = html.indexOf(scoreUrl);
-    if (urlIdx === -1) continue;
-    const nearbyHtml = html.substring(Math.max(0, urlIdx - 500), urlIdx + 1000);
-    const titleMatch = nearbyHtml.match(/>([A-Z][A-Z\s\u2013\u2014–-]+(?:\s*–\s*[^<]+)?)<\/a>/);
-    if (!titleMatch) continue;
-    const title = titleMatch[1].replace(/\s*–\s*KAGUNDA\s*$/, "").trim();
-    if (!title || title.length < 2) continue;
-    if (scores.find((s) => s.musescore_id === scoreId)) continue;
+  // Find every score URL (the linked title line is most reliable).
+  // Match: [TITLE](https://musescore.com/user/108485503/scores/ID)   — but NOT the image-link line.
+  const titleLineRe = /^\[([^\]\n]{2,200})\]\(https:\/\/musescore\.com\/user\/108485503\/scores\/(\d+)\)\s*$/gm;
+  const matches = [...md.matchAll(titleLineRe)];
 
-    const metaMatch = nearbyHtml.match(/(\d+)\s*parts?\s*[•·]\s*(\d+)\s*pages?\s*[•·]\s*([\d:]+)\s*[•·]\s*([^•·<]+)\s*[•·]\s*(\d+)\s*views?/i);
-    const ensembleMatch = nearbyHtml.match(/(Mixed Quartet|Piano Duo|String Duet|Mixed Trio|Church Choir|Mixed Ensemble|SATB|Solo)/i);
-    const instrumentMatch = nearbyHtml.match(/(Piano|Bass guitar|Strings group|Violin|Oboe)[^<]*/i);
-    const thumbMatch = nearbyHtml.match(/src="(https:\/\/cdn\.ustatik\.com\/musescore\/scoredata\/[^"]+)"/);
+  for (const m of matches) {
+    const rawTitle = m[1];
+    const scoreId = m[2];
+    if (seen.has(scoreId)) continue;
+    seen.add(scoreId);
+
+    // Skip the image-alt occurrence (alt starts with "!")
+    if (rawTitle.startsWith("!")) continue;
+
+    const title = rawTitle.replace(/\s*[–-]\s*KAGUNDA\s*$/i, "").trim();
+    if (!title) continue;
+
+    const startIdx = (m.index ?? 0) + m[0].length;
+    // Look at the ~700 chars after the title for metadata.
+    const after = md.substring(startIdx, startIdx + 700);
+
+    // Thumbnail: search the ~400 chars BEFORE the title for the image link with this scoreId.
+    const before = md.substring(Math.max(0, (m.index ?? 0) - 600), m.index ?? 0);
+    const thumbRe = new RegExp(`\\((https:\\/\\/cdn\\.ustatik\\.com\\/musescore\\/scoredata\\/[^)\\s]+)\\)\\]\\([^)]*${scoreId}[^)]*\\)`);
+    const thumbMatch = thumbRe.exec(before) ?? thumbRe.exec(md.substring(startIdx, startIdx + 800));
+
+    const metaRe = /(\d+)\s*parts?\s*•\s*(\d+)\s*pages?\s*•\s*([\d:]+)\s*•\s*([A-Za-z]{3}\s+\d{1,2},\s*\d{4})\s*•\s*(\d+)\s*views?/;
+    const meta = metaRe.exec(after);
+
+    const ensembleRe = /\[(Mixed Quartet|Piano Duo|String Duet|Mixed Trio|Mixed Ensemble|Church Choir|SATB|Solo)\]/;
+    const ensemble = ensembleRe.exec(after);
+
+    // Instruments: collect linked instrument names that follow the ensemble line.
+    let instruments: string | null = null;
+    if (ensemble) {
+      const afterEns = after.substring((ensemble.index ?? 0) + ensemble[0].length);
+      const instRe = /\[([A-Z][A-Za-z ]{1,40})\]\(https:\/\/musescore\.com\/sheetmusic\/[a-z-]+\)/g;
+      const instNames: string[] = [];
+      let im;
+      while ((im = instRe.exec(afterEns)) !== null && instNames.length < 5) {
+        const name = im[1].trim();
+        if (!["Mixed Quartet","Piano Duo","String Duet","Mixed Trio","Mixed Ensemble","Church Choir","SATB","Solo"].includes(name)) {
+          instNames.push(name);
+        }
+        if (im.index > 200) break;
+      }
+      if (instNames.length) instruments = instNames.join(", ");
+    }
 
     scores.push({
       title,
       musescore_id: scoreId,
-      musescore_url: scoreUrl,
+      musescore_url: `https://musescore.com/user/108485503/scores/${scoreId}`,
       thumbnail_url: thumbMatch ? thumbMatch[1].replace(/@\d+x\d+/, "@500x660") : null,
-      ensemble_type: ensembleMatch ? ensembleMatch[1] : null,
-      instruments: instrumentMatch ? instrumentMatch[0].trim() : null,
-      parts: metaMatch ? parseInt(metaMatch[1]) : 1,
-      pages: metaMatch ? parseInt(metaMatch[2]) : 1,
-      duration: metaMatch ? metaMatch[3] : null,
-      views: metaMatch ? parseInt(metaMatch[5]) : 0,
-      published_date: metaMatch ? metaMatch[4].trim() : null,
+      ensemble_type: ensemble ? ensemble[1] : null,
+      instruments,
+      parts: meta ? parseInt(meta[1]) : 1,
+      pages: meta ? parseInt(meta[2]) : 1,
+      duration: meta ? meta[3] : null,
+      views: meta ? parseInt(meta[5]) : 0,
+      published_date: meta ? meta[4].trim() : null,
     });
   }
 
   return scores;
+}
+
+async function fetchViaFirecrawl(apiKey: string): Promise<string> {
+  const res = await fetch(FIRECRAWL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      url: MUSESCORE_USER_URL,
+      formats: ["markdown"],
+      onlyMainContent: true,
+      waitFor: 3000,
+    }),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Firecrawl ${res.status}: ${text.slice(0, 300)}`);
+  }
+  const json = await res.json();
+  return json.markdown ?? json.data?.markdown ?? "";
 }
 
 Deno.serve(async (req) => {
@@ -84,15 +139,9 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  // Authorization: only callers presenting the shared SYNC_SECRET may trigger this
-  // function. This covers both the scheduled cron job and the in-app refresh button
-  // (which proxies through an authenticated path that injects the secret server-side).
   const expectedSecret = Deno.env.get("SYNC_SECRET");
   const providedSecret = req.headers.get("x-sync-secret");
-
-  const authorized = !!(expectedSecret && providedSecret && providedSecret === expectedSecret);
-
-  if (!authorized) {
+  if (!expectedSecret || providedSecret !== expectedSecret) {
     return new Response(
       JSON.stringify({ success: false, error: "Unauthorized" }),
       { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
@@ -102,40 +151,30 @@ Deno.serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const firecrawlKey = Deno.env.get("FIRECRAWL_API_KEY");
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    let html = "";
-    let fetchOk = false;
-    try {
-      const response = await fetch(MUSESCORE_USER_URL, {
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-          "Accept-Language": "en-US,en;q=0.9",
-          "Accept-Encoding": "gzip, deflate, br",
-          "Cache-Control": "no-cache",
-          "Pragma": "no-cache",
-          "Sec-Ch-Ua": '"Chromium";v="124", "Google Chrome";v="124"',
-          "Sec-Fetch-Dest": "document",
-          "Sec-Fetch-Mode": "navigate",
-          "Sec-Fetch-Site": "none",
-          "Upgrade-Insecure-Requests": "1",
-        },
-      });
-      if (response.ok) {
-        html = await response.text();
-        fetchOk = true;
-      } else {
-        console.warn(`MuseScore returned ${response.status}, using fallback catalog`);
+    let scores: ScoreData[] = [];
+    let source = "firecrawl";
+    let warning: string | null = null;
+
+    if (!firecrawlKey) {
+      warning = "FIRECRAWL_API_KEY missing";
+    } else {
+      try {
+        const content = await fetchViaFirecrawl(firecrawlKey);
+        scores = parseScoresFromMarkdown(content);
+        console.log(`Firecrawl returned ${content.length} chars, parsed ${scores.length} scores`);
+      } catch (e) {
+        warning = `Firecrawl failed: ${(e as Error).message}`;
+        console.warn(warning);
       }
-    } catch (e) {
-      console.warn("MuseScore fetch failed, using fallback catalog:", e);
     }
 
-    const scores = fetchOk ? parseScoresFromHtml(html) : [];
-
+    // Fallback curated list if scraping yielded nothing.
     if (scores.length === 0) {
-      const fallbackScores: ScoreData[] = [
+      source = "fallback";
+      scores = [
         { title: "HALELUYA", musescore_id: "28959626", musescore_url: "https://musescore.com/user/108485503/scores/28959626", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/1c0006c9355526855fdddd53fa994c33c6ccd8e6/score_0.png@500x660?no-cache=1770885292&bgclr=ffffff", ensemble_type: "Mixed Quartet", instruments: "Bass guitar, Strings group", parts: 4, pages: 1, duration: "00:31", views: 17, published_date: "Nov 1, 2025" },
         { title: "HEKO", musescore_id: "29658509", musescore_url: "https://musescore.com/user/108485503/scores/29658509", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/269f49578a6f2ec4513778e31ca00a679ec894e3/score_0.png@500x660?no-cache=1775565757&bgclr=ffffff", ensemble_type: "Piano Duo", instruments: "Piano", parts: 2, pages: 2, duration: "01:04", views: 30, published_date: "Nov 24, 2025" },
         { title: "NJONI TUINGIE", musescore_id: "32170553", musescore_url: "https://musescore.com/user/108485503/scores/32170553", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/fa0cad89f403eceb2eef3d09fb581e48a56ba63a/score_0.png@500x660?no-cache=1772639698&bgclr=ffffff", ensemble_type: "Mixed Quartet", instruments: "Piano, Bass guitar", parts: 4, pages: 1, duration: "00:26", views: 6, published_date: "Mar 2, 2026" },
@@ -143,27 +182,18 @@ Deno.serve(async (req) => {
         { title: "SIFA NA UTUKUFU", musescore_id: "32866709", musescore_url: "https://musescore.com/user/108485503/scores/32866709", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/9a4fd32d33f7e222994370cb1567cbfb79371ce9/score_0.png@500x660?no-cache=1774615293&bgclr=ffffff", ensemble_type: "Piano Duo", instruments: "Piano", parts: 2, pages: 1, duration: "00:27", views: 6, published_date: "Mar 27, 2026" },
         { title: "MISA ANTHONY", musescore_id: "30245900", musescore_url: "https://musescore.com/user/108485503/scores/30245900", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/02952ac134520f9c34b2306d1748349cc23f88a7/score_0.png@500x660?no-cache=1775457938&bgclr=ffffff", ensemble_type: "Mixed Trio", instruments: "Piano", parts: 3, pages: 3, duration: "01:33", views: 21, published_date: "Dec 16, 2025" },
       ];
-
-      for (const score of fallbackScores) {
-        await supabase.from("scores").upsert(score, { onConflict: "musescore_id" });
-      }
-
-      return new Response(
-        JSON.stringify({ success: true, synced: fallbackScores.length, source: "fallback" }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } },
-      );
     }
 
     let synced = 0;
+    let added = 0;
     for (const score of scores) {
-      // Check if score already exists; preserve curated story/mood if so.
       const { data: existing } = await supabase
         .from("scores")
         .select("id, story, mood")
         .eq("musescore_id", score.musescore_id)
         .maybeSingle();
 
-      const payload: ScoreData & { updated_at: string } = {
+      const payload: Record<string, unknown> = {
         ...score,
         updated_at: new Date().toISOString(),
       };
@@ -172,24 +202,24 @@ Deno.serve(async (req) => {
         const generated = generateStory(score.title, score.ensemble_type);
         payload.story = generated.story;
         payload.mood = generated.mood;
+        added++;
       } else {
-        // Don't overwrite curated narrative content on re-sync.
-        delete (payload as Record<string, unknown>).story;
-        delete (payload as Record<string, unknown>).mood;
+        delete payload.story;
+        delete payload.mood;
       }
 
       const { error } = await supabase
         .from("scores")
         .upsert(payload, { onConflict: "musescore_id" });
       if (!error) synced++;
+      else console.error("Upsert error:", error);
     }
 
     return new Response(
-      JSON.stringify({ success: true, synced, total: scores.length }),
+      JSON.stringify({ success: true, synced, added, total: scores.length, source, warning }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (error) {
-    // Log full error server-side, return generic message to client
     console.error("Sync error:", error);
     return new Response(
       JSON.stringify({ success: false, error: "Sync failed. Please try again later." }),
