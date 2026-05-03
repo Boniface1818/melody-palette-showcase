@@ -289,12 +289,6 @@ export default function Compositions() {
                     <p className="text-xs text-muted-foreground mb-3">{score.instruments}</p>
                   )}
 
-                  {score.story && (
-                    <blockquote className="text-xs text-foreground/80 italic leading-relaxed mb-3 border-l-2 border-primary/40 pl-3">
-                      {score.story}
-                    </blockquote>
-                  )}
-
                   {score.mood && (
                     <span className="self-start text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-md bg-primary/10 text-primary mb-2">
                       {score.mood}
