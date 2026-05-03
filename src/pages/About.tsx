@@ -5,7 +5,6 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
-import SyncScoresButton from "@/components/SyncScoresButton";
 import { Music, Feather, Quote, BookOpen, PenLine, Church, Heart, Sparkles, RefreshCw } from "lucide-react";
 
 const aboutSubtitles = [
@@ -174,15 +173,14 @@ export default function About() {
           </article>
         </Section>
 
-        {/* Refresh catalog from About */}
+        {/* Auto-sync notice */}
         <Section delay={250}>
           <div className="mt-12 max-w-3xl mx-auto glass-card text-center">
             <RefreshCw size={20} className="text-primary mx-auto mb-3" />
             <h3 className="font-display font-semibold text-base mb-2">Fresh scores, always</h3>
-            <p className="text-xs text-muted-foreground leading-relaxed mb-4 max-w-md mx-auto">
-              The catalogue updates automatically every day. If you'd rather pull the newest scores right now, give it a tap.
+            <p className="text-xs text-muted-foreground leading-relaxed max-w-md mx-auto">
+              The catalogue updates automatically every day, pulling the latest scores straight from MuseScore.
             </p>
-            <SyncScoresButton label="Update Catalog Now" />
           </div>
         </Section>
       </main>
