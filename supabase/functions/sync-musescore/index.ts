@@ -34,54 +34,78 @@ function generateStory(title: string, ensemble: string | null): { story: string;
   return { mood: "Soulful", story: `"${title}" — a sacred miniature for ${ens.toLowerCase()}, crafted with devotion and a love for liturgical beauty.` };
 }
 
-// Parse scores from either raw HTML or markdown returned by Firecrawl.
-function parseScoresFromContent(content: string): ScoreData[] {
+// Parse scores from Firecrawl markdown. Each score appears as a sequence:
+//   [![ALT](thumb_url)](score_url)
+//   [TITLE](score_url)
+//   [KAGUNDA](user_url)
+//   N parts • N pages • MM:SS • Date • N views
+//   [Ensemble](...)
+//   [Instrument](...), [Instrument](...)
+function parseScoresFromMarkdown(md: string): ScoreData[] {
   const scores: ScoreData[] = [];
   const seen = new Set<string>();
 
-  // Match MuseScore score URLs in either HTML href or markdown link form.
-  const urlPattern = /https:\/\/musescore\.com\/user\/108485503\/scores\/(\d+)/g;
-  const ids = new Set<string>();
-  let m;
-  while ((m = urlPattern.exec(content)) !== null) ids.add(m[1]);
+  // Find every score URL (the linked title line is most reliable).
+  // Match: [TITLE](https://musescore.com/user/108485503/scores/ID)   — but NOT the image-link line.
+  const titleLineRe = /^\[([^\]\n]{2,200})\]\(https:\/\/musescore\.com\/user\/108485503\/scores\/(\d+)\)\s*$/gm;
+  const matches = [...md.matchAll(titleLineRe)];
 
-  for (const scoreId of ids) {
+  for (const m of matches) {
+    const rawTitle = m[1];
+    const scoreId = m[2];
     if (seen.has(scoreId)) continue;
     seen.add(scoreId);
-    const scoreUrl = `https://musescore.com/user/108485503/scores/${scoreId}`;
 
-    // Find a chunk of context around this score id.
-    const idx = content.indexOf(scoreId);
-    const ctx = content.substring(Math.max(0, idx - 800), Math.min(content.length, idx + 800));
+    // Skip the image-alt occurrence (alt starts with "!")
+    if (rawTitle.startsWith("!")) continue;
 
-    // Title: prefer markdown link text [TITLE](...scoreId), else nearby uppercase text.
-    let title: string | null = null;
-    const mdLink = new RegExp(`\\[([^\\]]{2,120})\\]\\([^)]*${scoreId}[^)]*\\)`).exec(ctx);
-    if (mdLink) {
-      title = mdLink[1].replace(/\s*[–-]\s*KAGUNDA\s*$/i, "").trim();
-    } else {
-      const htmlTitle = />\s*([A-Z][A-Z0-9\s\u2013\u2014–\-']{2,80})\s*</.exec(ctx);
-      if (htmlTitle) title = htmlTitle[1].replace(/\s*[–-]\s*KAGUNDA\s*$/i, "").trim();
+    const title = rawTitle.replace(/\s*[–-]\s*KAGUNDA\s*$/i, "").trim();
+    if (!title) continue;
+
+    const startIdx = (m.index ?? 0) + m[0].length;
+    // Look at the ~700 chars after the title for metadata.
+    const after = md.substring(startIdx, startIdx + 700);
+
+    // Thumbnail: search the ~400 chars BEFORE the title for the image link with this scoreId.
+    const before = md.substring(Math.max(0, (m.index ?? 0) - 600), m.index ?? 0);
+    const thumbRe = new RegExp(`\\((https:\\/\\/cdn\\.ustatik\\.com\\/musescore\\/scoredata\\/[^)\\s]+)\\)\\]\\([^)]*${scoreId}[^)]*\\)`);
+    const thumbMatch = thumbRe.exec(before) ?? thumbRe.exec(md.substring(startIdx, startIdx + 800));
+
+    const metaRe = /(\d+)\s*parts?\s*•\s*(\d+)\s*pages?\s*•\s*([\d:]+)\s*•\s*([A-Za-z]{3}\s+\d{1,2},\s*\d{4})\s*•\s*(\d+)\s*views?/;
+    const meta = metaRe.exec(after);
+
+    const ensembleRe = /\[(Mixed Quartet|Piano Duo|String Duet|Mixed Trio|Mixed Ensemble|Church Choir|SATB|Solo)\]/;
+    const ensemble = ensembleRe.exec(after);
+
+    // Instruments: collect linked instrument names that follow the ensemble line.
+    let instruments: string | null = null;
+    if (ensemble) {
+      const afterEns = after.substring((ensemble.index ?? 0) + ensemble[0].length);
+      const instRe = /\[([A-Z][A-Za-z ]{1,40})\]\(https:\/\/musescore\.com\/sheetmusic\/[a-z-]+\)/g;
+      const instNames: string[] = [];
+      let im;
+      while ((im = instRe.exec(afterEns)) !== null && instNames.length < 5) {
+        const name = im[1].trim();
+        if (!["Mixed Quartet","Piano Duo","String Duet","Mixed Trio","Mixed Ensemble","Church Choir","SATB","Solo"].includes(name)) {
+          instNames.push(name);
+        }
+        if (im.index > 200) break;
+      }
+      if (instNames.length) instruments = instNames.join(", ");
     }
-    if (!title || title.length < 2) continue;
-
-    const metaMatch = ctx.match(/(\d+)\s*parts?\s*[•·]\s*(\d+)\s*pages?\s*[•·]\s*([\d:]+)\s*[•·]\s*([^•·<\n\]]+?)\s*[•·]\s*(\d+)\s*views?/i);
-    const ensembleMatch = ctx.match(/(Mixed Quartet|Piano Duo|String Duet|Mixed Trio|Church Choir|Mixed Ensemble|SATB|Solo)/i);
-    const instrumentMatch = ctx.match(/(Piano|Bass guitar|Strings group|Violin|Oboe)[^<\n\]]{0,60}/i);
-    const thumbMatch = ctx.match(/(https:\/\/cdn\.ustatik\.com\/musescore\/scoredata\/[^\s")\]]+)/);
 
     scores.push({
       title,
       musescore_id: scoreId,
-      musescore_url: scoreUrl,
+      musescore_url: `https://musescore.com/user/108485503/scores/${scoreId}`,
       thumbnail_url: thumbMatch ? thumbMatch[1].replace(/@\d+x\d+/, "@500x660") : null,
-      ensemble_type: ensembleMatch ? ensembleMatch[1] : null,
-      instruments: instrumentMatch ? instrumentMatch[0].trim() : null,
-      parts: metaMatch ? parseInt(metaMatch[1]) : 1,
-      pages: metaMatch ? parseInt(metaMatch[2]) : 1,
-      duration: metaMatch ? metaMatch[3] : null,
-      views: metaMatch ? parseInt(metaMatch[5]) : 0,
-      published_date: metaMatch ? metaMatch[4].trim() : null,
+      ensemble_type: ensemble ? ensemble[1] : null,
+      instruments,
+      parts: meta ? parseInt(meta[1]) : 1,
+      pages: meta ? parseInt(meta[2]) : 1,
+      duration: meta ? meta[3] : null,
+      views: meta ? parseInt(meta[5]) : 0,
+      published_date: meta ? meta[4].trim() : null,
     });
   }
 
@@ -97,9 +121,9 @@ async function fetchViaFirecrawl(apiKey: string): Promise<string> {
     },
     body: JSON.stringify({
       url: MUSESCORE_USER_URL,
-      formats: ["markdown", "html"],
-      onlyMainContent: false,
-      waitFor: 2500,
+      formats: ["markdown"],
+      onlyMainContent: true,
+      waitFor: 3000,
     }),
   });
   if (!res.ok) {
@@ -107,10 +131,7 @@ async function fetchViaFirecrawl(apiKey: string): Promise<string> {
     throw new Error(`Firecrawl ${res.status}: ${text.slice(0, 300)}`);
   }
   const json = await res.json();
-  // v2 returns fields directly, v1 wraps in data
-  const md = json.markdown ?? json.data?.markdown ?? "";
-  const html = json.html ?? json.data?.html ?? "";
-  return `${md}\n\n${html}`;
+  return json.markdown ?? json.data?.markdown ?? "";
 }
 
 Deno.serve(async (req) => {
