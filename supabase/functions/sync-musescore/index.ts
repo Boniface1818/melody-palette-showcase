@@ -84,30 +84,13 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  // Authorization: only cron / authenticated admins may trigger this function.
-  // The cron job sends the SYNC_SECRET via the `x-sync-secret` header.
+  // Authorization: only callers presenting the shared SYNC_SECRET may trigger this
+  // function. This covers both the scheduled cron job and the in-app refresh button
+  // (which proxies through an authenticated path that injects the secret server-side).
   const expectedSecret = Deno.env.get("SYNC_SECRET");
   const providedSecret = req.headers.get("x-sync-secret");
-  const authHeader = req.headers.get("Authorization");
 
-  let authorized = false;
-
-  if (expectedSecret && providedSecret && providedSecret === expectedSecret) {
-    authorized = true;
-  } else if (authHeader?.startsWith("Bearer ")) {
-    try {
-      const supabaseAuth = createClient(
-        Deno.env.get("SUPABASE_URL")!,
-        Deno.env.get("SUPABASE_ANON_KEY")!,
-        { global: { headers: { Authorization: authHeader } } },
-      );
-      const token = authHeader.replace("Bearer ", "");
-      const { data, error } = await supabaseAuth.auth.getClaims(token);
-      if (!error && data?.claims?.sub) authorized = true;
-    } catch (_) {
-      // fall through to unauthorized
-    }
-  }
+  const authorized = !!(expectedSecret && providedSecret && providedSecret === expectedSecret);
 
   if (!authorized) {
     return new Response(
