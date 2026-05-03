@@ -183,6 +183,35 @@ export default function Compositions() {
           </div>
         </Section>
 
+        {/* Search + Sort */}
+        <Section delay={140}>
+          <div className="mt-6 max-w-2xl mx-auto flex flex-col sm:flex-row gap-3">
+            <div className="flex-1 relative">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search by title, instrument, mood…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 rounded-full bg-background/40 backdrop-blur-sm border border-border/50 text-sm font-body focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30 transition"
+              />
+            </div>
+            <div className="relative">
+              <ArrowUpDown size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value as SortKey)}
+                className="appearance-none pl-10 pr-8 py-3 rounded-full bg-background/40 backdrop-blur-sm border border-border/50 text-sm font-body focus:outline-none focus:border-primary/60 cursor-pointer"
+              >
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="views">Most viewed</option>
+                <option value="title">Title (A–Z)</option>
+              </select>
+            </div>
+          </div>
+        </Section>
+
         {loading ? (
           <div className="flex justify-center mt-20">
             <Loader2 size={32} className="animate-spin text-primary" />
@@ -190,7 +219,7 @@ export default function Compositions() {
         ) : filtered.length === 0 ? (
           <Section delay={200}>
             <p className="text-center text-muted-foreground mt-20">
-              No compositions yet. The catalog auto-updates daily.
+              No compositions match your search. Try a different filter.
             </p>
           </Section>
         ) : (
