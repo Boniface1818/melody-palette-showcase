@@ -163,7 +163,7 @@ Deno.serve(async (req) => {
     } else {
       try {
         const content = await fetchViaFirecrawl(firecrawlKey);
-        scores = parseScoresFromContent(content);
+        scores = parseScoresFromMarkdown(content);
         console.log(`Firecrawl returned ${content.length} chars, parsed ${scores.length} scores`);
       } catch (e) {
         warning = `Firecrawl failed: ${(e as Error).message}`;
