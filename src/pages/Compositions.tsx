@@ -7,8 +7,10 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library } from "lucide-react";
+import { ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown } from "lucide-react";
 import SyncScoresButton from "@/components/SyncScoresButton";
+
+type SortKey = "newest" | "oldest" | "views" | "title";
 
 interface Score {
   id: string;
