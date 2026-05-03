@@ -7,7 +7,6 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SyncScoresButton from "@/components/SyncScoresButton";
 import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
 

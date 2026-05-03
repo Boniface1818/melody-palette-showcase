@@ -7,7 +7,6 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import SyncScoresButton from "@/components/SyncScoresButton";
 import { ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library } from "lucide-react";
 
 interface Score {
