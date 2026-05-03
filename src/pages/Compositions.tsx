@@ -8,6 +8,7 @@ import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
 import { ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library } from "lucide-react";
+import SyncScoresButton from "@/components/SyncScoresButton";
 
 interface Score {
   id: string;
@@ -78,12 +79,14 @@ export default function Compositions() {
           <p className="text-center text-muted-foreground text-sm mt-4 transition-opacity duration-700">
             {subtitle}
           </p>
-          {/* Catalog meta */}
-          <div className="mt-8 max-w-2xl mx-auto flex items-center justify-center gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm">
+          {/* Catalog meta + manual sync */}
+          <div className="mt-8 max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Library size={14} className="text-primary" />
               <span className="font-body tracking-wide">{scores.length} scores · auto-syncs daily</span>
             </div>
+            <span className="hidden sm:block w-px h-5 bg-border" />
+            <SyncScoresButton variant="ghost" label="Check for new scores" onSynced={fetchScores} />
           </div>
         </Section>
 
