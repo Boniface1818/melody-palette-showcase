@@ -1,7 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2/cors";
 
-const MUSESCORE_USER_URL = "https://musescore.com/user/108485503/sheetmusic";
+const MUSESCORE_USER_URL = "https://musescore.com/user/108485503";
 const FIRECRAWL_ENDPOINT = "https://api.firecrawl.dev/v2/scrape";
 
 interface ScoreData {
