@@ -104,19 +104,35 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const response = await fetch(MUSESCORE_USER_URL, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; ScoreSync/1.0)",
-        "Accept": "text/html",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch MuseScore: ${response.status}`);
+    let html = "";
+    let fetchOk = false;
+    try {
+      const response = await fetch(MUSESCORE_USER_URL, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Cache-Control": "no-cache",
+          "Pragma": "no-cache",
+          "Sec-Ch-Ua": '"Chromium";v="124", "Google Chrome";v="124"',
+          "Sec-Fetch-Dest": "document",
+          "Sec-Fetch-Mode": "navigate",
+          "Sec-Fetch-Site": "none",
+          "Upgrade-Insecure-Requests": "1",
+        },
+      });
+      if (response.ok) {
+        html = await response.text();
+        fetchOk = true;
+      } else {
+        console.warn(`MuseScore returned ${response.status}, using fallback catalog`);
+      }
+    } catch (e) {
+      console.warn("MuseScore fetch failed, using fallback catalog:", e);
     }
 
-    const html = await response.text();
-    const scores = parseScoresFromHtml(html);
+    const scores = fetchOk ? parseScoresFromHtml(html) : [];
 
     if (scores.length === 0) {
       const fallbackScores: ScoreData[] = [
