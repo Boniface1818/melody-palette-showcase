@@ -146,13 +146,9 @@ export default function Home() {
                   Listen freely. Download what speaks to you. And when you're ready to commission a piece of your own — I'm one note away.
                 </p>
 
-                {/* Refresh button + status */}
-                <div className="mt-6 flex flex-wrap items-center gap-4">
-                  <SyncScoresButton label="Update Catalog Now" />
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground/70">
-                    Auto-syncs daily · Click to refresh instantly
-                  </span>
-                </div>
+                <p className="mt-6 text-[10px] uppercase tracking-widest text-muted-foreground/70">
+                  Catalog auto-syncs daily from MuseScore
+                </p>
               </div>
             </div>
           </div>

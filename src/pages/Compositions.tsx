@@ -79,14 +79,12 @@ export default function Compositions() {
           <p className="text-center text-muted-foreground text-sm mt-4 transition-opacity duration-700">
             {subtitle}
           </p>
-          {/* Catalog meta + refresh */}
-          <div className="mt-8 max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm">
+          {/* Catalog meta */}
+          <div className="mt-8 max-w-2xl mx-auto flex items-center justify-center gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Library size={14} className="text-primary" />
-              <span className="font-body tracking-wide">{scores.length} scores in the catalog</span>
+              <span className="font-body tracking-wide">{scores.length} scores · auto-syncs daily</span>
             </div>
-            <span className="hidden sm:block w-px h-5 bg-border" />
-            <SyncScoresButton label="Refresh Now" onSynced={fetchScores} />
           </div>
         </Section>
 
