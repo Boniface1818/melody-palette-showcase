@@ -49,6 +49,8 @@ export default function Compositions() {
   const [scores, setScores] = useState<Score[]>([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<Filter>("All");
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<SortKey>("newest");
 
   const fetchScores = async () => {
     const { data } = await supabase
@@ -63,7 +65,28 @@ export default function Compositions() {
     fetchScores();
   }, []);
 
-  const filtered = active === "All" ? scores : scores.filter((s) => s.ensemble_type === active);
+  const filtered = scores
+    .filter((s) => active === "All" || s.ensemble_type === active)
+    .filter((s) => {
+      if (!query.trim()) return true;
+      const q = query.toLowerCase();
+      return (
+        s.title.toLowerCase().includes(q) ||
+        (s.instruments ?? "").toLowerCase().includes(q) ||
+        (s.mood ?? "").toLowerCase().includes(q) ||
+        (s.ensemble_type ?? "").toLowerCase().includes(q)
+      );
+    })
+    .sort((a, b) => {
+      switch (sort) {
+        case "oldest": return (a.published_date ?? "").localeCompare(b.published_date ?? "");
+        case "views": return (b.views ?? 0) - (a.views ?? 0);
+        case "title": return a.title.localeCompare(b.title);
+        case "newest":
+        default:
+          return 0; // already newest-first from query
+      }
+    });
   const featured = scores.find((s) => s.featured) ?? scores[0];
 
   return (
