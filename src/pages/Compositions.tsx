@@ -425,7 +425,7 @@ export default function Compositions() {
                 <Section key={score.id} delay={Math.min(i * 60, 400)}>
                   <div
                     className={`glass-card glow-border h-full flex group cursor-pointer ${isList ? "flex-row gap-4 items-center !p-4" : "flex-col"}`}
-                    onClick={() => setPreview(score)}
+                    onClick={() => openPreview(score)}
                   >
                     {score.thumbnail_url && (
                       <div className={`relative rounded-xl overflow-hidden bg-secondary/50 ${isList ? "w-28 h-28 shrink-0" : "mb-4"}`}>
