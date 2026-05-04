@@ -87,7 +87,7 @@ export default function Compositions() {
     } catch {}
   }, []);
 
-  // Keyboard "/" to focus search, "Esc" to close preview
+  // Keyboard "/" focus search, Esc close, ←/→ navigate preview
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "/" && document.activeElement?.tagName !== "INPUT") {
@@ -95,10 +95,18 @@ export default function Compositions() {
         searchRef.current?.focus();
       }
       if (e.key === "Escape") setPreview(null);
+      if (preview && (e.key === "ArrowRight" || e.key === "ArrowLeft")) {
+        const idx = filtered.findIndex((s) => s.id === preview.id);
+        if (idx === -1) return;
+        const next = e.key === "ArrowRight"
+          ? filtered[(idx + 1) % filtered.length]
+          : filtered[(idx - 1 + filtered.length) % filtered.length];
+        openPreview(next);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  });
 
   const toggleFav = (id: string) => {
     setFavorites((prev) => {
