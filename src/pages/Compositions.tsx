@@ -82,6 +82,8 @@ export default function Compositions() {
     try {
       const raw = localStorage.getItem(FAV_KEY);
       if (raw) setFavorites(new Set(JSON.parse(raw)));
+      const r = localStorage.getItem(RECENT_KEY);
+      if (r) setRecent(JSON.parse(r));
     } catch {}
   }, []);
 
