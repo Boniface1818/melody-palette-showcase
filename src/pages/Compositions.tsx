@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
+  ChevronLeft, ChevronRight, Download, History, Trophy,
 } from "lucide-react";
 import SyncScoresButton from "@/components/SyncScoresButton";
 
@@ -45,6 +46,8 @@ type Filter = "All" | "Piano Duo" | "String Duet" | "Mixed Quartet" | "Mixed Tri
 const filters: Filter[] = ["All", "Piano Duo", "String Duet", "Mixed Quartet", "Mixed Trio"];
 
 const FAV_KEY = "bk_favorites";
+const RECENT_KEY = "bk_recent";
+const RECENT_MAX = 6;
 
 export default function Compositions() {
   useBackgroundCycle(5000);
@@ -62,6 +65,7 @@ export default function Compositions() {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [preview, setPreview] = useState<Score | null>(null);
   const [shared, setShared] = useState<string | null>(null);
+  const [recent, setRecent] = useState<string[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
 
   const fetchScores = async () => {
@@ -78,10 +82,12 @@ export default function Compositions() {
     try {
       const raw = localStorage.getItem(FAV_KEY);
       if (raw) setFavorites(new Set(JSON.parse(raw)));
+      const r = localStorage.getItem(RECENT_KEY);
+      if (r) setRecent(JSON.parse(r));
     } catch {}
   }, []);
 
-  // Keyboard "/" to focus search, "Esc" to close preview
+  // Keyboard "/" focus search, Esc close, ←/→ navigate preview
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "/" && document.activeElement?.tagName !== "INPUT") {
@@ -89,16 +95,33 @@ export default function Compositions() {
         searchRef.current?.focus();
       }
       if (e.key === "Escape") setPreview(null);
+      if (preview && (e.key === "ArrowRight" || e.key === "ArrowLeft")) {
+        const idx = filtered.findIndex((s) => s.id === preview.id);
+        if (idx === -1) return;
+        const next = e.key === "ArrowRight"
+          ? filtered[(idx + 1) % filtered.length]
+          : filtered[(idx - 1 + filtered.length) % filtered.length];
+        openPreview(next);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  });
 
   const toggleFav = (id: string) => {
     setFavorites((prev) => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
       try { localStorage.setItem(FAV_KEY, JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  };
+
+  const openPreview = (score: Score) => {
+    setPreview(score);
+    setRecent((prev) => {
+      const next = [score.id, ...prev.filter((id) => id !== score.id)].slice(0, RECENT_MAX);
+      try { localStorage.setItem(RECENT_KEY, JSON.stringify(next)); } catch {}
       return next;
     });
   };
@@ -155,8 +178,39 @@ export default function Compositions() {
   const surpriseMe = () => {
     if (!filtered.length) return;
     const pick = filtered[Math.floor(Math.random() * filtered.length)];
-    setPreview(pick);
+    openPreview(pick);
   };
+
+  const topScore = useMemo(
+    () => scores.reduce<Score | null>((top, s) => (!top || (s.views ?? 0) > (top.views ?? 0) ? s : top), null),
+    [scores],
+  );
+
+  const recentScores = useMemo(
+    () => recent.map((id) => scores.find((s) => s.id === id)).filter(Boolean) as Score[],
+    [recent, scores],
+  );
+
+  const exportFavorites = () => {
+    const favs = scores.filter((s) => favorites.has(s.id));
+    if (!favs.length) return;
+    const lines = [
+      "BK Music — My Favorite Compositions",
+      "=".repeat(40),
+      "",
+      ...favs.map((s, i) =>
+        `${i + 1}. ${s.title}\n   ${s.ensemble_type ?? ""}${s.duration ? ` • ${s.duration}` : ""}\n   ${s.musescore_url}\n`
+      ),
+    ];
+    const blob = new Blob([lines.join("\n")], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "bk-music-favorites.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+  // surpriseMe end
 
   const formatNum = (n: number) =>
     n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`;
@@ -192,6 +246,39 @@ export default function Compositions() {
                   <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">{label}</div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Top score highlight */}
+          {!loading && topScore && (topScore.views ?? 0) > 0 && (
+            <button
+              onClick={() => openPreview(topScore)}
+              className="mt-4 mx-auto flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs hover:bg-accent/20 transition active:scale-95"
+            >
+              <Trophy size={13} />
+              <span className="uppercase tracking-widest text-[10px]">Most viewed</span>
+              <span className="text-foreground font-medium">{topScore.title}</span>
+              <span className="text-muted-foreground">• {formatNum(topScore.views ?? 0)} views</span>
+            </button>
+          )}
+
+          {/* Recently viewed strip */}
+          {recentScores.length > 0 && (
+            <div className="mt-6 max-w-3xl mx-auto">
+              <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
+                <History size={12} /> Recently viewed
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {recentScores.map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => openPreview(s)}
+                    className="shrink-0 px-3 py-1.5 rounded-full bg-secondary/60 hover:bg-secondary border border-border/50 text-xs whitespace-nowrap transition"
+                  >
+                    {s.title}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
@@ -282,6 +369,15 @@ export default function Compositions() {
             >
               ♥ Favorites {favorites.size > 0 && `(${favorites.size})`}
             </button>
+            {favorites.size > 0 && (
+              <button
+                onClick={exportFavorites}
+                className="px-4 py-2 rounded-full text-xs font-body tracking-wide bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all duration-300 active:scale-95 inline-flex items-center gap-1.5"
+                title="Export favorites as a text file"
+              >
+                <Download size={12} /> Export
+              </button>
+            )}
           </div>
         </Section>
 
@@ -371,7 +467,7 @@ export default function Compositions() {
                 <Section key={score.id} delay={Math.min(i * 60, 400)}>
                   <div
                     className={`glass-card glow-border h-full flex group cursor-pointer ${isList ? "flex-row gap-4 items-center !p-4" : "flex-col"}`}
-                    onClick={() => setPreview(score)}
+                    onClick={() => openPreview(score)}
                   >
                     {score.thumbnail_url && (
                       <div className={`relative rounded-xl overflow-hidden bg-secondary/50 ${isList ? "w-28 h-28 shrink-0" : "mb-4"}`}>
@@ -495,6 +591,30 @@ export default function Compositions() {
             >
               <X size={16} />
             </button>
+            {filtered.length > 1 && (
+              <>
+                <button
+                  onClick={() => {
+                    const i = filtered.findIndex((s) => s.id === preview.id);
+                    openPreview(filtered[(i - 1 + filtered.length) % filtered.length]);
+                  }}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/70 hover:bg-background border border-border/50 transition"
+                  aria-label="Previous score"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  onClick={() => {
+                    const i = filtered.findIndex((s) => s.id === preview.id);
+                    openPreview(filtered[(i + 1) % filtered.length]);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/70 hover:bg-background border border-border/50 transition"
+                  aria-label="Next score"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </>
+            )}
             <div className="aspect-video bg-secondary">
               <iframe
                 src={`https://musescore.com/user/108485503/scores/${preview.musescore_id}/embed`}
@@ -515,14 +635,29 @@ export default function Compositions() {
                   <span>{preview.story}</span>
                 </p>
               )}
-              <a
-                href={preview.musescore_url}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-primary"
-              >
-                Open on MuseScore <ExternalLink size={14} />
-              </a>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href={preview.musescore_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-primary"
+                >
+                  Open on MuseScore <ExternalLink size={14} />
+                </a>
+                <button
+                  onClick={(e) => handleShare(e as any, preview)}
+                  className="px-4 py-3 rounded-xl border border-border/60 text-xs font-medium inline-flex items-center gap-2 hover:border-primary/60 hover:text-primary transition active:scale-95"
+                >
+                  {shared === preview.id ? <><Check size={14} /> Copied</> : <><Share2 size={14} /> Share</>}
+                </button>
+                <button
+                  onClick={() => toggleFav(preview.id)}
+                  className="px-4 py-3 rounded-xl border border-border/60 text-xs font-medium inline-flex items-center gap-2 hover:border-accent/60 hover:text-accent transition active:scale-95"
+                >
+                  <span className="text-base leading-none">{favorites.has(preview.id) ? "♥" : "♡"}</span>
+                  {favorites.has(preview.id) ? "Saved" : "Save"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
