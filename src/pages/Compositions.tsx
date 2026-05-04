@@ -46,6 +46,8 @@ type Filter = "All" | "Piano Duo" | "String Duet" | "Mixed Quartet" | "Mixed Tri
 const filters: Filter[] = ["All", "Piano Duo", "String Duet", "Mixed Quartet", "Mixed Trio"];
 
 const FAV_KEY = "bk_favorites";
+const RECENT_KEY = "bk_recent";
+const RECENT_MAX = 6;
 
 export default function Compositions() {
   useBackgroundCycle(5000);
