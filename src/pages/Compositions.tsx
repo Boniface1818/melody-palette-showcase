@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
@@ -7,10 +7,14 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown } from "lucide-react";
+import {
+  ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown,
+  LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
+} from "lucide-react";
 import SyncScoresButton from "@/components/SyncScoresButton";
 
-type SortKey = "newest" | "oldest" | "views" | "title";
+type SortKey = "newest" | "oldest" | "views" | "title" | "parts";
+type ViewMode = "grid" | "list";
 
 interface Score {
   id: string;
