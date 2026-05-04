@@ -249,6 +249,39 @@ export default function Compositions() {
             </div>
           )}
 
+          {/* Top score highlight */}
+          {!loading && topScore && (topScore.views ?? 0) > 0 && (
+            <button
+              onClick={() => openPreview(topScore)}
+              className="mt-4 mx-auto flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs hover:bg-accent/20 transition active:scale-95"
+            >
+              <Trophy size={13} />
+              <span className="uppercase tracking-widest text-[10px]">Most viewed</span>
+              <span className="text-foreground font-medium">{topScore.title}</span>
+              <span className="text-muted-foreground">• {formatNum(topScore.views ?? 0)} views</span>
+            </button>
+          )}
+
+          {/* Recently viewed strip */}
+          {recentScores.length > 0 && (
+            <div className="mt-6 max-w-3xl mx-auto">
+              <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
+                <History size={12} /> Recently viewed
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {recentScores.map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => openPreview(s)}
+                    className="shrink-0 px-3 py-1.5 rounded-full bg-secondary/60 hover:bg-secondary border border-border/50 text-xs whitespace-nowrap transition"
+                  >
+                    {s.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Catalog meta + manual sync */}
           <div className="mt-6 max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
