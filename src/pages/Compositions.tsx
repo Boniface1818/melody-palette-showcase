@@ -65,6 +65,7 @@ export default function Compositions() {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [preview, setPreview] = useState<Score | null>(null);
   const [shared, setShared] = useState<string | null>(null);
+  const [recent, setRecent] = useState<string[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
 
   const fetchScores = async () => {
