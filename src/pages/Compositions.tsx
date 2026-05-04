@@ -178,8 +178,39 @@ export default function Compositions() {
   const surpriseMe = () => {
     if (!filtered.length) return;
     const pick = filtered[Math.floor(Math.random() * filtered.length)];
-    setPreview(pick);
+    openPreview(pick);
   };
+
+  const topScore = useMemo(
+    () => scores.reduce<Score | null>((top, s) => (!top || (s.views ?? 0) > (top.views ?? 0) ? s : top), null),
+    [scores],
+  );
+
+  const recentScores = useMemo(
+    () => recent.map((id) => scores.find((s) => s.id === id)).filter(Boolean) as Score[],
+    [recent, scores],
+  );
+
+  const exportFavorites = () => {
+    const favs = scores.filter((s) => favorites.has(s.id));
+    if (!favs.length) return;
+    const lines = [
+      "BK Music — My Favorite Compositions",
+      "=".repeat(40),
+      "",
+      ...favs.map((s, i) =>
+        `${i + 1}. ${s.title}\n   ${s.ensemble_type ?? ""}${s.duration ? ` • ${s.duration}` : ""}\n   ${s.musescore_url}\n`
+      ),
+    ];
+    const blob = new Blob([lines.join("\n")], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "bk-music-favorites.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+  // surpriseMe end
 
   const formatNum = (n: number) =>
     n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`;
