@@ -117,6 +117,15 @@ export default function Compositions() {
     });
   };
 
+  const openPreview = (score: Score) => {
+    setPreview(score);
+    setRecent((prev) => {
+      const next = [score.id, ...prev.filter((id) => id !== score.id)].slice(0, RECENT_MAX);
+      try { localStorage.setItem(RECENT_KEY, JSON.stringify(next)); } catch {}
+      return next;
+    });
+  };
+
   const handleShare = async (e: React.MouseEvent, score: Score) => {
     e.preventDefault();
     e.stopPropagation();
