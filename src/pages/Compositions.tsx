@@ -635,14 +635,29 @@ export default function Compositions() {
                   <span>{preview.story}</span>
                 </p>
               )}
-              <a
-                href={preview.musescore_url}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-primary"
-              >
-                Open on MuseScore <ExternalLink size={14} />
-              </a>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href={preview.musescore_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-primary"
+                >
+                  Open on MuseScore <ExternalLink size={14} />
+                </a>
+                <button
+                  onClick={(e) => handleShare(e as any, preview)}
+                  className="px-4 py-3 rounded-xl border border-border/60 text-xs font-medium inline-flex items-center gap-2 hover:border-primary/60 hover:text-primary transition active:scale-95"
+                >
+                  {shared === preview.id ? <><Check size={14} /> Copied</> : <><Share2 size={14} /> Share</>}
+                </button>
+                <button
+                  onClick={() => toggleFav(preview.id)}
+                  className="px-4 py-3 rounded-xl border border-border/60 text-xs font-medium inline-flex items-center gap-2 hover:border-accent/60 hover:text-accent transition active:scale-95"
+                >
+                  <span className="text-base leading-none">{favorites.has(preview.id) ? "♥" : "♡"}</span>
+                  {favorites.has(preview.id) ? "Saved" : "Save"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
