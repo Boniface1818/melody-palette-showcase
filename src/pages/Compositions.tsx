@@ -369,6 +369,15 @@ export default function Compositions() {
             >
               ♥ Favorites {favorites.size > 0 && `(${favorites.size})`}
             </button>
+            {favorites.size > 0 && (
+              <button
+                onClick={exportFavorites}
+                className="px-4 py-2 rounded-full text-xs font-body tracking-wide bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-all duration-300 active:scale-95 inline-flex items-center gap-1.5"
+                title="Export favorites as a text file"
+              >
+                <Download size={12} /> Export
+              </button>
+            )}
           </div>
         </Section>
 
