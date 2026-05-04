@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
-  ChevronLeft, ChevronRight, Download, History, Trophy, Printer,
+  ChevronLeft, ChevronRight, Download, History, Trophy,
 } from "lucide-react";
 import SyncScoresButton from "@/components/SyncScoresButton";
 
