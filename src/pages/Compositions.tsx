@@ -591,6 +591,30 @@ export default function Compositions() {
             >
               <X size={16} />
             </button>
+            {filtered.length > 1 && (
+              <>
+                <button
+                  onClick={() => {
+                    const i = filtered.findIndex((s) => s.id === preview.id);
+                    openPreview(filtered[(i - 1 + filtered.length) % filtered.length]);
+                  }}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/70 hover:bg-background border border-border/50 transition"
+                  aria-label="Previous score"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  onClick={() => {
+                    const i = filtered.findIndex((s) => s.id === preview.id);
+                    openPreview(filtered[(i + 1) % filtered.length]);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/70 hover:bg-background border border-border/50 transition"
+                  aria-label="Next score"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </>
+            )}
             <div className="aspect-video bg-secondary">
               <iframe
                 src={`https://musescore.com/user/108485503/scores/${preview.musescore_id}/embed`}
