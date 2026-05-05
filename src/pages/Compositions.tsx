@@ -255,12 +255,13 @@ export default function Compositions() {
 
           {/* Stats dashboard */}
           {!loading && scores.length > 0 && (
-            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto">
+            <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-4xl mx-auto">
               {[
                 { icon: FileMusic, label: "Scores", value: scores.length },
                 { icon: Eye, label: "Total Views", value: formatNum(stats.totalViews) },
                 { icon: Users, label: "Parts Written", value: stats.totalParts },
                 { icon: Clock, label: "Pages", value: stats.totalPages },
+                { icon: Clock, label: "Minutes", value: stats.totalMinutes },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="glass-card !p-4 text-center">
                   <Icon size={16} className="mx-auto text-primary mb-1.5" />
@@ -268,6 +269,29 @@ export default function Compositions() {
                   <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">{label}</div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Ensemble breakdown mini chart */}
+          {!loading && ensembleBreakdown.length > 1 && (
+            <div className="mt-4 max-w-4xl mx-auto glass-card !p-4">
+              <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
+                <BarChart3 size={12} className="text-primary" /> Catalog by Ensemble
+              </div>
+              <div className="space-y-2">
+                {ensembleBreakdown.map((e) => (
+                  <div key={e.label} className="flex items-center gap-3">
+                    <span className="text-xs text-foreground w-32 shrink-0 truncate">{e.label}</span>
+                    <div className="flex-1 h-2 rounded-full bg-secondary/60 overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-700"
+                        style={{ width: `${Math.max(e.pct, 4)}%` }}
+                      />
+                    </div>
+                    <span className="text-[11px] text-muted-foreground tabular-nums w-12 text-right">{e.count} · {e.pct}%</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
