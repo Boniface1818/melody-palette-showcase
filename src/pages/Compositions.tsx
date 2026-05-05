@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
-  ChevronLeft, ChevronRight, Download, History, Trophy,
+  ChevronLeft, ChevronRight, Download, History, Trophy, BarChart3, Copy,
 } from "lucide-react";
 import SyncScoresButton from "@/components/SyncScoresButton";
 
@@ -172,7 +172,29 @@ export default function Compositions() {
     const totalViews = scores.reduce((sum, s) => sum + (s.views ?? 0), 0);
     const totalParts = scores.reduce((sum, s) => sum + (s.parts ?? 0), 0);
     const totalPages = scores.reduce((sum, s) => sum + (s.pages ?? 0), 0);
-    return { totalViews, totalParts, totalPages };
+    // Sum durations like "3:42" or "1:02:30"
+    let totalSec = 0;
+    for (const s of scores) {
+      if (!s.duration) continue;
+      const parts = s.duration.split(":").map((n) => parseInt(n, 10) || 0);
+      if (parts.length === 2) totalSec += parts[0] * 60 + parts[1];
+      else if (parts.length === 3) totalSec += parts[0] * 3600 + parts[1] * 60 + parts[2];
+    }
+    const totalMinutes = Math.round(totalSec / 60);
+    return { totalViews, totalParts, totalPages, totalMinutes };
+  }, [scores]);
+
+  // Ensemble breakdown for mini chart
+  const ensembleBreakdown = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const s of scores) {
+      const key = s.ensemble_type ?? "Other";
+      map.set(key, (map.get(key) ?? 0) + 1);
+    }
+    const total = scores.length || 1;
+    return [...map.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([label, count]) => ({ label, count, pct: Math.round((count / total) * 100) }));
   }, [scores]);
 
   const surpriseMe = () => {
@@ -233,12 +255,13 @@ export default function Compositions() {
 
           {/* Stats dashboard */}
           {!loading && scores.length > 0 && (
-            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto">
+            <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-4xl mx-auto">
               {[
                 { icon: FileMusic, label: "Scores", value: scores.length },
                 { icon: Eye, label: "Total Views", value: formatNum(stats.totalViews) },
                 { icon: Users, label: "Parts Written", value: stats.totalParts },
                 { icon: Clock, label: "Pages", value: stats.totalPages },
+                { icon: Clock, label: "Minutes", value: stats.totalMinutes },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="glass-card !p-4 text-center">
                   <Icon size={16} className="mx-auto text-primary mb-1.5" />
@@ -246,6 +269,29 @@ export default function Compositions() {
                   <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5">{label}</div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Ensemble breakdown mini chart */}
+          {!loading && ensembleBreakdown.length > 1 && (
+            <div className="mt-4 max-w-4xl mx-auto glass-card !p-4">
+              <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
+                <BarChart3 size={12} className="text-primary" /> Catalog by Ensemble
+              </div>
+              <div className="space-y-2">
+                {ensembleBreakdown.map((e) => (
+                  <div key={e.label} className="flex items-center gap-3">
+                    <span className="text-xs text-foreground w-32 shrink-0 truncate">{e.label}</span>
+                    <div className="flex-1 h-2 rounded-full bg-secondary/60 overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-700"
+                        style={{ width: `${Math.max(e.pct, 4)}%` }}
+                      />
+                    </div>
+                    <span className="text-[11px] text-muted-foreground tabular-nums w-12 text-right">{e.count} · {e.pct}%</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -656,6 +702,16 @@ export default function Compositions() {
                 >
                   <span className="text-base leading-none">{favorites.has(preview.id) ? "♥" : "♡"}</span>
                   {favorites.has(preview.id) ? "Saved" : "Save"}
+                </button>
+                <button
+                  onClick={async () => {
+                    const code = `<iframe src="https://musescore.com/user/108485503/scores/${preview.musescore_id}/embed" width="100%" height="500" frameborder="0" allow="autoplay; fullscreen"></iframe>`;
+                    try { await navigator.clipboard.writeText(code); setShared("__embed__"); setTimeout(() => setShared(null), 1500); } catch {}
+                  }}
+                  className="px-4 py-3 rounded-xl border border-border/60 text-xs font-medium inline-flex items-center gap-2 hover:border-primary/60 hover:text-primary transition active:scale-95"
+                  title="Copy iframe embed code"
+                >
+                  {shared === "__embed__" ? <><Check size={14} /> Embed copied</> : <><Copy size={14} /> Copy embed</>}
                 </button>
               </div>
             </div>

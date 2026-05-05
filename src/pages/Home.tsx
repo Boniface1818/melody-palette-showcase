@@ -7,8 +7,16 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones } from "lucide-react";
+import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones, Mail, MessageCircle, Pen, Mic2, Send } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
+import ScoreOfTheDay from "@/components/ScoreOfTheDay";
+
+const journey = [
+  { icon: MessageCircle, title: "You reach out", text: "Tell me the moment, the voice, the prayer behind the song." },
+  { icon: Pen, title: "I sketch", text: "Melody first, then harmony — drafts shared with you for feedback." },
+  { icon: Mic2, title: "We refine", text: "Tweak keys, voicings, and lyrics until the score sings to you." },
+  { icon: Send, title: "You receive", text: "Final PDF, MIDI, backing track, and a guide vocal — yours forever." },
+];
 
 const swahiliQuotes = [
   { sw: "Bwana ni mchungaji wangu, sitapungukiwa na kitu.", en: "The Lord is my shepherd; I shall not want.", attr: "Zaburi 23" },
@@ -200,6 +208,44 @@ export default function Home() {
             </div>
             <ArrowRight size={16} className="ml-auto text-muted-foreground transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent" />
           </a>
+        </Section>
+
+        {/* Score of the Day */}
+        <Section delay={320}>
+          <div className="mt-16">
+            <ScoreOfTheDay />
+          </div>
+        </Section>
+
+        {/* Commission Journey Timeline */}
+        <Section delay={340}>
+          <div className="mt-16 max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <Feather size={12} /> How a Commission Unfolds
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                Four steps from your idea to a finished score.
+              </h2>
+            </div>
+            <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {journey.map((step, i) => (
+                <li key={step.title} className="glass-card relative group hover:-translate-y-1 transition-transform duration-500">
+                  <span className="absolute -top-3 -left-3 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-display font-bold flex items-center justify-center shadow-lg">
+                    {i + 1}
+                  </span>
+                  <step.icon size={20} className="text-accent mb-3" />
+                  <h3 className="font-display font-semibold text-sm mb-1.5">{step.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{step.text}</p>
+                </li>
+              ))}
+            </ol>
+            <div className="text-center mt-6">
+              <Link to="/contact" className="btn-primary inline-flex">
+                <Mail size={14} /> Begin Your Commission
+              </Link>
+            </div>
+          </div>
         </Section>
 
         {/* Closing invitation strip */}

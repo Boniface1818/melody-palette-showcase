@@ -8,7 +8,10 @@ import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
   Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
+  MessageCircle, HelpCircle, ChevronDown,
 } from "lucide-react";
+import { useState } from "react";
+import { useNairobiClock } from "@/hooks/useNairobiClock";
 import serviceLiturgical from "@/assets/service-liturgical.jpg";
 import serviceFestivals from "@/assets/service-festivals.jpg";
 import servicePsalms from "@/assets/service-psalms.jpg";
@@ -110,11 +113,36 @@ const audiences = [
 const gmailLink = (subject: string) =>
   `https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=${encodeURIComponent(subject)}`;
 
+const faqs = [
+  {
+    q: "How long does a commission take?",
+    a: "Most pieces take 2–4 weeks from first sketch to finished score. Rush jobs are possible — let me know your deadline up front and I'll be honest about whether it can be done well in the time you have.",
+  },
+  {
+    q: "Do you write in Kiswahili, English, Latin?",
+    a: "All three, often in the same piece. Tell me which liturgical languages your community uses, and I'll shape the text accordingly.",
+  },
+  {
+    q: "What do I receive when the song is done?",
+    a: "A clean PDF score, MIDI file, an MP3 mock-up, and (for soloists) a backing track and guide vocal — everything you need to learn the piece without me there.",
+  },
+  {
+    q: "How do payments work?",
+    a: "A small deposit confirms the brief; the rest is due once you've heard a draft you love. M-Pesa, bank transfer, and international options are all supported.",
+  },
+  {
+    q: "Can I request edits after delivery?",
+    a: "Yes — two rounds of revisions are included on every commission. Beyond that we can talk, but it's almost never needed.",
+  },
+];
+
 export default function Contact() {
   useBackgroundCycle(5000);
   const headingColor = useColorCycle(3000);
   const heading = useTextReveal("Let's Make Music Together", 70, 200, true, 60000);
   const subtitle = useRotatingSubtitles(contactSubtitles, 8000);
+  const nairobiTime = useNairobiClock();
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
     <>
@@ -150,7 +178,7 @@ export default function Contact() {
               <span className="hidden sm:block w-px h-6 bg-border" />
               <div className="flex items-center gap-2 text-sm">
                 <Clock size={16} className="text-accent" />
-                <span className="text-foreground">Available 24 hours · Worldwide</span>
+                <span className="text-foreground">Nairobi · <span className="font-mono tabular-nums">{nairobiTime}</span></span>
               </div>
               <span className="hidden sm:block w-px h-6 bg-border" />
               <div className="flex items-center gap-2 text-sm">
@@ -162,7 +190,7 @@ export default function Contact() {
         </Section>
 
         {/* Quick Contact Cards */}
-        <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-4xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 max-w-5xl mx-auto">
           <Section delay={100}>
             <a
               href={gmailLink("Music Inquiry")}
@@ -187,11 +215,25 @@ export default function Contact() {
             </a>
           </Section>
           <Section delay={200}>
+            <a
+              href="https://wa.me/254104586361?text=Habari%20Boniface%2C%20I%27d%20like%20to%20talk%20about%20a%20song."
+              target="_blank"
+              rel="noreferrer"
+              className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group"
+            >
+              <MessageCircle size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+              <div>
+                <p className="text-xs text-muted-foreground">WhatsApp chat</p>
+                <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">Message me directly</p>
+              </div>
+            </a>
+          </Section>
+          <Section delay={250}>
             <div className="glass-card flex items-start gap-3 h-full">
               <MapPin size={20} className="text-primary mt-0.5 shrink-0" />
               <div>
                 <p className="text-xs text-muted-foreground">Based In</p>
-                <p className="text-sm font-body text-foreground">Kenya · Available Worldwide</p>
+                <p className="text-sm font-body text-foreground">Kenya · Worldwide</p>
               </div>
             </div>
           </Section>
@@ -315,6 +357,45 @@ export default function Contact() {
                   </div>
                 </Section>
               ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* FAQ */}
+        <Section delay={180}>
+          <div className="mt-20 max-w-3xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <HelpCircle size={12} /> Common questions
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold">Things people ask before commissioning</h2>
+            </div>
+            <div className="space-y-3">
+              {faqs.map((f, i) => {
+                const isOpen = openFaq === i;
+                return (
+                  <div key={f.q} className="glass-card !p-0 overflow-hidden">
+                    <button
+                      onClick={() => setOpenFaq(isOpen ? null : i)}
+                      className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-secondary/30 transition"
+                      aria-expanded={isOpen}
+                    >
+                      <span className="font-display font-semibold text-sm sm:text-base">{f.q}</span>
+                      <ChevronDown
+                        size={18}
+                        className={`text-primary shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    <div
+                      className={`grid transition-all duration-300 ease-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </Section>
