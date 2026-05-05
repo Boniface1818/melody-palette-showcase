@@ -172,7 +172,29 @@ export default function Compositions() {
     const totalViews = scores.reduce((sum, s) => sum + (s.views ?? 0), 0);
     const totalParts = scores.reduce((sum, s) => sum + (s.parts ?? 0), 0);
     const totalPages = scores.reduce((sum, s) => sum + (s.pages ?? 0), 0);
-    return { totalViews, totalParts, totalPages };
+    // Sum durations like "3:42" or "1:02:30"
+    let totalSec = 0;
+    for (const s of scores) {
+      if (!s.duration) continue;
+      const parts = s.duration.split(":").map((n) => parseInt(n, 10) || 0);
+      if (parts.length === 2) totalSec += parts[0] * 60 + parts[1];
+      else if (parts.length === 3) totalSec += parts[0] * 3600 + parts[1] * 60 + parts[2];
+    }
+    const totalMinutes = Math.round(totalSec / 60);
+    return { totalViews, totalParts, totalPages, totalMinutes };
+  }, [scores]);
+
+  // Ensemble breakdown for mini chart
+  const ensembleBreakdown = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const s of scores) {
+      const key = s.ensemble_type ?? "Other";
+      map.set(key, (map.get(key) ?? 0) + 1);
+    }
+    const total = scores.length || 1;
+    return [...map.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([label, count]) => ({ label, count, pct: Math.round((count / total) * 100) }));
   }, [scores]);
 
   const surpriseMe = () => {
