@@ -703,6 +703,16 @@ export default function Compositions() {
                   <span className="text-base leading-none">{favorites.has(preview.id) ? "♥" : "♡"}</span>
                   {favorites.has(preview.id) ? "Saved" : "Save"}
                 </button>
+                <button
+                  onClick={async () => {
+                    const code = `<iframe src="https://musescore.com/user/108485503/scores/${preview.musescore_id}/embed" width="100%" height="500" frameborder="0" allow="autoplay; fullscreen"></iframe>`;
+                    try { await navigator.clipboard.writeText(code); setShared("__embed__"); setTimeout(() => setShared(null), 1500); } catch {}
+                  }}
+                  className="px-4 py-3 rounded-xl border border-border/60 text-xs font-medium inline-flex items-center gap-2 hover:border-primary/60 hover:text-primary transition active:scale-95"
+                  title="Copy iframe embed code"
+                >
+                  {shared === "__embed__" ? <><Check size={14} /> Embed copied</> : <><Copy size={14} /> Copy embed</>}
+                </button>
               </div>
             </div>
           </div>
