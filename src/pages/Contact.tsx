@@ -361,6 +361,45 @@ export default function Contact() {
           </div>
         </Section>
 
+        {/* FAQ */}
+        <Section delay={180}>
+          <div className="mt-20 max-w-3xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <HelpCircle size={12} /> Common questions
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold">Things people ask before commissioning</h2>
+            </div>
+            <div className="space-y-3">
+              {faqs.map((f, i) => {
+                const isOpen = openFaq === i;
+                return (
+                  <div key={f.q} className="glass-card !p-0 overflow-hidden">
+                    <button
+                      onClick={() => setOpenFaq(isOpen ? null : i)}
+                      className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-secondary/30 transition"
+                      aria-expanded={isOpen}
+                    >
+                      <span className="font-display font-semibold text-sm sm:text-base">{f.q}</span>
+                      <ChevronDown
+                        size={18}
+                        className={`text-primary shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    <div
+                      className={`grid transition-all duration-300 ease-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </Section>
+
         {/* Socials */}
         <Section delay={200}>
           <div className="mt-20 max-w-3xl mx-auto text-center">
