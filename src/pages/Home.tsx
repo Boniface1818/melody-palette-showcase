@@ -210,6 +210,44 @@ export default function Home() {
           </a>
         </Section>
 
+        {/* Score of the Day */}
+        <Section delay={320}>
+          <div className="mt-16">
+            <ScoreOfTheDay />
+          </div>
+        </Section>
+
+        {/* Commission Journey Timeline */}
+        <Section delay={340}>
+          <div className="mt-16 max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <Feather size={12} /> How a Commission Unfolds
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                Four steps from your idea to a finished score.
+              </h2>
+            </div>
+            <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {journey.map((step, i) => (
+                <li key={step.title} className="glass-card relative group hover:-translate-y-1 transition-transform duration-500">
+                  <span className="absolute -top-3 -left-3 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-display font-bold flex items-center justify-center shadow-lg">
+                    {i + 1}
+                  </span>
+                  <step.icon size={20} className="text-accent mb-3" />
+                  <h3 className="font-display font-semibold text-sm mb-1.5">{step.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{step.text}</p>
+                </li>
+              ))}
+            </ol>
+            <div className="text-center mt-6">
+              <Link to="/contact" className="btn-primary inline-flex">
+                <Mail size={14} /> Begin Your Commission
+              </Link>
+            </div>
+          </div>
+        </Section>
+
         {/* Closing invitation strip */}
         <Section delay={350}>
           <div className="mt-12 max-w-4xl mx-auto text-center px-4">
