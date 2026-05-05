@@ -113,11 +113,36 @@ const audiences = [
 const gmailLink = (subject: string) =>
   `https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=${encodeURIComponent(subject)}`;
 
+const faqs = [
+  {
+    q: "How long does a commission take?",
+    a: "Most pieces take 2–4 weeks from first sketch to finished score. Rush jobs are possible — let me know your deadline up front and I'll be honest about whether it can be done well in the time you have.",
+  },
+  {
+    q: "Do you write in Kiswahili, English, Latin?",
+    a: "All three, often in the same piece. Tell me which liturgical languages your community uses, and I'll shape the text accordingly.",
+  },
+  {
+    q: "What do I receive when the song is done?",
+    a: "A clean PDF score, MIDI file, an MP3 mock-up, and (for soloists) a backing track and guide vocal — everything you need to learn the piece without me there.",
+  },
+  {
+    q: "How do payments work?",
+    a: "A small deposit confirms the brief; the rest is due once you've heard a draft you love. M-Pesa, bank transfer, and international options are all supported.",
+  },
+  {
+    q: "Can I request edits after delivery?",
+    a: "Yes — two rounds of revisions are included on every commission. Beyond that we can talk, but it's almost never needed.",
+  },
+];
+
 export default function Contact() {
   useBackgroundCycle(5000);
   const headingColor = useColorCycle(3000);
   const heading = useTextReveal("Let's Make Music Together", 70, 200, true, 60000);
   const subtitle = useRotatingSubtitles(contactSubtitles, 8000);
+  const nairobiTime = useNairobiClock();
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
     <>
