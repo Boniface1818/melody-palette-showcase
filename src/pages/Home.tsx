@@ -7,8 +7,16 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones } from "lucide-react";
+import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones, Mail, MessageCircle, Pen, Mic2, Send } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
+import ScoreOfTheDay from "@/components/ScoreOfTheDay";
+
+const journey = [
+  { icon: MessageCircle, title: "You reach out", text: "Tell me the moment, the voice, the prayer behind the song." },
+  { icon: Pen, title: "I sketch", text: "Melody first, then harmony — drafts shared with you for feedback." },
+  { icon: Mic2, title: "We refine", text: "Tweak keys, voicings, and lyrics until the score sings to you." },
+  { icon: Send, title: "You receive", text: "Final PDF, MIDI, backing track, and a guide vocal — yours forever." },
+];
 
 const swahiliQuotes = [
   { sw: "Bwana ni mchungaji wangu, sitapungukiwa na kitu.", en: "The Lord is my shepherd; I shall not want.", attr: "Zaburi 23" },
