@@ -178,7 +178,7 @@ export default function Contact() {
               <span className="hidden sm:block w-px h-6 bg-border" />
               <div className="flex items-center gap-2 text-sm">
                 <Clock size={16} className="text-accent" />
-                <span className="text-foreground">Available 24 hours · Worldwide</span>
+                <span className="text-foreground">Nairobi · <span className="font-mono tabular-nums">{nairobiTime}</span></span>
               </div>
               <span className="hidden sm:block w-px h-6 bg-border" />
               <div className="flex items-center gap-2 text-sm">
