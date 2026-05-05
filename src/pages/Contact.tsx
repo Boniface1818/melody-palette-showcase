@@ -215,11 +215,25 @@ export default function Contact() {
             </a>
           </Section>
           <Section delay={200}>
+            <a
+              href="https://wa.me/254104586361?text=Habari%20Boniface%2C%20I%27d%20like%20to%20talk%20about%20a%20song."
+              target="_blank"
+              rel="noreferrer"
+              className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group"
+            >
+              <MessageCircle size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+              <div>
+                <p className="text-xs text-muted-foreground">WhatsApp chat</p>
+                <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">Message me directly</p>
+              </div>
+            </a>
+          </Section>
+          <Section delay={250}>
             <div className="glass-card flex items-start gap-3 h-full">
               <MapPin size={20} className="text-primary mt-0.5 shrink-0" />
               <div>
                 <p className="text-xs text-muted-foreground">Based In</p>
-                <p className="text-sm font-body text-foreground">Kenya · Available Worldwide</p>
+                <p className="text-sm font-body text-foreground">Kenya · Worldwide</p>
               </div>
             </div>
           </Section>
