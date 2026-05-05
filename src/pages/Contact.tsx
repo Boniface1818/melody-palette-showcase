@@ -8,7 +8,10 @@ import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
   Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
+  MessageCircle, HelpCircle, ChevronDown,
 } from "lucide-react";
+import { useState } from "react";
+import { useNairobiClock } from "@/hooks/useNairobiClock";
 import serviceLiturgical from "@/assets/service-liturgical.jpg";
 import serviceFestivals from "@/assets/service-festivals.jpg";
 import servicePsalms from "@/assets/service-psalms.jpg";
