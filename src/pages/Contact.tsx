@@ -190,7 +190,7 @@ export default function Contact() {
         </Section>
 
         {/* Quick Contact Cards */}
-        <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-4xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 max-w-5xl mx-auto">
           <Section delay={100}>
             <a
               href={gmailLink("Music Inquiry")}
