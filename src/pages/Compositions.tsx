@@ -8,11 +8,10 @@ import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown,
+  ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
-  ChevronLeft, ChevronRight, Download, History, Trophy, BarChart3, Copy,
+  ChevronLeft, ChevronRight, Download, History, Trophy, Copy,
 } from "lucide-react";
-import SyncScoresButton from "@/components/SyncScoresButton";
 
 type SortKey = "newest" | "oldest" | "views" | "title" | "parts";
 type ViewMode = "grid" | "list";
@@ -184,17 +183,19 @@ export default function Compositions() {
     return { totalViews, totalParts, totalPages, totalMinutes };
   }, [scores]);
 
-  // Ensemble breakdown for mini chart
-  const ensembleBreakdown = useMemo(() => {
+  // Mood cloud — top moods across catalog
+  const moodCloud = useMemo(() => {
     const map = new Map<string, number>();
     for (const s of scores) {
-      const key = s.ensemble_type ?? "Other";
-      map.set(key, (map.get(key) ?? 0) + 1);
+      if (!s.mood) continue;
+      for (const m of s.mood.split(/[,/]/).map((x) => x.trim()).filter(Boolean)) {
+        map.set(m, (map.get(m) ?? 0) + 1);
+      }
     }
-    const total = scores.length || 1;
     return [...map.entries()]
       .sort((a, b) => b[1] - a[1])
-      .map(([label, count]) => ({ label, count, pct: Math.round((count / total) * 100) }));
+      .slice(0, 10)
+      .map(([label, count]) => ({ label, count }));
   }, [scores]);
 
   const surpriseMe = () => {
@@ -272,71 +273,33 @@ export default function Compositions() {
             </div>
           )}
 
-          {/* Ensemble breakdown mini chart */}
-          {!loading && ensembleBreakdown.length > 1 && (
-            <div className="mt-4 max-w-4xl mx-auto glass-card !p-4">
-              <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
-                <BarChart3 size={12} className="text-primary" /> Catalog by Ensemble
-              </div>
-              <div className="space-y-2">
-                {ensembleBreakdown.map((e) => (
-                  <div key={e.label} className="flex items-center gap-3">
-                    <span className="text-xs text-foreground w-32 shrink-0 truncate">{e.label}</span>
-                    <div className="flex-1 h-2 rounded-full bg-secondary/60 overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-primary to-accent transition-all duration-700"
-                        style={{ width: `${Math.max(e.pct, 4)}%` }}
-                      />
-                    </div>
-                    <span className="text-[11px] text-muted-foreground tabular-nums w-12 text-right">{e.count} · {e.pct}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Top score highlight */}
-          {!loading && topScore && (topScore.views ?? 0) > 0 && (
-            <button
-              onClick={() => openPreview(topScore)}
-              className="mt-4 mx-auto flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 text-accent text-xs hover:bg-accent/20 transition active:scale-95"
-            >
-              <Trophy size={13} />
-              <span className="uppercase tracking-widest text-[10px]">Most viewed</span>
-              <span className="text-foreground font-medium">{topScore.title}</span>
-              <span className="text-muted-foreground">• {formatNum(topScore.views ?? 0)} views</span>
-            </button>
-          )}
-
-          {/* Recently viewed strip */}
-          {recentScores.length > 0 && (
+          {/* Mood cloud — quick filter */}
+          {!loading && moodCloud.length > 0 && (
             <div className="mt-6 max-w-3xl mx-auto">
-              <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
-                <History size={12} /> Recently viewed
+              <div className="flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest text-muted-foreground mb-3">
+                <Sparkles size={12} className="text-accent" /> Browse by mood
               </div>
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {recentScores.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => openPreview(s)}
-                    className="shrink-0 px-3 py-1.5 rounded-full bg-secondary/60 hover:bg-secondary border border-border/50 text-xs whitespace-nowrap transition"
-                  >
-                    {s.title}
-                  </button>
-                ))}
+              <div className="flex flex-wrap justify-center gap-2">
+                {moodCloud.map(({ label, count }) => {
+                  const selected = query.toLowerCase() === label.toLowerCase();
+                  return (
+                    <button
+                      key={label}
+                      onClick={() => setQuery(selected ? "" : label)}
+                      className={`px-3 py-1.5 rounded-full text-xs transition active:scale-95 border ${
+                        selected
+                          ? "bg-accent text-accent-foreground border-accent"
+                          : "bg-secondary/40 text-foreground/80 border-border/40 hover:border-accent/50"
+                      }`}
+                    >
+                      {label}
+                      <span className="ml-1.5 text-[10px] opacity-60">{count}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
-
-          {/* Catalog meta + manual sync */}
-          <div className="mt-6 max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 p-4 rounded-2xl border border-border/50 bg-background/40 backdrop-blur-sm">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Library size={14} className="text-primary" />
-              <span className="font-body tracking-wide">Auto-syncs daily from MuseScore</span>
-            </div>
-            <span className="hidden sm:block w-px h-5 bg-border" />
-            <SyncScoresButton variant="ghost" label="Check for new scores" onSynced={fetchScores} />
-          </div>
         </Section>
 
         {/* Featured Story */}

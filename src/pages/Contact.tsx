@@ -8,7 +8,7 @@ import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
   Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
-  MessageCircle, HelpCircle, ChevronDown,
+  HelpCircle, ChevronDown, Calendar, Globe2,
 } from "lucide-react";
 import { useState } from "react";
 import { useNairobiClock } from "@/hooks/useNairobiClock";
@@ -189,8 +189,30 @@ export default function Contact() {
           </div>
         </Section>
 
-        {/* Quick Contact Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 max-w-5xl mx-auto">
+        {/* Response promise + global timezones */}
+        <Section delay={90}>
+          <div className="mt-6 max-w-5xl mx-auto grid sm:grid-cols-3 gap-4">
+            <div className="glass-card">
+              <Clock size={18} className="text-primary mb-2" />
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Reply Window</p>
+              <p className="font-display text-sm font-semibold mt-1">Within 24 hours, every weekday.</p>
+              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">Weekend messages get a Monday-morning answer with a draft timeline attached.</p>
+            </div>
+            <div className="glass-card">
+              <Globe2 size={18} className="text-accent mb-2" />
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Working Across</p>
+              <p className="font-display text-sm font-semibold mt-1">EAT · CET · ET · PT</p>
+              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">I schedule calls for your timezone, not mine. Just say what works.</p>
+            </div>
+            <div className="glass-card">
+              <Calendar size={18} className="text-primary mb-2" />
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Booking Window</p>
+              <p className="font-display text-sm font-semibold mt-1">2–4 weeks for new commissions.</p>
+              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">Rush jobs possible — share your deadline and I'll be honest about it.</p>
+            </div>
+          </div>
+        </Section>
+        <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-5xl mx-auto">
           <Section delay={100}>
             <a
               href={gmailLink("Music Inquiry")}
@@ -211,20 +233,6 @@ export default function Contact() {
               <div>
                 <p className="text-xs text-muted-foreground">Call (voice only)</p>
                 <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">0104 586 361</p>
-              </div>
-            </a>
-          </Section>
-          <Section delay={200}>
-            <a
-              href="https://wa.me/254104586361?text=Habari%20Boniface%2C%20I%27d%20like%20to%20talk%20about%20a%20song."
-              target="_blank"
-              rel="noreferrer"
-              className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group"
-            >
-              <MessageCircle size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
-              <div>
-                <p className="text-xs text-muted-foreground">WhatsApp chat</p>
-                <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">Message me directly</p>
               </div>
             </a>
           </Section>

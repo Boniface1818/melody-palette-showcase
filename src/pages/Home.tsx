@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones, Mail, MessageCircle, Pen, Mic2, Send } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
+import LiturgicalSeasonBadge from "@/components/LiturgicalSeasonBadge";
 
 const journey = [
   { icon: MessageCircle, title: "You reach out", text: "Tell me the moment, the voice, the prayer behind the song." },
@@ -210,9 +211,12 @@ export default function Home() {
           </a>
         </Section>
 
-        {/* Score of the Day */}
+        {/* Liturgical season + Score of the Day */}
         <Section delay={320}>
-          <div className="mt-16">
+          <div className="mt-16 flex justify-center">
+            <LiturgicalSeasonBadge />
+          </div>
+          <div className="mt-8">
             <ScoreOfTheDay />
           </div>
         </Section>
