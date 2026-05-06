@@ -8,11 +8,10 @@ import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Library, Search, ArrowUpDown,
+  ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
-  ChevronLeft, ChevronRight, Download, History, Trophy, BarChart3, Copy,
+  ChevronLeft, ChevronRight, Download, History, Trophy, Copy,
 } from "lucide-react";
-import SyncScoresButton from "@/components/SyncScoresButton";
 
 type SortKey = "newest" | "oldest" | "views" | "title" | "parts";
 type ViewMode = "grid" | "list";
