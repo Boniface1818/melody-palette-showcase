@@ -211,9 +211,12 @@ export default function Home() {
           </a>
         </Section>
 
-        {/* Score of the Day */}
+        {/* Liturgical season + Score of the Day */}
         <Section delay={320}>
-          <div className="mt-16">
+          <div className="mt-16 flex justify-center">
+            <LiturgicalSeasonBadge />
+          </div>
+          <div className="mt-8">
             <ScoreOfTheDay />
           </div>
         </Section>
