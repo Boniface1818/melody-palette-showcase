@@ -190,7 +190,7 @@ export default function Contact() {
         </Section>
 
         {/* Quick Contact Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-5xl mx-auto">
           <Section delay={100}>
             <a
               href={gmailLink("Music Inquiry")}
@@ -211,20 +211,6 @@ export default function Contact() {
               <div>
                 <p className="text-xs text-muted-foreground">Call (voice only)</p>
                 <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">0104 586 361</p>
-              </div>
-            </a>
-          </Section>
-          <Section delay={200}>
-            <a
-              href="https://wa.me/254104586361?text=Habari%20Boniface%2C%20I%27d%20like%20to%20talk%20about%20a%20song."
-              target="_blank"
-              rel="noreferrer"
-              className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group"
-            >
-              <MessageCircle size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
-              <div>
-                <p className="text-xs text-muted-foreground">WhatsApp chat</p>
-                <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">Message me directly</p>
               </div>
             </a>
           </Section>
