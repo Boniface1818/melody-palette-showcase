@@ -121,7 +121,7 @@ export default function Home() {
         <Section delay={100}>
           <div className="relative mt-16 max-w-5xl mx-auto">
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-2xl pointer-events-none" aria-hidden />
-            <div className="relative grid md:grid-cols-[auto_1fr] gap-8 p-8 sm:p-12 rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md">
+            <div className="relative grid md:grid-cols-[auto_1fr] gap-8 p-8 sm:p-12 rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md aurora shine">
               {/* left side: vertical accent */}
               <div className="hidden md:flex flex-col items-center gap-3">
                 <Feather size={26} className="text-primary" />
@@ -134,9 +134,9 @@ export default function Home() {
                   Karibu sana · Welcome
                 </p>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05] mb-5">
-                  Where <span className="text-primary">prayer</span> learns to sing,
+                  Where <span className="text-gradient">prayer</span> learns to sing,
                   <br className="hidden sm:block" />
-                  and <span className="text-accent">silence</span> finds its melody.
+                  and <span className="text-gradient">silence</span> finds its melody.
                 </h2>
 
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
