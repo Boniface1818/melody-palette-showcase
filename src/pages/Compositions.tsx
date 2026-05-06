@@ -184,17 +184,19 @@ export default function Compositions() {
     return { totalViews, totalParts, totalPages, totalMinutes };
   }, [scores]);
 
-  // Ensemble breakdown for mini chart
-  const ensembleBreakdown = useMemo(() => {
+  // Mood cloud — top moods across catalog
+  const moodCloud = useMemo(() => {
     const map = new Map<string, number>();
     for (const s of scores) {
-      const key = s.ensemble_type ?? "Other";
-      map.set(key, (map.get(key) ?? 0) + 1);
+      if (!s.mood) continue;
+      for (const m of s.mood.split(/[,/]/).map((x) => x.trim()).filter(Boolean)) {
+        map.set(m, (map.get(m) ?? 0) + 1);
+      }
     }
-    const total = scores.length || 1;
     return [...map.entries()]
       .sort((a, b) => b[1] - a[1])
-      .map(([label, count]) => ({ label, count, pct: Math.round((count / total) * 100) }));
+      .slice(0, 10)
+      .map(([label, count]) => ({ label, count }));
   }, [scores]);
 
   const surpriseMe = () => {
