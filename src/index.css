@@ -188,4 +188,103 @@
     20%, 40% { transform: rotate(-8deg); }
     50% { transform: rotate(10deg); }
   }
+
+  /* Aurora animated background — subtle, premium */
+  .aurora {
+    position: relative;
+    isolation: isolate;
+  }
+  .aurora::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    z-index: -1;
+    background:
+      radial-gradient(40% 40% at 20% 30%, hsl(var(--primary) / 0.18), transparent 60%),
+      radial-gradient(35% 35% at 80% 20%, hsl(var(--accent) / 0.16), transparent 60%),
+      radial-gradient(45% 45% at 60% 80%, hsl(var(--primary) / 0.14), transparent 60%);
+    filter: blur(40px);
+    animation: aurora-drift 18s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes aurora-drift {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    50%  { transform: translate3d(2%, -2%, 0) scale(1.05); }
+    100% { transform: translate3d(-2%, 2%, 0) scale(1); }
+  }
+
+  /* Animated gradient text */
+  .text-gradient {
+    background: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-pan 8s linear infinite;
+  }
+  @keyframes gradient-pan {
+    to { background-position: 200% 0; }
+  }
+
+  /* Shine sweep on hover */
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 30%, hsl(var(--foreground) / 0.08) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+  }
+  .shine:hover::after { transform: translateX(100%); }
+
+  /* Premium card with conic gradient border */
+  .premium-card {
+    position: relative;
+    border-radius: 1.25rem;
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(20px);
+    padding: 1.5rem;
+  }
+  .premium-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--angle, 0deg), hsl(var(--primary) / 0.4), hsl(var(--accent) / 0.4), hsl(var(--primary) / 0.4));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: rotate-angle 8s linear infinite;
+    pointer-events: none;
+  }
+  @property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes rotate-angle {
+    to { --angle: 360deg; }
+  }
+
+  /* Section divider — ornamental */
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: hsl(var(--muted-foreground));
+  }
+  .ornament-divider::before,
+  .ornament-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+  }
 }
