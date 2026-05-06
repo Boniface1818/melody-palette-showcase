@@ -189,7 +189,29 @@ export default function Contact() {
           </div>
         </Section>
 
-        {/* Quick Contact Cards */}
+        {/* Response promise + global timezones */}
+        <Section delay={90}>
+          <div className="mt-6 max-w-5xl mx-auto grid sm:grid-cols-3 gap-4">
+            <div className="glass-card">
+              <Clock size={18} className="text-primary mb-2" />
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Reply Window</p>
+              <p className="font-display text-sm font-semibold mt-1">Within 24 hours, every weekday.</p>
+              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">Weekend messages get a Monday-morning answer with a draft timeline attached.</p>
+            </div>
+            <div className="glass-card">
+              <Globe2 size={18} className="text-accent mb-2" />
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Working Across</p>
+              <p className="font-display text-sm font-semibold mt-1">EAT · CET · ET · PT</p>
+              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">I schedule calls for your timezone, not mine. Just say what works.</p>
+            </div>
+            <div className="glass-card">
+              <Calendar size={18} className="text-primary mb-2" />
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Booking Window</p>
+              <p className="font-display text-sm font-semibold mt-1">2–4 weeks for new commissions.</p>
+              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">Rush jobs possible — share your deadline and I'll be honest about it.</p>
+            </div>
+          </div>
+        </Section>
         <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-5xl mx-auto">
           <Section delay={100}>
             <a
