@@ -173,8 +173,58 @@ export default function About() {
           </article>
         </Section>
 
+        {/* By the Numbers */}
+        <Section delay={220}>
+          <div className="mt-12 max-w-5xl mx-auto">
+            <div className="text-center mb-6">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-2 inline-flex items-center gap-2">
+                <Sparkles size={12} /> By the Numbers
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold">A small catalogue, carefully kept.</h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { n: "5+", l: "Years composing" },
+                { n: "3", l: "Liturgical languages" },
+                { n: "100%", l: "Made in Kenya" },
+                { n: "∞", l: "Revisions, if needed" },
+              ].map((s) => (
+                <div key={s.l} className="glass-card text-center !p-5">
+                  <p className="font-display text-3xl font-bold text-primary">{s.n}</p>
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">{s.l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* Composing Principles */}
+        <Section delay={240}>
+          <div className="mt-12 max-w-5xl mx-auto">
+            <div className="text-center mb-6">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2 inline-flex items-center gap-2">
+                <PenLine size={12} /> Composing Principles
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold">Four things I refuse to compromise.</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[
+                { t: "Singers first", d: "If a line is uncomfortable to sing, it is rewritten — no matter how clever it looks on the page." },
+                { t: "Prayer over polish", d: "A piece must function as prayer the very first time the assembly meets it, not after a year of rehearsal." },
+                { t: "Honest harmony", d: "No filler. Every voice has somewhere to go, something to say, a reason to be in the score." },
+                { t: "Quiet authorship", d: "The composer's name belongs at the bottom of the page, not at the top of the song." },
+              ].map((p) => (
+                <div key={p.t} className="glass-card">
+                  <h3 className="font-display font-semibold text-base mb-2">{p.t}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{p.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Section>
+
         {/* Auto-sync notice */}
-        <Section delay={250}>
+        <Section delay={300}>
           <div className="mt-12 max-w-3xl mx-auto glass-card text-center">
             <RefreshCw size={20} className="text-primary mx-auto mb-3" />
             <h3 className="font-display font-semibold text-base mb-2">Fresh scores, always</h3>
