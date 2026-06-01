@@ -21,30 +21,30 @@ const aboutJsonLd = {
 };
 
 const aboutSubtitles = [
-  "A Kenyan composer crafting music for the universal Church.",
-  "Sacred harmony, shaped for real choirs and real voices.",
-  "From the quiet desk to the singing assembly — this is where I work.",
-  "Liturgia kwanza. Ubunifu wa pili. Kiburi, kamwe.",
+  "Sacred music written in Nairobi, sung wherever the Church gathers.",
+  "Composer, arranger, and quiet servant of the liturgy.",
+  "Music that respects the singer and serves the prayer.",
+  "Ujenzi wa wimbo: kalamu, sauti, na sala.",
 ];
 
 const chapters = [
   {
     icon: BookOpen,
-    label: "Msikilizaji · The Listener",
+    label: "Mwanzo · Where it began",
     text:
-      "Before I ever wrote a note, I was a listener — paying attention to which melodies made hearts lean in, and which ones drifted past unnoticed. That ear, trained in living worship, is still the one I trust most when I compose.",
+      "I grew up in a parish where the choir was small and the heart was huge. Long before any conservatory theory, I learned that a song lives or dies by whether the gathered assembly can carry it home and hum it on Monday morning.",
   },
   {
     icon: PenLine,
-    label: "Mfundi · The Craftsman",
+    label: "Kazi · The work",
     text:
-      "I treat each score as honest work — singable lines, kind harmonies, page turns that respect the singer. Composition, for me, is craftsmanship in service of prayer; the music must hold up the hundredth time it's sung, not just the first.",
+      "I write every line on the page as if I were the singer staring at it for the first time. Page turns are planned, breath marks are honest, ranges are kind, and harmony is never decoration — only meaning.",
   },
   {
     icon: Church,
-    label: "Mtumishi · The Servant",
+    label: "Wito · The calling",
     text:
-      "My name will not be on the lips of the assembly, and that is exactly as it should be. The composer's job is to disappear behind the prayer of the Church — if people leave singing the song instead of remembering the writer, the score has done its work.",
+      "The composer is not the point. The prayer is. If a piece I wrote can disappear into the lips of an assembly and leave behind only an encounter with God, then the score has done exactly its job.",
   },
 ];
 
