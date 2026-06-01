@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
+import SEO from "@/components/SEO";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -12,6 +13,15 @@ import {
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
   ChevronLeft, ChevronRight, Download, History, Trophy, Copy,
 } from "lucide-react";
+
+const compositionsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  url: "https://bk-melodies.lovable.app/compositions",
+  name: "Compositions by Boniface Kagunda",
+  description: "A catalog of sacred music compositions and arrangements by Boniface Kagunda, synced from MuseScore.",
+  about: { "@type": "Person", name: "Boniface Kagunda" },
+};
 
 type SortKey = "newest" | "oldest" | "views" | "title" | "parts";
 type ViewMode = "grid" | "list";
@@ -240,6 +250,12 @@ export default function Compositions() {
 
   return (
     <>
+      <SEO
+        title="Compositions — Boniface Kagunda Sacred Music Catalog"
+        description="Browse sacred music compositions by Boniface Kagunda — Mass settings, psalms, piano duos, string duets, and SATB arrangements, synced daily from MuseScore."
+        path="/compositions"
+        jsonLd={compositionsJsonLd}
+      />
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
         <Section>
@@ -398,6 +414,7 @@ export default function Compositions() {
               <input
                 ref={searchRef}
                 type="text"
+                aria-label="Search compositions"
                 placeholder="Search by title, instrument, mood…  (press / )"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -418,6 +435,7 @@ export default function Compositions() {
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value as SortKey)}
+                aria-label="Sort compositions"
                 className="appearance-none pl-10 pr-8 py-3 rounded-full bg-background/40 backdrop-blur-sm border border-border/50 text-sm font-body focus:outline-none focus:border-primary/60 cursor-pointer w-full"
               >
                 <option value="newest">Newest</option>

@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
+import SEO from "@/components/SEO";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -146,6 +147,20 @@ export default function Contact() {
 
   return (
     <>
+      <SEO
+        title="Contact Boniface Kagunda — Commission Sacred Music"
+        description="Commission a Mass setting, psalm, or bespoke sacred song from composer Boniface Kagunda. Reach out by email or phone — choirs, cantors, soloists, and parishes welcome."
+        path="/contact"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }}
+      />
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
         {/* Hero */}

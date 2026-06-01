@@ -1,11 +1,24 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
+import SEO from "@/components/SEO";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import { Music, Feather, Quote, BookOpen, PenLine, Church, Heart, Sparkles, RefreshCw } from "lucide-react";
+
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  url: "https://bk-melodies.lovable.app/about",
+  mainEntity: {
+    "@type": "Person",
+    name: "Boniface Kagunda",
+    jobTitle: "Sacred Music Composer & Arranger",
+    nationality: "Kenyan",
+  },
+};
 
 const aboutSubtitles = [
   "A Kenyan composer crafting music for the universal Church.",
@@ -38,11 +51,17 @@ const chapters = [
 export default function About() {
   useBackgroundCycle(5000);
   const headingColor = useColorCycle(3000);
-  const heading = useTextReveal("About Me", 80, 200, true, 60000);
+  const heading = useTextReveal("About Boniface Kagunda", 80, 200, true, 60000);
   const subtitle = useRotatingSubtitles(aboutSubtitles, 8000);
 
   return (
     <>
+      <SEO
+        title="About Boniface Kagunda — Sacred Music Composer"
+        description="Meet Boniface Kagunda, a Kenyan composer crafting liturgical music for the Catholic Church — Mass settings, psalms, SATB arrangements, and bespoke choral works."
+        path="/about"
+        jsonLd={aboutJsonLd}
+      />
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
         <Section>
@@ -52,6 +71,7 @@ export default function About() {
           >
             {heading.revealed}
             {!heading.done && <span className="typing-cursor" />}
+            <span className="sr-only"> — Sacred Music Composer</span>
           </h1>
           <p className="text-center text-muted-foreground text-sm mt-4 max-w-md mx-auto transition-opacity duration-700">
             {subtitle}
