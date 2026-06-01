@@ -113,25 +113,28 @@ export default function Home() {
             {/* Tagline directly under the logo */}
             <p className="font-display italic text-base sm:text-lg text-primary tracking-wide mb-5 flex items-center justify-center gap-2">
               <span className="h-px w-6 bg-primary/50" />
-              Elegance In Every Note
+              Where the score serves the song
               <span className="h-px w-6 bg-primary/50" />
             </p>
 
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6 font-body">
-              Composer · Arranger · Sacred Music for the Catholic Church
+              Sacred Composer · Choral Arranger · Open for Commissions
             </p>
           </Section>
 
           <Section delay={100}>
             <h1
-              className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.95] cursor-default relative"
-              style={{ textWrap: "balance" as any, color: headingColor, transition: "color 1.5s ease" }}
+              className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.95] cursor-default relative inline-block shine"
+              style={{ textWrap: "balance" as any }}
             >
-              <span>{heading.revealed}</span>
+              <span className="text-gradient">{heading.revealed}</span>
               {!heading.done && <span className="typing-cursor" />}
               <span className="sr-only"> — Sacred Music Composer & Arranger</span>
               {heading.done && (
-                <span className="absolute -bottom-2 left-0 w-full h-1 rounded-full opacity-60" style={{ background: `linear-gradient(90deg, ${headingColor}, hsl(36, 90%, 54%))`, transition: "background 1.5s ease" }} />
+                <span
+                  className="absolute -bottom-2 left-0 w-full h-1 rounded-full opacity-70"
+                  style={{ background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)))" }}
+                />
               )}
             </h1>
             <p className="mt-4 text-base sm:text-lg text-muted-foreground font-body">
@@ -140,46 +143,54 @@ export default function Home() {
           </Section>
 
           <Section delay={200}>
-            <p className="mt-8 text-lg sm:text-xl md:text-2xl text-muted-foreground font-body">
-              <span>{typedText}</span>
+            <p className="mt-8 text-lg sm:text-xl md:text-2xl text-foreground/90 font-body min-h-[2em]">
+              <span className="text-gradient font-semibold">{typedText}</span>
               <span className="typing-cursor" />
             </p>
           </Section>
 
           <Section delay={350}>
-            <p className="mt-8 max-w-md text-sm text-muted-foreground leading-relaxed mx-auto transition-opacity duration-700" style={{ textWrap: "pretty" as any }}>
+            <p className="mt-8 max-w-lg text-sm text-muted-foreground leading-relaxed mx-auto transition-opacity duration-700" style={{ textWrap: "pretty" as any }}>
               {quote1Text}
             </p>
           </Section>
           <Section delay={450}>
-            <p className="mt-4 max-w-md text-sm text-muted-foreground/80 leading-relaxed mx-auto italic transition-opacity duration-700" style={{ textWrap: "pretty" as any }}>
+            <p className="mt-4 max-w-lg text-sm text-muted-foreground/80 leading-relaxed mx-auto italic transition-opacity duration-700" style={{ textWrap: "pretty" as any }}>
               {quote2Text}
             </p>
           </Section>
 
           <Section delay={500}>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <Link to="/compositions" className="btn-primary group">
-                Explore My Music
+              <Link to="/compositions" className="btn-primary shine group hover-scale">
+                Listen to the Catalog
                 <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
                 to="/contact"
-                className="btn-primary"
+                className="btn-primary shine group hover-scale"
                 style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
               >
-                Commission a Piece
+                <Mail size={14} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
+                Commission Your Song
               </Link>
             </div>
+            {/* Trust chips */}
+            <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-muted-foreground">
+              {trustChips.map(({ Icon, label }) => (
+                <li key={label} className="inline-flex items-center gap-1.5">
+                  <Icon size={12} className="text-accent" /> {label}
+                </li>
+              ))}
+            </ul>
           </Section>
         </section>
 
-        {/* Welcome — fresh, lyrical, no Sunday emphasis */}
+        {/* Welcome — refreshed copy */}
         <Section delay={100}>
           <div className="relative mt-16 max-w-5xl mx-auto">
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-2xl pointer-events-none" aria-hidden />
             <div className="relative grid md:grid-cols-[auto_1fr] gap-8 p-8 sm:p-12 rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md aurora shine">
-              {/* left side: vertical accent */}
               <div className="hidden md:flex flex-col items-center gap-3">
                 <Feather size={26} className="text-primary" />
                 <div className="w-px flex-1 bg-gradient-to-b from-primary/60 via-accent/40 to-transparent" />
@@ -188,41 +199,43 @@ export default function Home() {
 
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">
-                  Karibu sana · Welcome
+                  Hujambo · Welcome to the studio
                 </p>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05] mb-5">
-                  Where <span className="text-gradient">prayer</span> learns to sing,
+                  Music written like a <span className="text-gradient">letter</span>,
                   <br className="hidden sm:block" />
-                  and <span className="text-gradient">silence</span> finds its melody.
+                  addressed to <span className="text-gradient">one assembly</span> at a time.
                 </h2>
 
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-                  I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — a Kenyan
-                  composer crafting sacred music for choirs, cantors, soloists, and anyone whose worship needs words a melody can carry. Every score here was written for a real moment, a real voice, a real prayer.
+                  This is the workbench of <span className="text-foreground font-semibold">Boniface Kagunda</span> — a Kenyan
+                  composer who treats every score like a private conversation between the page, the singer, and the One being praised.
+                  Nothing here is generic. Everything is shaped for a specific voice, a specific moment, a specific prayer.
                 </p>
 
                 <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/85 text-sm mb-3">
                   <Quote size={14} className="inline text-primary mr-1 -mt-1" />
-                  "Ubora ni utumishi uliopambwa kwa upendo." — Excellence is service dressed in love.
+                  "Andika kana kwamba mtu mmoja ataimba — kisha mioyo elfu itaungana." — Write as if one will sing it, and a thousand hearts will join.
                 </blockquote>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Listen freely. Download what speaks to you. And when you're ready to commission a piece of your own — I'm one note away.
+                  Stream what calls to you, save what serves you, and when a piece of your own is ready to be born,
+                  <span className="text-foreground"> the desk is open</span>.
                 </p>
 
                 <p className="mt-6 text-[10px] uppercase tracking-widest text-muted-foreground/70">
-                  Catalog auto-syncs daily from MuseScore
+                  Fresh scores published weekly · Catalog auto-syncs from MuseScore
                 </p>
               </div>
             </div>
           </div>
         </Section>
 
-        {/* Rotating Swahili wisdom — quartet of cards */}
+        {/* Verses — refreshed quartet */}
         <Section delay={150}>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 max-w-6xl mx-auto">
-            {swahiliQuotes.map((q) => (
-              <div key={q.sw} className="glass-card text-center hover:-translate-y-1 transition-transform duration-500">
+            {verses.map((q) => (
+              <div key={q.sw} className="glass-card shine text-center hover:-translate-y-1 transition-transform duration-500">
                 <Quote size={16} className="text-primary mx-auto mb-3 opacity-60" />
                 <p className="text-sm text-foreground italic leading-relaxed">"{q.sw}"</p>
                 <p className="text-xs text-muted-foreground mt-2">{q.en}</p>
@@ -241,7 +254,7 @@ export default function Home() {
               { label: "Total Views", value: "100+", Icon: BookOpen },
               { label: "Instruments", value: "5+", Icon: Piano },
             ].map((s, i) => (
-              <div key={i} className="glass-card text-center group cursor-default py-8" style={{ transitionDelay: `${i * 80}ms` }}>
+              <div key={i} className="glass-card text-center group cursor-default py-8 hover-scale" style={{ transitionDelay: `${i * 80}ms` }}>
                 <s.Icon size={24} className="mx-auto mb-3 text-primary transition-all duration-300 group-hover:text-accent group-hover:scale-110" />
                 <p className="text-2xl font-display font-bold text-foreground tabular-nums">{s.value}</p>
                 <p className="text-[11px] text-muted-foreground mt-1 tracking-wide">{s.label}</p>
@@ -256,12 +269,12 @@ export default function Home() {
             href="https://musescore.com/user/108485503"
             target="_blank"
             rel="noreferrer"
-            className="glass-card glow-border flex items-center gap-4 group mt-8 max-w-lg mx-auto"
+            className="glass-card glow-border shine flex items-center gap-4 group mt-8 max-w-lg mx-auto"
           >
             <Music size={32} className="text-primary transition-colors duration-300 group-hover:text-accent" />
             <div>
               <p className="font-display font-semibold text-sm">Listen on MuseScore</p>
-              <p className="text-xs text-muted-foreground">Browse all compositions, listen, and download sheet music</p>
+              <p className="text-xs text-muted-foreground">Stream every score, follow new releases, download sheet music</p>
             </div>
             <ArrowRight size={16} className="ml-auto text-muted-foreground transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent" />
           </a>
@@ -274,20 +287,55 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* Commission Journey Timeline */}
-        <Section delay={340}>
-          <div className="mt-16 max-w-5xl mx-auto">
+        {/* Testimonials — social proof */}
+        <Section delay={330}>
+          <div className="mt-20 max-w-6xl mx-auto">
             <div className="text-center mb-8">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
-                <Feather size={12} /> How a Commission Unfolds
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
+                <Star size={12} /> What singers are saying
               </p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
-                Four steps from your idea to a finished score.
+                Voices that <span className="text-gradient">trust the score</span>.
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {testimonials.map((t) => (
+                <figure
+                  key={t.name}
+                  className="glass-card shine relative flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-500"
+                >
+                  <div className="flex gap-0.5 text-accent">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={12} fill="currentColor" />
+                    ))}
+                  </div>
+                  <blockquote className="text-sm text-foreground/90 leading-relaxed italic">
+                    "{t.text}"
+                  </blockquote>
+                  <figcaption className="mt-auto">
+                    <p className="font-display font-semibold text-sm">{t.name}</p>
+                    <p className="text-[11px] uppercase tracking-widest text-muted-foreground">{t.role}</p>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* Commission Journey Timeline */}
+        <Section delay={340}>
+          <div className="mt-20 max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <Feather size={12} /> Path of a Commission
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                From <span className="text-gradient">first whisper</span> to finished score.
               </h2>
             </div>
             <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {journey.map((step, i) => (
-                <li key={step.title} className="glass-card relative group hover:-translate-y-1 transition-transform duration-500">
+                <li key={step.title} className="glass-card shine relative group hover:-translate-y-1 transition-transform duration-500">
                   <span className="absolute -top-3 -left-3 h-7 w-7 rounded-full bg-primary text-primary-foreground text-xs font-display font-bold flex items-center justify-center shadow-lg">
                     {i + 1}
                   </span>
@@ -298,7 +346,7 @@ export default function Home() {
               ))}
             </ol>
             <div className="text-center mt-6">
-              <Link to="/contact" className="btn-primary inline-flex">
+              <Link to="/contact" className="btn-primary shine inline-flex">
                 <Mail size={14} /> Begin Your Commission
               </Link>
             </div>
@@ -309,10 +357,10 @@ export default function Home() {
         <Section delay={350}>
           <div className="mt-12 max-w-4xl mx-auto text-center px-4">
             <p className="text-xs uppercase tracking-[0.3em] text-accent mb-3">
-              <Sparkles size={12} className="inline mr-1" /> A song is waiting for you
+              <Sparkles size={12} className="inline mr-1" /> Your song is somewhere on this desk
             </p>
             <p className="text-base sm:text-lg text-foreground/85 font-display italic">
-              "Where words end, music begins — and prayer finds wings."
+              "Bring the prayer; I'll bring the harmony — and together we'll send it singing."
             </p>
           </div>
         </Section>
