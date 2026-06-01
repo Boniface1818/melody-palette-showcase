@@ -1,20 +1,25 @@
 import { useState, useEffect } from "react";
 
-const phrases = [
-  "Music Composer",
-  "Choir Arranger",
-  "Piano Composer",
-  "Liturgical Music Creator",
-  "SATB Arrangement Specialist",
-  "Worship Music Artist",
+const defaultPhrases = [
+  "Composer of Sacred Music",
+  "Arranger for Choirs & Cantors",
+  "Liturgical Music Specialist",
+  "SATB · SAB · SSA · Unison",
+  "Bespoke Songs for Soloists",
+  "Mass Settings · Psalms · Hymns",
+  "Music shaped for prayer",
 ];
 
-export function useTypingAnimation(speed = 80, pause = 2000) {
+export function useTypingAnimation(
+  speed = 70,
+  pause = 1800,
+  phrases: string[] = defaultPhrases,
+) {
   const [text, setText] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
 
   useEffect(() => {
-    const phrase = phrases[phraseIndex];
+    const phrase = phrases[phraseIndex % phrases.length];
     let charIndex = 0;
     let deleting = false;
     let timeout: ReturnType<typeof setTimeout>;
@@ -39,12 +44,14 @@ export function useTypingAnimation(speed = 80, pause = 2000) {
           return;
         }
       }
-      timeout = setTimeout(tick, deleting ? 40 : speed);
+      // Smoother variable cadence: faster delete, slight jitter on type
+      const jitter = deleting ? 28 : speed + Math.floor(Math.random() * 30) - 10;
+      timeout = setTimeout(tick, Math.max(20, jitter));
     }
 
     tick();
     return () => clearTimeout(timeout);
-  }, [phraseIndex, speed, pause]);
+  }, [phraseIndex, speed, pause, phrases]);
 
   return text;
 }
