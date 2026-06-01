@@ -7,7 +7,7 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones, Mail, MessageCircle, Pen, Mic2, Send } from "lucide-react";
+import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones, Mail, MessageCircle, Pen, Mic2, Send, Star, ShieldCheck, Globe, Heart, Clock3 } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
 import SEO from "@/components/SEO";
@@ -31,17 +31,42 @@ const personJsonLd = {
 };
 
 const journey = [
-  { icon: MessageCircle, title: "You reach out", text: "Tell me the moment, the voice, the prayer behind the song." },
-  { icon: Pen, title: "I sketch", text: "Melody first, then harmony — drafts shared with you for feedback." },
-  { icon: Mic2, title: "We refine", text: "Tweak keys, voicings, and lyrics until the score sings to you." },
-  { icon: Send, title: "You receive", text: "Final PDF, MIDI, backing track, and a guide vocal — yours forever." },
+  { icon: MessageCircle, title: "Tell the story", text: "Share the moment, the voice, and the prayer the piece must carry." },
+  { icon: Pen, title: "I sketch it", text: "A melody first — then voicings, harmony, and a draft sent for your ear." },
+  { icon: Mic2, title: "We shape it", text: "Refine key, lyrics, and dynamics together until it sings the way you imagined." },
+  { icon: Send, title: "You receive it", text: "Engraved PDF score, MIDI, MP3 mock-up, backing track and guide vocal — delivered to keep." },
 ];
 
-const swahiliQuotes = [
-  { sw: "Bwana ni mchungaji wangu, sitapungukiwa na kitu.", en: "The Lord is my shepherd; I shall not want.", attr: "Zaburi 23" },
-  { sw: "Anayeimba, anasali mara mbili.", en: "He who sings, prays twice.", attr: "Mt. Augustino" },
-  { sw: "Imba kwa Bwana wimbo mpya.", en: "Sing to the Lord a new song.", attr: "Zaburi 96" },
-  { sw: "Cantare amantis est.", en: "Singing belongs to the one who loves.", attr: "St. Augustine" },
+const verses = [
+  { sw: "Mioyo ya watu ni vinubi vya Mungu.", en: "Human hearts are the harps of God.", attr: "Hadithi za zamani" },
+  { sw: "Sauti moja ya pekee inaweza kufungua mbingu.", en: "A single honest voice can open the heavens.", attr: "Mwandishi" },
+  { sw: "Wimbo huutoka mahali ambapo maneno yameishia.", en: "Song begins exactly where words run out.", attr: "Methali" },
+  { sw: "Mahali penye sala, kuna muziki.", en: "Where there is prayer, there is music.", attr: "Wahenga" },
+];
+
+const testimonials = [
+  {
+    name: "Sr. Mary, Choir Director",
+    role: "Parish in Nairobi",
+    text: "Boniface writes for the choir we actually have, not the one we wish we had. The pieces stick after one rehearsal.",
+  },
+  {
+    name: "Fr. James",
+    role: "Liturgy team, Western Kenya",
+    text: "The psalm setting he wrote for our ordination is now the one the cantor reaches for first. Singable and dignified.",
+  },
+  {
+    name: "Esther — Solo artist",
+    role: "Catholic recording artist",
+    text: "He pitched the song in my key, sent a guide vocal and a backing track. I learned it in a weekend. Best gift to my voice.",
+  },
+];
+
+const trustChips = [
+  { Icon: ShieldCheck, label: "Two free revisions" },
+  { Icon: Globe, label: "Worldwide delivery" },
+  { Icon: Clock3, label: "Reply in 24h" },
+  { Icon: Heart, label: "Built for real choirs" },
 ];
 
 export default function Home() {
