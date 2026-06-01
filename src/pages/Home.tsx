@@ -10,6 +10,25 @@ import Footer from "@/components/Footer";
 import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, Headphones, Mail, MessageCircle, Pen, Mic2, Send } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
+import SEO from "@/components/SEO";
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Boniface Kagunda",
+  jobTitle: "Composer & Arranger",
+  description: "Kenyan composer of sacred Catholic music — Mass settings, psalms, SATB arrangements, and bespoke songs for cantors and soloists.",
+  url: "https://bk-melodies.lovable.app/",
+  image: "https://bk-melodies.lovable.app/bk-logo.png",
+  nationality: "Kenyan",
+  sameAs: [
+    "https://musescore.com/user/108485503",
+    "https://www.linkedin.com/in/BonifaceKagunda",
+    "https://www.instagram.com/bonifacekagunda39/",
+    "https://www.facebook.com/profile.php?id=61550230027573",
+    "https://www.youtube.com/@BonifaceKagunda006",
+  ],
+};
 
 const journey = [
   { icon: MessageCircle, title: "You reach out", text: "Tell me the moment, the voice, the prayer behind the song." },
@@ -34,6 +53,13 @@ export default function Home() {
 
   return (
     <>
+      <SEO
+        title="Boniface Kagunda — Sacred Music Composer & Arranger"
+        description="Kenyan composer Boniface Kagunda writes sacred music for the Catholic Church — Mass settings, psalms, SATB arrangements, and bespoke songs for cantors and soloists."
+        path="/"
+        type="profile"
+        jsonLd={personJsonLd}
+      />
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
         {/* Hero */}
