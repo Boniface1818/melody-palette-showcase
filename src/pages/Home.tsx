@@ -100,12 +100,16 @@ export default function Home() {
               className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.95] cursor-default relative"
               style={{ textWrap: "balance" as any, color: headingColor, transition: "color 1.5s ease" }}
             >
-              {heading.revealed}
+              <span>{heading.revealed}</span>
               {!heading.done && <span className="typing-cursor" />}
+              <span className="sr-only"> — Sacred Music Composer & Arranger</span>
               {heading.done && (
                 <span className="absolute -bottom-2 left-0 w-full h-1 rounded-full opacity-60" style={{ background: `linear-gradient(90deg, ${headingColor}, hsl(36, 90%, 54%))`, transition: "background 1.5s ease" }} />
               )}
             </h1>
+            <p className="mt-4 text-base sm:text-lg text-muted-foreground font-body">
+              Sacred Music Composer &amp; Arranger
+            </p>
           </Section>
 
           <Section delay={200}>
