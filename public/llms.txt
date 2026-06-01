@@ -1,0 +1,10 @@
+# Boniface Kagunda Music
+
+> Sacred music compositions, choral arrangements, and liturgical works by Kenyan composer Boniface Kagunda — Mass settings, responsorial psalms, SATB arrangements, and bespoke songs for cantors and soloists.
+
+## Pages
+
+- [Home](/): Introduction to Boniface Kagunda and his sacred music catalog.
+- [About](/about): Background, composing principles, and approach to liturgical music.
+- [Compositions](/compositions): Browseable catalog of scores synced from MuseScore.
+- [Contact](/contact): Commission inquiries, services offered, and FAQs.
