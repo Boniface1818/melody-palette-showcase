@@ -79,6 +79,8 @@ export default function Home() {
                 alt="BK Music — Boniface Kagunda monogram in gold with treble clef and musical staff"
                 width={160}
                 height={160}
+                fetchPriority="high"
+                decoding="async"
                 className="relative h-36 w-36 sm:h-40 sm:w-40 rounded-full object-cover ring-2 ring-primary/50 shadow-2xl mx-auto"
               />
             </div>
