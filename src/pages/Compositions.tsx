@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import SEO from "@/components/SEO";
+import SyncScoresButton from "@/components/SyncScoresButton";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -260,15 +261,18 @@ export default function Compositions() {
       <main className="pt-24 pb-12 container mx-auto px-6">
         <Section>
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center mt-12"
-            style={{ color: headingColor, transition: "color 1.5s ease" }}
+            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-center mt-12 inline-block w-full"
           >
-            {heading.revealed}
+            <span className="text-gradient">{heading.revealed}</span>
             {!heading.done && <span className="typing-cursor" />}
           </h1>
           <p className="text-center text-muted-foreground text-sm mt-4 transition-opacity duration-700">
             {subtitle}
           </p>
+          <div className="flex justify-center mt-6">
+            <SyncScoresButton onSynced={fetchScores} label="Sync New Scores" />
+          </div>
+
 
           {/* Stats dashboard */}
           {!loading && scores.length > 0 && (
