@@ -49,8 +49,8 @@ export const featuredTestimonials: Testimonial[] = [
 ];
 
 interface Props {
-  heading?: string;
-  eyebrow?: string;
+  heading?: React.ReactNode;
+  eyebrow?: React.ReactNode;
   items?: Testimonial[];
   compact?: boolean;
 }
