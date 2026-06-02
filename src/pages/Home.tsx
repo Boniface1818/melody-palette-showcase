@@ -205,7 +205,7 @@ export default function Home() {
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05] mb-5">
                   Every song begins as a <span className="text-gradient">whisper</span>,
                   <br className="hidden sm:block" />
-                  and ends as somebody's <span class="text-gradient">favorite prayer</span>.
+                  and ends as somebody's <span className="text-gradient">favorite prayer</span>.
                 </h2>
 
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
