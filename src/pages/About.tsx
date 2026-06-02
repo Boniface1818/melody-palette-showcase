@@ -250,6 +250,17 @@ export default function About() {
         </Section>
 
         {/* Auto-sync notice */}
+        {/* Testimonials — songs that found their people */}
+        <Section delay={280}>
+          <div className="mt-16">
+            <Testimonials
+              eyebrow="Songs already written for real people"
+              heading={<>Stories that became <span className="text-gradient">songs</span>.</>}
+            />
+          </div>
+        </Section>
+
+        {/* Auto-sync notice */}
         <Section delay={300}>
           <div className="mt-12 max-w-3xl mx-auto glass-card shine text-center">
             <RefreshCw size={20} className="text-primary mx-auto mb-3" />
