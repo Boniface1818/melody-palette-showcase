@@ -88,10 +88,10 @@ export default function About() {
                 <Heart size={12} /> A few honest words
               </p>
               <blockquote className="text-lg sm:text-xl text-foreground italic leading-relaxed max-w-xl mx-auto">
-                "Mimi siimbi ili nisikike — naimba ili Mungu apate kusikika."
+                "Sijaitwa kuandika nyimbo — nimeitwa kuandika nyakati."
               </blockquote>
               <p className="text-xs text-muted-foreground mt-2 mb-1">
-                I do not sing to be heard — I sing so that God may be heard.
+                I was not called to write songs — I was called to write moments.
               </p>
               <p className="text-[10px] uppercase tracking-widest text-accent">— Studio motto</p>
             </div>
