@@ -105,9 +105,9 @@ export default function About() {
               <Sparkles size={12} /> The studio in one sentence
             </p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight max-w-3xl mx-auto">
-              I write <span className="text-gradient">durable</span> sacred music
+              I write <span className="text-gradient">songs</span> for the moments
               <br className="hidden sm:block" />
-              for choirs that need to <span className="text-gradient">sing it on Sunday</span>.
+              that <span className="text-gradient">deserve their own melody</span>.
             </h2>
           </div>
         </Section>
