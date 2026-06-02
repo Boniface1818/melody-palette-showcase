@@ -270,8 +270,16 @@ export default function Compositions() {
           <p className="text-center text-muted-foreground text-sm mt-4 transition-opacity duration-700">
             {subtitle}
           </p>
-          <div className="flex justify-center mt-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
             <SyncScoresButton onSynced={fetchScores} label="Sync New Scores" />
+            <a
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=${encodeURIComponent("Request a Custom Song")}&body=${encodeURIComponent("Hi Boniface,\n\nI'd like to request a custom song.\n\nOccasion: \nFor whom: \nMood / message: \nLanguage: \nDeadline: \n\nThank you!")}`}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary shine inline-flex"
+            >
+              <Mail size={14} /> Request a Custom Song
+            </a>
           </div>
 
 
