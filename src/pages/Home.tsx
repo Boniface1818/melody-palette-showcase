@@ -45,23 +45,6 @@ const verses = [
   { sw: "Mahali penye sala, kuna muziki.", en: "Where there is prayer, there is music.", attr: "Wahenga" },
 ];
 
-const testimonials = [
-  {
-    name: "Sr. Mary, Choir Director",
-    role: "Parish in Nairobi",
-    text: "Boniface writes for the choir we actually have, not the one we wish we had. The pieces stick after one rehearsal.",
-  },
-  {
-    name: "Fr. James",
-    role: "Liturgy team, Western Kenya",
-    text: "The psalm setting he wrote for our ordination is now the one the cantor reaches for first. Singable and dignified.",
-  },
-  {
-    name: "Esther — Solo artist",
-    role: "Catholic recording artist",
-    text: "He pitched the song in my key, sent a guide vocal and a backing track. I learned it in a weekend. Best gift to my voice.",
-  },
-];
 
 const trustChips = [
   { Icon: ShieldCheck, label: "Two free revisions" },
