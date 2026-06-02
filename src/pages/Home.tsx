@@ -111,14 +111,14 @@ export default function Home() {
             </div>
 
             {/* Tagline directly under the logo */}
-            <p className="font-display italic text-base sm:text-lg text-primary tracking-wide mb-5 flex items-center justify-center gap-2">
-              <span className="h-px w-6 bg-primary/50" />
-              Where the score serves the song
-              <span className="h-px w-6 bg-primary/50" />
+            <p className="font-display italic text-lg sm:text-2xl text-gradient tracking-wide mb-5 flex items-center justify-center gap-3">
+              <span className="h-px w-8 bg-primary/50" />
+              Elegance In Every Note
+              <span className="h-px w-8 bg-accent/50" />
             </p>
 
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6 font-body">
-              Sacred Composer · Choral Arranger · Open for Commissions
+              Composer · Arranger · Storyteller in Sound
             </p>
           </Section>
 
