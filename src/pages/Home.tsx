@@ -200,32 +200,33 @@ export default function Home() {
 
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">
-                  Hujambo · Welcome to the studio
+                  Karibu · Step into the studio
                 </p>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05] mb-5">
-                  Music written like a <span className="text-gradient">letter</span>,
+                  Every song begins as a <span className="text-gradient">whisper</span>,
                   <br className="hidden sm:block" />
-                  addressed to <span className="text-gradient">one assembly</span> at a time.
+                  and ends as somebody's <span class="text-gradient">favorite prayer</span>.
                 </h2>
 
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-                  This is the workbench of <span className="text-foreground font-semibold">Boniface Kagunda</span> — a Kenyan
-                  composer who treats every score like a private conversation between the page, the singer, and the One being praised.
-                  Nothing here is generic. Everything is shaped for a specific voice, a specific moment, a specific prayer.
+                  I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — and this is where stories
+                  become songs. A graduation, a thanksgiving, an ordination, an ordinary Sunday — give me the moment,
+                  and I'll write the music that makes it unforgettable. Each score leaves this desk tailored, engraved,
+                  and ready to sing the very first time it's opened.
                 </p>
 
-                <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/85 text-sm mb-3">
-                  <Quote size={14} className="inline text-primary mr-1 -mt-1" />
-                  "Andika kana kwamba mtu mmoja ataimba — kisha mioyo elfu itaungana." — Write as if one will sing it, and a thousand hearts will join.
+                <blockquote className="border-l-2 border-accent pl-4 italic text-foreground/85 text-sm mb-3">
+                  <Quote size={14} className="inline text-accent mr-1 -mt-1" />
+                  "Kila wimbo huzaliwa mara mbili — mara ya kwanza kalamuni, mara ya pili mioyoni." — Every song is born twice: first on the page, then in the heart.
                 </blockquote>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Stream what calls to you, save what serves you, and when a piece of your own is ready to be born,
-                  <span className="text-foreground"> the desk is open</span>.
+                  Browse the catalog, listen with headphones on, and when your moment is ready —
+                  <span className="text-foreground"> the pen is warm</span>.
                 </p>
 
                 <p className="mt-6 text-[10px] uppercase tracking-widest text-muted-foreground/70">
-                  Fresh scores published weekly · Catalog auto-syncs from MuseScore
+                  New scores published weekly · Catalog auto-syncs from MuseScore
                 </p>
               </div>
             </div>
