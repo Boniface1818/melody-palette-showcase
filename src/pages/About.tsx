@@ -6,6 +6,7 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
+import Testimonials from "@/components/Testimonials";
 import { Music, Feather, Quote, BookOpen, PenLine, Church, Heart, Sparkles, RefreshCw } from "lucide-react";
 
 const aboutJsonLd = {
@@ -21,30 +22,30 @@ const aboutJsonLd = {
 };
 
 const aboutSubtitles = [
-  "Sacred music written in Nairobi, sung wherever the Church gathers.",
-  "Composer, arranger, and quiet servant of the liturgy.",
-  "Music that respects the singer and serves the prayer.",
-  "Ujenzi wa wimbo: kalamu, sauti, na sala.",
+  "Composer of songs that turn moments into memories.",
+  "Where a graduation, a thanksgiving, a Sunday — all become music.",
+  "Bespoke songs, sacred scores, and stories shaped in sound.",
+  "Kalamu moja, sauti nyingi — one pen, many voices.",
 ];
 
 const chapters = [
   {
     icon: BookOpen,
-    label: "Mwanzo · Where it began",
+    label: "Chimbuko · The spark",
     text:
-      "I grew up in a parish where the choir was small and the heart was huge. Long before any conservatory theory, I learned that a song lives or dies by whether the gathered assembly can carry it home and hum it on Monday morning.",
+      "It started with watching people sing words that didn't quite fit their hearts. I picked up a pen and decided no one I write for would ever again borrow another person's song to express their own joy, grief, or gratitude.",
   },
   {
     icon: PenLine,
-    label: "Kazi · The work",
+    label: "Mtindo · The craft",
     text:
-      "I write every line on the page as if I were the singer staring at it for the first time. Page turns are planned, breath marks are honest, ranges are kind, and harmony is never decoration — only meaning.",
+      "I write the way a tailor cuts cloth — measured to one voice, one range, one story. Every page is engraved so the singer never has to wrestle the score; they only have to mean it.",
   },
   {
     icon: Church,
-    label: "Wito · The calling",
+    label: "Maana · The meaning",
     text:
-      "The composer is not the point. The prayer is. If a piece I wrote can disappear into the lips of an assembly and leave behind only an encounter with God, then the score has done exactly its job.",
+      "A song is finished when it disappears into the person singing it. My name belongs at the bottom of the page — the moment belongs to you, and through you, to God.",
   },
 ];
 
@@ -88,10 +89,10 @@ export default function About() {
                 <Heart size={12} /> A few honest words
               </p>
               <blockquote className="text-lg sm:text-xl text-foreground italic leading-relaxed max-w-xl mx-auto">
-                "Mimi siimbi ili nisikike — naimba ili Mungu apate kusikika."
+                "Sijaitwa kuandika nyimbo — nimeitwa kuandika nyakati."
               </blockquote>
               <p className="text-xs text-muted-foreground mt-2 mb-1">
-                I do not sing to be heard — I sing so that God may be heard.
+                I was not called to write songs — I was called to write moments.
               </p>
               <p className="text-[10px] uppercase tracking-widest text-accent">— Studio motto</p>
             </div>
@@ -105,9 +106,9 @@ export default function About() {
               <Sparkles size={12} /> The studio in one sentence
             </p>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight max-w-3xl mx-auto">
-              I write <span className="text-gradient">durable</span> sacred music
+              I write <span className="text-gradient">songs</span> for the moments
               <br className="hidden sm:block" />
-              for choirs that need to <span className="text-gradient">sing it on Sunday</span>.
+              that <span className="text-gradient">deserve their own melody</span>.
             </h2>
           </div>
         </Section>
@@ -123,11 +124,11 @@ export default function About() {
               <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2">At a glance</p>
               <h3 className="text-xl font-display font-bold mb-2">Boniface Kagunda</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Nairobi-based composer. Builds singable, durable sacred music
-                — one commission, one assembly, one prayer at a time.
+                Kenyan composer, arranger, and storyteller. Writes original songs and sacred scores
+                that turn personal moments — graduations, thanksgivings, ordinations — into music people keep.
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5">
-                {["Composer", "Arranger", "Cantor", "Engraver", "Catholic"].map((t) => (
+                {["Composer", "Arranger", "Songwriter", "Engraver", "Storyteller"].map((t) => (
                   <span key={t} className="text-[10px] px-2 py-1 rounded-full bg-secondary text-foreground/80">{t}</span>
                 ))}
               </div>
@@ -138,20 +139,20 @@ export default function About() {
               <h2 className="text-lg font-display font-semibold mb-4">The longer story</h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 <p>
-                  I am <span className="text-foreground font-semibold">Boniface Kagunda</span>, a Kenyan composer working at the intersection of
-                  liturgy and craft. Most of what leaves my desk is sacred — Mass settings, responsorial psalms,
-                  offertory and communion pieces, hymn arrangements for SATB, SAB, SSA, and unison choirs, plus bespoke songs for
-                  solo Catholic artists who carry the gospel in their own voice.
+                  I'm <span className="text-foreground font-semibold">Boniface Kagunda</span>, a Kenyan composer who treats
+                  every song like a small, private commission from real life. When Cynthia wanted to thank God for His blessings,
+                  she didn't borrow somebody else's hymn — I wrote <em className="text-foreground">"Asante"</em> for her.
+                  When Kinani graduated from campus, his celebration wasn't background music — it was <em className="text-foreground">"Heko"</em>,
+                  a song built around his own journey.
                 </p>
                 <p>
-                  I work the same way whether the brief is one cantor or a hundred-voice festival choir:
-                  start with the text, find the melody that already lives inside it, then dress it in harmony
-                  that <em>helps</em> rather than decorates. Every page is engraved to be readable in low candlelight, with page turns
-                  that respect the singer's breath.
+                  That's the work: turning a feeling that's hard to name into a melody you'll never forget. Sacred or personal,
+                  choir or soloist, Kiswahili or Latin — the brief is always the same. Find the song already living inside the
+                  moment, and write it down before it gets away.
                 </p>
                 <p>
-                  My promise is short: <span className="text-foreground">clarity over cleverness, prayer over performance,
-                  the singer before the composer</span> — and a finished score you can trust the very first time the choir opens it.
+                  My promise is short: <span className="text-foreground">your story leads, the music follows</span> — and what
+                  you receive is a score you can sing, share, and keep for the rest of your life.
                 </p>
               </div>
             </div>
@@ -245,6 +246,17 @@ export default function About() {
                 </div>
               ))}
             </div>
+          </div>
+        </Section>
+
+        {/* Auto-sync notice */}
+        {/* Testimonials — songs that found their people */}
+        <Section delay={280}>
+          <div className="mt-16">
+            <Testimonials
+              eyebrow="Songs already written for real people"
+              heading={<>Stories that became <span className="text-gradient">songs</span>.</>}
+            />
           </div>
         </Section>
 

@@ -12,8 +12,9 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
-  ChevronLeft, ChevronRight, Download, History, Trophy, Copy,
+  ChevronLeft, ChevronRight, Download, History, Trophy, Copy, Mail, Heart, Music2,
 } from "lucide-react";
+import Testimonials from "@/components/Testimonials";
 
 const compositionsJsonLd = {
   "@context": "https://schema.org",
@@ -269,8 +270,16 @@ export default function Compositions() {
           <p className="text-center text-muted-foreground text-sm mt-4 transition-opacity duration-700">
             {subtitle}
           </p>
-          <div className="flex justify-center mt-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
             <SyncScoresButton onSynced={fetchScores} label="Sync New Scores" />
+            <a
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=Kagundaboniface98@gmail.com&su=${encodeURIComponent("Request a Custom Song")}&body=${encodeURIComponent("Hi Boniface,\n\nI'd like to request a custom song.\n\nOccasion: \nFor whom: \nMood / message: \nLanguage: \nDeadline: \n\nThank you!")}`}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary shine inline-flex"
+            >
+              <Mail size={14} /> Request a Custom Song
+            </a>
           </div>
 
 
@@ -601,6 +610,16 @@ export default function Compositions() {
             })}
           </div>
         )}
+
+        {/* Songs written for real people */}
+        <Section delay={200}>
+          <div className="mt-24">
+            <Testimonials
+              eyebrow="Behind the catalog"
+              heading={<>The songs <span className="text-gradient">these scores</span> became.</>}
+            />
+          </div>
+        </Section>
       </main>
 
       {/* Preview modal */}

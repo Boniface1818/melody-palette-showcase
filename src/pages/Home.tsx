@@ -11,6 +11,7 @@ import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, He
 import logo from "@/assets/bk-logo.png";
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
 import SEO from "@/components/SEO";
+import Testimonials, { featuredTestimonials } from "@/components/Testimonials";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -44,23 +45,6 @@ const verses = [
   { sw: "Mahali penye sala, kuna muziki.", en: "Where there is prayer, there is music.", attr: "Wahenga" },
 ];
 
-const testimonials = [
-  {
-    name: "Sr. Mary, Choir Director",
-    role: "Parish in Nairobi",
-    text: "Boniface writes for the choir we actually have, not the one we wish we had. The pieces stick after one rehearsal.",
-  },
-  {
-    name: "Fr. James",
-    role: "Liturgy team, Western Kenya",
-    text: "The psalm setting he wrote for our ordination is now the one the cantor reaches for first. Singable and dignified.",
-  },
-  {
-    name: "Esther — Solo artist",
-    role: "Catholic recording artist",
-    text: "He pitched the song in my key, sent a guide vocal and a backing track. I learned it in a weekend. Best gift to my voice.",
-  },
-];
 
 const trustChips = [
   { Icon: ShieldCheck, label: "Two free revisions" },
@@ -111,14 +95,14 @@ export default function Home() {
             </div>
 
             {/* Tagline directly under the logo */}
-            <p className="font-display italic text-base sm:text-lg text-primary tracking-wide mb-5 flex items-center justify-center gap-2">
-              <span className="h-px w-6 bg-primary/50" />
-              Where the score serves the song
-              <span className="h-px w-6 bg-primary/50" />
+            <p className="font-display italic text-lg sm:text-2xl text-gradient tracking-wide mb-5 flex items-center justify-center gap-3">
+              <span className="h-px w-8 bg-primary/50" />
+              Elegance In Every Note
+              <span className="h-px w-8 bg-accent/50" />
             </p>
 
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6 font-body">
-              Sacred Composer · Choral Arranger · Open for Commissions
+              Composer · Arranger · Storyteller in Sound
             </p>
           </Section>
 
@@ -199,32 +183,33 @@ export default function Home() {
 
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">
-                  Hujambo · Welcome to the studio
+                  Karibu · Step into the studio
                 </p>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05] mb-5">
-                  Music written like a <span className="text-gradient">letter</span>,
+                  Every song begins as a <span className="text-gradient">whisper</span>,
                   <br className="hidden sm:block" />
-                  addressed to <span className="text-gradient">one assembly</span> at a time.
+                  and ends as somebody's <span className="text-gradient">favorite prayer</span>.
                 </h2>
 
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-                  This is the workbench of <span className="text-foreground font-semibold">Boniface Kagunda</span> — a Kenyan
-                  composer who treats every score like a private conversation between the page, the singer, and the One being praised.
-                  Nothing here is generic. Everything is shaped for a specific voice, a specific moment, a specific prayer.
+                  I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — and this is where stories
+                  become songs. A graduation, a thanksgiving, an ordination, an ordinary Sunday — give me the moment,
+                  and I'll write the music that makes it unforgettable. Each score leaves this desk tailored, engraved,
+                  and ready to sing the very first time it's opened.
                 </p>
 
-                <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/85 text-sm mb-3">
-                  <Quote size={14} className="inline text-primary mr-1 -mt-1" />
-                  "Andika kana kwamba mtu mmoja ataimba — kisha mioyo elfu itaungana." — Write as if one will sing it, and a thousand hearts will join.
+                <blockquote className="border-l-2 border-accent pl-4 italic text-foreground/85 text-sm mb-3">
+                  <Quote size={14} className="inline text-accent mr-1 -mt-1" />
+                  "Kila wimbo huzaliwa mara mbili — mara ya kwanza kalamuni, mara ya pili mioyoni." — Every song is born twice: first on the page, then in the heart.
                 </blockquote>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Stream what calls to you, save what serves you, and when a piece of your own is ready to be born,
-                  <span className="text-foreground"> the desk is open</span>.
+                  Browse the catalog, listen with headphones on, and when your moment is ready —
+                  <span className="text-foreground"> the pen is warm</span>.
                 </p>
 
                 <p className="mt-6 text-[10px] uppercase tracking-widest text-muted-foreground/70">
-                  Fresh scores published weekly · Catalog auto-syncs from MuseScore
+                  New scores published weekly · Catalog auto-syncs from MuseScore
                 </p>
               </div>
             </div>
@@ -287,38 +272,10 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* Testimonials — social proof */}
+        {/* Testimonials — real songs, real people */}
         <Section delay={330}>
-          <div className="mt-20 max-w-6xl mx-auto">
-            <div className="text-center mb-8">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
-                <Star size={12} /> What singers are saying
-              </p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
-                Voices that <span className="text-gradient">trust the score</span>.
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {testimonials.map((t) => (
-                <figure
-                  key={t.name}
-                  className="glass-card shine relative flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-500"
-                >
-                  <div className="flex gap-0.5 text-accent">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} size={12} fill="currentColor" />
-                    ))}
-                  </div>
-                  <blockquote className="text-sm text-foreground/90 leading-relaxed italic">
-                    "{t.text}"
-                  </blockquote>
-                  <figcaption className="mt-auto">
-                    <p className="font-display font-semibold text-sm">{t.name}</p>
-                    <p className="text-[11px] uppercase tracking-widest text-muted-foreground">{t.role}</p>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
+          <div className="mt-20">
+            <Testimonials />
           </div>
         </Section>
 
