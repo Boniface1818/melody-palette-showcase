@@ -610,6 +610,16 @@ export default function Compositions() {
             })}
           </div>
         )}
+
+        {/* Songs written for real people */}
+        <Section delay={200}>
+          <div className="mt-24">
+            <Testimonials
+              eyebrow="Behind the catalog"
+              heading={<>The songs <span className="text-gradient">these scores</span> became.</>}
+            />
+          </div>
+        </Section>
       </main>
 
       {/* Preview modal */}
