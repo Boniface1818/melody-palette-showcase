@@ -12,8 +12,9 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
-  ChevronLeft, ChevronRight, Download, History, Trophy, Copy,
+  ChevronLeft, ChevronRight, Download, History, Trophy, Copy, Mail, Heart, Music2,
 } from "lucide-react";
+import Testimonials from "@/components/Testimonials";
 
 const compositionsJsonLd = {
   "@context": "https://schema.org",
