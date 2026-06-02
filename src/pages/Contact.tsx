@@ -385,6 +385,50 @@ export default function Contact() {
         </Section>
 
         {/* FAQ */}
+        {/* Commission Brief Checklist — new feature */}
+        <Section delay={170}>
+          <div className="mt-20 max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
+                <Sparkles size={12} /> Before you write to me
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                The <span className="text-gradient">six things</span> that make your song unforgettable.
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto mt-3">
+                Send me even three of these and I can already start sketching. The more I know, the more the song will sound like <em>you</em>.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                { n: "01", t: "The moment", d: "What's the occasion? A graduation, a wedding, a thanksgiving, an ordinary Tuesday that needs marking." },
+                { n: "02", t: "The person", d: "Who is this song for? Their name, their voice, one detail no one else would think to include." },
+                { n: "03", t: "The feeling", d: "What should the listener feel by the last note? Gratitude, joy, surrender, peace, courage." },
+                { n: "04", t: "The language", d: "Kiswahili, English, Latin, mixed — tell me which words the heart already prays in." },
+                { n: "05", t: "The voice", d: "Soprano, alto, tenor, bass — or full choir. If you can hum your range, even better." },
+                { n: "06", t: "The deadline", d: "When does it need to be sung? Be honest about urgency and I'll be honest about timing." },
+              ].map((s) => (
+                <div key={s.n} className="premium-card shine hover:-translate-y-1 transition-transform duration-500">
+                  <p className="font-display text-3xl font-bold text-primary/30 leading-none">{s.n}</p>
+                  <h3 className="font-display font-semibold text-base mt-2 mb-2">{s.t}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{s.d}</p>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-6">
+              <a
+                href={gmailLink("My Commission Brief")}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-primary shine inline-flex"
+              >
+                <Mail size={14} /> Send My Brief
+              </a>
+            </div>
+          </div>
+        </Section>
+
+        {/* FAQ */}
         <Section delay={180}>
           <div className="mt-20 max-w-3xl mx-auto">
             <div className="text-center mb-8">
