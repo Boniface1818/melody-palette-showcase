@@ -289,38 +289,10 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* Testimonials — social proof */}
+        {/* Testimonials — real songs, real people */}
         <Section delay={330}>
-          <div className="mt-20 max-w-6xl mx-auto">
-            <div className="text-center mb-8">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
-                <Star size={12} /> What singers are saying
-              </p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
-                Voices that <span className="text-gradient">trust the score</span>.
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {testimonials.map((t) => (
-                <figure
-                  key={t.name}
-                  className="glass-card shine relative flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-500"
-                >
-                  <div className="flex gap-0.5 text-accent">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} size={12} fill="currentColor" />
-                    ))}
-                  </div>
-                  <blockquote className="text-sm text-foreground/90 leading-relaxed italic">
-                    "{t.text}"
-                  </blockquote>
-                  <figcaption className="mt-auto">
-                    <p className="font-display font-semibold text-sm">{t.name}</p>
-                    <p className="text-[11px] uppercase tracking-widest text-muted-foreground">{t.role}</p>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
+          <div className="mt-20">
+            <Testimonials />
           </div>
         </Section>
 
