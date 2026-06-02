@@ -11,6 +11,7 @@ import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, He
 import logo from "@/assets/bk-logo.png";
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
 import SEO from "@/components/SEO";
+import Testimonials, { featuredTestimonials } from "@/components/Testimonials";
 
 const personJsonLd = {
   "@context": "https://schema.org",
