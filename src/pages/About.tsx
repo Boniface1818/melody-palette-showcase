@@ -123,11 +123,11 @@ export default function About() {
               <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2">At a glance</p>
               <h3 className="text-xl font-display font-bold mb-2">Boniface Kagunda</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Nairobi-based composer. Builds singable, durable sacred music
-                — one commission, one assembly, one prayer at a time.
+                Kenyan composer, arranger, and storyteller. Writes original songs and sacred scores
+                that turn personal moments — graduations, thanksgivings, ordinations — into music people keep.
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5">
-                {["Composer", "Arranger", "Cantor", "Engraver", "Catholic"].map((t) => (
+                {["Composer", "Arranger", "Songwriter", "Engraver", "Storyteller"].map((t) => (
                   <span key={t} className="text-[10px] px-2 py-1 rounded-full bg-secondary text-foreground/80">{t}</span>
                 ))}
               </div>
@@ -138,20 +138,20 @@ export default function About() {
               <h2 className="text-lg font-display font-semibold mb-4">The longer story</h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 <p>
-                  I am <span className="text-foreground font-semibold">Boniface Kagunda</span>, a Kenyan composer working at the intersection of
-                  liturgy and craft. Most of what leaves my desk is sacred — Mass settings, responsorial psalms,
-                  offertory and communion pieces, hymn arrangements for SATB, SAB, SSA, and unison choirs, plus bespoke songs for
-                  solo Catholic artists who carry the gospel in their own voice.
+                  I'm <span className="text-foreground font-semibold">Boniface Kagunda</span>, a Kenyan composer who treats
+                  every song like a small, private commission from real life. When Cynthia wanted to thank God for His blessings,
+                  she didn't borrow somebody else's hymn — I wrote <em className="text-foreground">"Asante"</em> for her.
+                  When Kinani graduated from campus, his celebration wasn't background music — it was <em className="text-foreground">"Heko"</em>,
+                  a song built around his own journey.
                 </p>
                 <p>
-                  I work the same way whether the brief is one cantor or a hundred-voice festival choir:
-                  start with the text, find the melody that already lives inside it, then dress it in harmony
-                  that <em>helps</em> rather than decorates. Every page is engraved to be readable in low candlelight, with page turns
-                  that respect the singer's breath.
+                  That's the work: turning a feeling that's hard to name into a melody you'll never forget. Sacred or personal,
+                  choir or soloist, Kiswahili or Latin — the brief is always the same. Find the song already living inside the
+                  moment, and write it down before it gets away.
                 </p>
                 <p>
-                  My promise is short: <span className="text-foreground">clarity over cleverness, prayer over performance,
-                  the singer before the composer</span> — and a finished score you can trust the very first time the choir opens it.
+                  My promise is short: <span className="text-foreground">your story leads, the music follows</span> — and what
+                  you receive is a score you can sing, share, and keep for the rest of your life.
                 </p>
               </div>
             </div>
