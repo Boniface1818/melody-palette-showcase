@@ -21,30 +21,30 @@ const aboutJsonLd = {
 };
 
 const aboutSubtitles = [
-  "Sacred music written in Nairobi, sung wherever the Church gathers.",
-  "Composer, arranger, and quiet servant of the liturgy.",
-  "Music that respects the singer and serves the prayer.",
-  "Ujenzi wa wimbo: kalamu, sauti, na sala.",
+  "Composer of songs that turn moments into memories.",
+  "Where a graduation, a thanksgiving, a Sunday — all become music.",
+  "Bespoke songs, sacred scores, and stories shaped in sound.",
+  "Kalamu moja, sauti nyingi — one pen, many voices.",
 ];
 
 const chapters = [
   {
     icon: BookOpen,
-    label: "Mwanzo · Where it began",
+    label: "Chimbuko · The spark",
     text:
-      "I grew up in a parish where the choir was small and the heart was huge. Long before any conservatory theory, I learned that a song lives or dies by whether the gathered assembly can carry it home and hum it on Monday morning.",
+      "It started with watching people sing words that didn't quite fit their hearts. I picked up a pen and decided no one I write for would ever again borrow another person's song to express their own joy, grief, or gratitude.",
   },
   {
     icon: PenLine,
-    label: "Kazi · The work",
+    label: "Mtindo · The craft",
     text:
-      "I write every line on the page as if I were the singer staring at it for the first time. Page turns are planned, breath marks are honest, ranges are kind, and harmony is never decoration — only meaning.",
+      "I write the way a tailor cuts cloth — measured to one voice, one range, one story. Every page is engraved so the singer never has to wrestle the score; they only have to mean it.",
   },
   {
     icon: Church,
-    label: "Wito · The calling",
+    label: "Maana · The meaning",
     text:
-      "The composer is not the point. The prayer is. If a piece I wrote can disappear into the lips of an assembly and leave behind only an encounter with God, then the score has done exactly its job.",
+      "A song is finished when it disappears into the person singing it. My name belongs at the bottom of the page — the moment belongs to you, and through you, to God.",
   },
 ];
 
