@@ -11,7 +11,7 @@ import { ArrowRight, Music, Sparkles, Users, BookOpen, Piano, Quote, Feather, He
 import logo from "@/assets/bk-logo.png";
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
 import SEO from "@/components/SEO";
-import Testimonials, { featuredTestimonials } from "@/components/Testimonials";
+import Testimonials from "@/components/Testimonials";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -39,10 +39,10 @@ const journey = [
 ];
 
 const verses = [
-  { sw: "Mioyo ya watu ni vinubi vya Mungu.", en: "Human hearts are the harps of God.", attr: "Hadithi za zamani" },
-  { sw: "Sauti moja ya pekee inaweza kufungua mbingu.", en: "A single honest voice can open the heavens.", attr: "Mwandishi" },
-  { sw: "Wimbo huutoka mahali ambapo maneno yameishia.", en: "Song begins exactly where words run out.", attr: "Methali" },
-  { sw: "Mahali penye sala, kuna muziki.", en: "Where there is prayer, there is music.", attr: "Wahenga" },
+  { line: "A song is a feeling that finally learned how to breathe.", attr: "Studio note" },
+  { line: "Write the melody people will remember at the kitchen sink, not just at the altar.", attr: "Pinned above the desk" },
+  { line: "The best harmony is the one no singer has to fight.", attr: "Rehearsal lesson" },
+  { line: "Every commission is a small, private miracle waiting to be notated.", attr: "Letter to a friend" },
 ];
 
 
@@ -183,24 +183,24 @@ export default function Home() {
 
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">
-                  Karibu · Step into the studio
+                  Welcome · Step into the studio
                 </p>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05] mb-5">
-                  Every song begins as a <span className="text-gradient">whisper</span>,
+                  I write the <span className="text-gradient">songs</span> people sing
                   <br className="hidden sm:block" />
-                  and ends as somebody's <span className="text-gradient">favorite prayer</span>.
+                  on the most important <span className="text-gradient">days of their lives</span>.
                 </h2>
 
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-                  I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — and this is where stories
-                  become songs. A graduation, a thanksgiving, an ordination, an ordinary Sunday — give me the moment,
-                  and I'll write the music that makes it unforgettable. Each score leaves this desk tailored, engraved,
-                  and ready to sing the very first time it's opened.
+                  I'm <span className="text-foreground font-semibold">Boniface Kagunda</span> — a composer who treats
+                  every brief like a love letter someone has been waiting their whole life to receive. Tell me the
+                  moment — a graduation, a wedding, a goodbye, a thanksgiving — and I'll send back a finished score,
+                  in your key, in your language, ready to sing the first time you open it.
                 </p>
 
                 <blockquote className="border-l-2 border-accent pl-4 italic text-foreground/85 text-sm mb-3">
                   <Quote size={14} className="inline text-accent mr-1 -mt-1" />
-                  "Kila wimbo huzaliwa mara mbili — mara ya kwanza kalamuni, mara ya pili mioyoni." — Every song is born twice: first on the page, then in the heart.
+                  "A song doesn't belong to the composer. It belongs to the moment it was written for — and to the person who sings it next."
                 </blockquote>
 
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -220,11 +220,10 @@ export default function Home() {
         <Section delay={150}>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 max-w-6xl mx-auto">
             {verses.map((q) => (
-              <div key={q.sw} className="glass-card shine text-center hover:-translate-y-1 transition-transform duration-500">
+              <div key={q.line} className="glass-card shine text-center hover:-translate-y-1 transition-transform duration-500">
                 <Quote size={16} className="text-primary mx-auto mb-3 opacity-60" />
-                <p className="text-sm text-foreground italic leading-relaxed">"{q.sw}"</p>
-                <p className="text-xs text-muted-foreground mt-2">{q.en}</p>
-                <p className="text-[10px] uppercase tracking-widest text-accent mt-2">— {q.attr}</p>
+                <p className="text-sm text-foreground italic leading-relaxed">"{q.line}"</p>
+                <p className="text-[10px] uppercase tracking-widest text-accent mt-3">— {q.attr}</p>
               </div>
             ))}
           </div>

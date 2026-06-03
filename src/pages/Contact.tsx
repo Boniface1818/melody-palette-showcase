@@ -494,24 +494,51 @@ export default function Contact() {
           </div>
         </Section>
 
-        {/* Asante — bottom thank-you */}
+        {/* What you receive — deliverables */}
+        <Section delay={220}>
+          <div className="mt-20 max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
+                <Sparkles size={12} /> What lands in your inbox
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                Every commission ships with <span className="text-gradient">everything you need to sing it</span>.
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { t: "Engraved PDF score", d: "Clean typography, sensible page turns, ready to print or rehearse from a tablet." },
+                { t: "MIDI + MP3 mock-up", d: "Hear every voice before the first rehearsal — useful for soloists and section leads alike." },
+                { t: "Backing track", d: "A polished, performance-ready accompaniment in your key, mixed for live or studio use." },
+                { t: "Guide vocal", d: "A reference recording you can sing along with until the melody feels like yours." },
+              ].map((d) => (
+                <div key={d.t} className="premium-card shine hover:-translate-y-1 transition-transform duration-500">
+                  <h3 className="font-display font-semibold text-base mb-2">{d.t}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{d.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* Thank you — bottom */}
         <Section delay={250}>
           <div className="mt-20 max-w-3xl mx-auto text-center relative">
             <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 blur-2xl" aria-hidden />
             <div className="rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md p-8 sm:p-10">
               <Heart size={28} className="text-accent mx-auto mb-3" />
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3">Asante sana · Thank you</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3">Thank you for being here</p>
               <h3 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
                 For visiting, for listening, for singing along.
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xl mx-auto">
                 Whether you came to download a score, commission a piece, or simply to listen — your presence here means more than you know.
-                Every note on this site exists because someone, somewhere, decided that prayer deserved a melody. Thank you for being part of that long, beautiful song.
+                Every note on this site exists because someone, somewhere, decided that a moment deserved a melody. Thank you for being part of that long, beautiful song.
               </p>
               <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/85 text-sm max-w-md mx-auto text-left">
                 <Quote size={14} className="inline text-primary mr-1 -mt-1" />
-                "Mungu hupenda anayetoa kwa furaha." — God loves a cheerful giver.
-                <span className="block text-[11px] text-muted-foreground not-italic mt-1">— 2 Wakorintho 9:7</span>
+                "Give cheerfully — both your gift and your song."
+                <span className="block text-[11px] text-muted-foreground not-italic mt-1">— Studio note</span>
               </blockquote>
               <p className="mt-6 text-xs text-muted-foreground">
                 — With gratitude, <span className="text-foreground font-display font-semibold">Boniface Kagunda</span>

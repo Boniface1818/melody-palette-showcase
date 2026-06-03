@@ -58,9 +58,9 @@ export default function SyncScoresButton({
     try {
       const { data, error } = await supabase.functions.invoke("trigger-sync", { body: {} });
       if (error) throw error;
-      const synced = (data as any)?.synced ?? 0;
+      const added = (data as any)?.added ?? 0;
       const total = (data as any)?.total ?? 0;
-      setMessage(synced ? `Added ${synced} new · ${total} total` : `Catalog up to date · ${total} scores`);
+      setMessage(added ? `Added ${added} new · ${total} total` : `Catalog up to date · ${total} scores`);
       setState("done");
       onSynced?.();
       localStorage.setItem(STORAGE_KEY, String(Date.now()));

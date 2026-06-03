@@ -14,7 +14,7 @@ import {
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
   ChevronLeft, ChevronRight, Download, History, Trophy, Copy, Mail, Heart, Music2,
 } from "lucide-react";
-import Testimonials from "@/components/Testimonials";
+
 
 const compositionsJsonLd = {
   "@context": "https://schema.org",
@@ -611,15 +611,6 @@ export default function Compositions() {
           </div>
         )}
 
-        {/* Songs written for real people */}
-        <Section delay={200}>
-          <div className="mt-24">
-            <Testimonials
-              eyebrow="Behind the catalog"
-              heading={<>The songs <span className="text-gradient">these scores</span> became.</>}
-            />
-          </div>
-        </Section>
       </main>
 
       {/* Preview modal */}

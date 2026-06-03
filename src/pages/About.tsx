@@ -6,7 +6,7 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
-import Testimonials from "@/components/Testimonials";
+
 import { Music, Feather, Quote, BookOpen, PenLine, Church, Heart, Sparkles, RefreshCw } from "lucide-react";
 
 const aboutJsonLd = {
@@ -23,29 +23,29 @@ const aboutJsonLd = {
 
 const aboutSubtitles = [
   "Composer of songs that turn moments into memories.",
-  "Where a graduation, a thanksgiving, a Sunday — all become music.",
+  "Where a graduation, a thanksgiving, an ordinary Sunday all become music.",
   "Bespoke songs, sacred scores, and stories shaped in sound.",
-  "Kalamu moja, sauti nyingi — one pen, many voices.",
+  "One pen, many voices — written for the people who will sing them.",
 ];
 
 const chapters = [
   {
     icon: BookOpen,
-    label: "Chimbuko · The spark",
+    label: "The spark",
     text:
       "It started with watching people sing words that didn't quite fit their hearts. I picked up a pen and decided no one I write for would ever again borrow another person's song to express their own joy, grief, or gratitude.",
   },
   {
     icon: PenLine,
-    label: "Mtindo · The craft",
+    label: "The craft",
     text:
       "I write the way a tailor cuts cloth — measured to one voice, one range, one story. Every page is engraved so the singer never has to wrestle the score; they only have to mean it.",
   },
   {
     icon: Church,
-    label: "Maana · The meaning",
+    label: "The meaning",
     text:
-      "A song is finished when it disappears into the person singing it. My name belongs at the bottom of the page — the moment belongs to you, and through you, to God.",
+      "A song is finished when it disappears into the person singing it. My name belongs at the bottom of the page — the moment belongs to you, and through you, to whoever is listening.",
   },
 ];
 
@@ -89,12 +89,9 @@ export default function About() {
                 <Heart size={12} /> A few honest words
               </p>
               <blockquote className="text-lg sm:text-xl text-foreground italic leading-relaxed max-w-xl mx-auto">
-                "Sijaitwa kuandika nyimbo — nimeitwa kuandika nyakati."
+                "I was not called to write songs. I was called to write the moments people will want to remember forever."
               </blockquote>
-              <p className="text-xs text-muted-foreground mt-2 mb-1">
-                I was not called to write songs — I was called to write moments.
-              </p>
-              <p className="text-[10px] uppercase tracking-widest text-accent">— Studio motto</p>
+              <p className="text-[10px] uppercase tracking-widest text-accent mt-4">— Studio motto</p>
             </div>
           </div>
         </Section>
@@ -140,19 +137,19 @@ export default function About() {
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 <p>
                   I'm <span className="text-foreground font-semibold">Boniface Kagunda</span>, a Kenyan composer who treats
-                  every song like a small, private commission from real life. When Cynthia wanted to thank God for His blessings,
-                  she didn't borrow somebody else's hymn — I wrote <em className="text-foreground">"Asante"</em> for her.
-                  When Kinani graduated from campus, his celebration wasn't background music — it was <em className="text-foreground">"Heko"</em>,
-                  a song built around his own journey.
+                  every song like a small, private commission from real life. When Cynthia wanted to thank God for His
+                  blessings, she didn't borrow somebody else's hymn — I wrote <em className="text-foreground">"Asante"</em>
+                  for her. When Kinani graduated from campus, his celebration wasn't background music — it was
+                  <em className="text-foreground"> "Heko"</em>, a song built around his own journey.
                 </p>
                 <p>
-                  That's the work: turning a feeling that's hard to name into a melody you'll never forget. Sacred or personal,
-                  choir or soloist, Kiswahili or Latin — the brief is always the same. Find the song already living inside the
+                  That's the work: turning a feeling that's hard to name into a melody you'll never forget. Sacred or
+                  personal, choir or soloist — the brief is always the same. Find the song already living inside the
                   moment, and write it down before it gets away.
                 </p>
                 <p>
-                  My promise is short: <span className="text-foreground">your story leads, the music follows</span> — and what
-                  you receive is a score you can sing, share, and keep for the rest of your life.
+                  My promise is short: <span className="text-foreground">your story leads, the music follows</span> — and
+                  what you receive is a score you can sing, share, and keep for the rest of your life.
                 </p>
               </div>
             </div>
@@ -249,16 +246,6 @@ export default function About() {
           </div>
         </Section>
 
-        {/* Auto-sync notice */}
-        {/* Testimonials — songs that found their people */}
-        <Section delay={280}>
-          <div className="mt-16">
-            <Testimonials
-              eyebrow="Songs already written for real people"
-              heading={<>Stories that became <span className="text-gradient">songs</span>.</>}
-            />
-          </div>
-        </Section>
 
         {/* Auto-sync notice */}
         <Section delay={300}>
