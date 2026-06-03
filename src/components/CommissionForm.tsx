@@ -51,8 +51,13 @@ export default function CommissionForm() {
     const id = crypto.randomUUID();
     const { error } = await supabase.from("commission_inquiries").insert({ id, ...form });
     if (error) {
+      console.error("Commission inquiry submission failed:", error);
       setSubmitting(false);
-      toast({ title: "Could not send your inquiry", description: error.message, variant: "destructive" });
+      toast({
+        title: "Could not send your inquiry",
+        description: "Something went wrong — please try again or email me directly.",
+        variant: "destructive",
+      });
       return;
     }
 
