@@ -28,24 +28,6 @@ export const featuredTestimonials: Testimonial[] = [
       "When I graduated, Boniface surprised me with 'Heko' — a song crafted just to celebrate me. Every line carried my journey. Years of late nights, prayers and small victories were lifted into one beautiful song. I feel blessed beyond words.",
     emoji: "🎓",
   },
-  {
-    name: "Sr. Mary",
-    role: "Choir Director · Parish in Nairobi",
-    text:
-      "Boniface writes for the choir we actually have, not the one we wish we had. The pieces stick after one rehearsal — and the assembly sings along by the second Sunday.",
-  },
-  {
-    name: "Fr. James",
-    role: "Liturgy Team · Western Kenya",
-    text:
-      "The psalm setting he wrote for our ordination is now the one the cantor reaches for first. Singable, dignified, and unmistakably prayerful.",
-  },
-  {
-    name: "Esther",
-    role: "Catholic Recording Artist",
-    text:
-      "He pitched the song in my key, sent a guide vocal and a backing track. I learned it in a weekend. The best gift anyone has ever given to my voice.",
-  },
 ];
 
 interface Props {
