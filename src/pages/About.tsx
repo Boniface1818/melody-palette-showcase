@@ -6,7 +6,7 @@ import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
-import Testimonials from "@/components/Testimonials";
+
 import { Music, Feather, Quote, BookOpen, PenLine, Church, Heart, Sparkles, RefreshCw } from "lucide-react";
 
 const aboutJsonLd = {
@@ -249,16 +249,6 @@ export default function About() {
           </div>
         </Section>
 
-        {/* Auto-sync notice */}
-        {/* Testimonials — songs that found their people */}
-        <Section delay={280}>
-          <div className="mt-16">
-            <Testimonials
-              eyebrow="Songs already written for real people"
-              heading={<>Stories that became <span className="text-gradient">songs</span>.</>}
-            />
-          </div>
-        </Section>
 
         {/* Auto-sync notice */}
         <Section delay={300}>
