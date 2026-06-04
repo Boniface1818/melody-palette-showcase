@@ -437,6 +437,26 @@ export default function Compositions() {
                 {f}
               </button>
             ))}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground inline-flex items-center gap-1.5 mr-1">
+              <Languages size={12} className="text-primary" /> Language
+            </span>
+            {languageFilters.map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang)}
+                className={`px-4 py-2 rounded-full text-xs font-body tracking-wide transition-all duration-300 active:scale-95 ${
+                  language === lang
+                    ? "bg-accent text-accent-foreground shadow-lg shadow-accent/20"
+                    : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+                }`}
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
             <button
               onClick={() => setFavOnly((v) => !v)}
               className={`px-5 py-2 rounded-full text-xs font-body tracking-wide transition-all duration-300 active:scale-95 inline-flex items-center gap-1.5 ${
