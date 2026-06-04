@@ -12,7 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
-  ChevronLeft, ChevronRight, Download, History, Trophy, Copy, Mail, Heart, Music2,
+  ChevronLeft, ChevronRight, Download, History, Trophy, Copy, Mail, Heart, Music2, Languages,
 } from "lucide-react";
 
 
@@ -27,6 +27,7 @@ const compositionsJsonLd = {
 
 type SortKey = "newest" | "oldest" | "views" | "title" | "parts";
 type ViewMode = "grid" | "list";
+type LanguageFilter = "All Languages" | "English" | "Kiswahili" | "Kikuyu";
 
 interface Score {
   id: string;
@@ -55,10 +56,18 @@ const compositionSubtitles = [
 
 type Filter = "All" | "Piano Duo" | "String Duet" | "Mixed Quartet" | "Mixed Trio";
 const filters: Filter[] = ["All", "Piano Duo", "String Duet", "Mixed Quartet", "Mixed Trio"];
+const languageFilters: LanguageFilter[] = ["All Languages", "English", "Kiswahili", "Kikuyu"];
 
 const FAV_KEY = "bk_favorites";
 const RECENT_KEY = "bk_recent";
 const RECENT_MAX = 6;
+
+const inferScoreLanguage = (score: Pick<Score, "title" | "story">): Exclude<LanguageFilter, "All Languages"> => {
+  const text = `${score.title} ${score.story ?? ""}`.toUpperCase();
+  if (/MATEGA|MAITU|MWATHANI|NGAI|WENDO|THIINI/.test(text)) return "Kikuyu";
+  if (/ASANTE|HEKO|MUNGU|BWANA|SADAKA|SIFA|UTUKUFU|NJONI|FADHILI|MNYONGE|HALELUYA/.test(text)) return "Kiswahili";
+  return "English";
+};
 
 export default function Compositions() {
   useBackgroundCycle(5000);
@@ -69,6 +78,7 @@ export default function Compositions() {
   const [scores, setScores] = useState<Score[]>([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<Filter>("All");
+  const [language, setLanguage] = useState<LanguageFilter>("All Languages");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("newest");
   const [view, setView] = useState<ViewMode>("grid");
@@ -179,6 +189,7 @@ export default function Compositions() {
 
   const filtered = useMemo(() => scores
     .filter((s) => active === "All" || s.ensemble_type === active)
+    .filter((s) => language === "All Languages" || inferScoreLanguage(s) === language)
     .filter((s) => !favOnly || favorites.has(s.id))
     .filter((s) => {
       if (!query.trim()) return true;
@@ -199,7 +210,7 @@ export default function Compositions() {
         case "newest":
         default: return 0;
       }
-    }), [scores, active, favOnly, favorites, query, sort]);
+    }), [scores, active, language, favOnly, favorites, query, sort]);
 
   const featured = scores.find((s) => s.featured) ?? scores[0];
 
