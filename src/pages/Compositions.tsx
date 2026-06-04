@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import SEO from "@/components/SEO";
-import SyncScoresButton from "@/components/SyncScoresButton";
+import SyncScoresButton, { syncScoresNow } from "@/components/SyncScoresButton";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -77,6 +77,7 @@ export default function Compositions() {
   const [preview, setPreview] = useState<Score | null>(null);
   const [shared, setShared] = useState<string | null>(null);
   const [recent, setRecent] = useState<string[]>([]);
+  const [autoSyncStatus, setAutoSyncStatus] = useState("Checking MuseScore for new scores…");
   const searchRef = useRef<HTMLInputElement>(null);
 
   const fetchScores = async () => {
@@ -96,6 +97,30 @@ export default function Compositions() {
       const r = localStorage.getItem(RECENT_KEY);
       if (r) setRecent(JSON.parse(r));
     } catch {}
+
+    let cancelled = false;
+    const runAutomaticSync = async () => {
+      try {
+        const result = await syncScoresNow();
+        if (cancelled) return;
+        if ((result.added ?? 0) > 0) {
+          setAutoSyncStatus(`Auto-loaded ${result.added} new score${result.added === 1 ? "" : "s"} from MuseScore.`);
+          await fetchScores();
+        } else {
+          setAutoSyncStatus(`MuseScore checked automatically · ${result.total ?? "all"} scores loaded.`);
+        }
+        window.setTimeout(() => {
+          if (!cancelled) setAutoSyncStatus("");
+        }, 6000);
+      } catch (error) {
+        console.error("Automatic MuseScore sync failed:", error);
+        if (!cancelled) setAutoSyncStatus("Automatic check paused — use Sync New Scores to retry.");
+      }
+    };
+    runAutomaticSync();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Keyboard "/" focus search, Esc close, ←/→ navigate preview
@@ -281,6 +306,11 @@ export default function Compositions() {
               <Mail size={14} /> Request a Custom Song
             </a>
           </div>
+          {autoSyncStatus && (
+            <p className="mt-3 text-center text-[11px] uppercase tracking-widest text-muted-foreground">
+              {autoSyncStatus}
+            </p>
+          )}
 
 
           {/* Stats dashboard */}
