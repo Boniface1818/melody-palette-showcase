@@ -113,6 +113,7 @@ function parseScoresFromMarkdown(md: string): ScoreData[] {
 }
 
 async function fetchViaFirecrawl(apiKey: string): Promise<string> {
+  const freshUrl = `${MUSESCORE_USER_URL}?sort=date_uploaded&time=all&refresh=${Date.now()}`;
   const res = await fetch(FIRECRAWL_ENDPOINT, {
     method: "POST",
     headers: {
@@ -120,10 +121,11 @@ async function fetchViaFirecrawl(apiKey: string): Promise<string> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      url: MUSESCORE_USER_URL,
+      url: freshUrl,
       formats: ["markdown"],
-      onlyMainContent: true,
-      waitFor: 3000,
+      onlyMainContent: false,
+      waitFor: 8000,
+      maxAge: 0,
     }),
   });
   if (!res.ok) {
@@ -181,6 +183,7 @@ Deno.serve(async (req) => {
         { title: "SADAKA TAKATIFU", musescore_id: "31555013", musescore_url: "https://musescore.com/user/108485503/scores/31555013", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/87d24f9322344cf67f699621aaac53c2c1d3359a/score_0.png@500x660?no-cache=1773657233&bgclr=ffffff", ensemble_type: "String Duet", instruments: "Strings group", parts: 2, pages: 1, duration: "01:20", views: 20, published_date: "Feb 6, 2026" },
         { title: "SIFA NA UTUKUFU", musescore_id: "32866709", musescore_url: "https://musescore.com/user/108485503/scores/32866709", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/9a4fd32d33f7e222994370cb1567cbfb79371ce9/score_0.png@500x660?no-cache=1774615293&bgclr=ffffff", ensemble_type: "Piano Duo", instruments: "Piano", parts: 2, pages: 1, duration: "00:27", views: 6, published_date: "Mar 27, 2026" },
         { title: "MISA ANTHONY", musescore_id: "30245900", musescore_url: "https://musescore.com/user/108485503/scores/30245900", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/02952ac134520f9c34b2306d1748349cc23f88a7/score_0.png@500x660?no-cache=1775457938&bgclr=ffffff", ensemble_type: "Mixed Trio", instruments: "Piano", parts: 3, pages: 3, duration: "01:33", views: 21, published_date: "Dec 16, 2025" },
+        { title: "MATEGA MAITU", musescore_id: "34681568", musescore_url: "https://musescore.com/user/108485503/scores/34681568", thumbnail_url: "https://cdn.ustatik.com/musescore/scoredata/g/bba6b8195a4df66df496e954a44711bd541d356d/score_0.png@500x660?no-cache=1780472477&bgclr=ffffff", ensemble_type: "Piano Duo", instruments: "Piano", parts: 2, pages: 1, duration: "01:21", views: 2, published_date: "Jun 3, 2026" },
       ];
     }
 

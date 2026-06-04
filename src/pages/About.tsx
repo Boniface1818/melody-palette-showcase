@@ -7,7 +7,8 @@ import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
 import { useTextReveal } from "@/hooks/useTextReveal";
 import {
-  Music, Feather, Quote, Pen, Headphones, MapPin, Coffee, Mic2, Library, Lightbulb,
+  BookMarked, Church, FileMusic, Fingerprint, Globe2, Languages, Layers3,
+  MapPin, Mic2, Music, PenLine, Quote, Sparkles, UsersRound, Volume2,
 } from "lucide-react";
 
 const aboutJsonLd = {
@@ -17,41 +18,47 @@ const aboutJsonLd = {
   mainEntity: {
     "@type": "Person",
     name: "Boniface Kagunda",
-    jobTitle: "Composer, Arranger & Songwriter",
+    jobTitle: "Composer & Songwriter",
     nationality: "Kenyan",
   },
 };
 
 const aboutSubtitles = [
-  "A composer working one voice, one moment at a time.",
-  "Original songs, sacred scores, and quiet, careful arrangements.",
-  "From Nairobi to anywhere a song needs to be sung.",
+  "A Kenyan composer writing songs with names attached to them.",
+  "English, Kiswahili, and Kikuyu melodies for faith, family, and celebration.",
+  "A score should sound personal before anyone reads the dedication.",
 ];
 
-const dayInTheStudio = [
-  { icon: Coffee, time: "Early", title: "First light, first lines", text: "Coffee, a blank stave, and whatever melody followed me out of sleep. Most pieces start here as a single sung phrase." },
-  { icon: Pen, time: "Mid-morning", title: "Writing the bones", text: "Voicings, harmony, form. The piece is sketched on paper before it ever touches a screen — keeps it honest." },
-  { icon: Headphones, time: "Afternoon", title: "Listening tests", text: "Playback through small speakers, headphones, and a phone. If it survives all three, it survives a real congregation." },
-  { icon: Mic2, time: "Evening", title: "Recording the guide", text: "A guide vocal so whoever sings it next can hear exactly how the melody breathes — long before our first call." },
+const identityCards = [
+  { icon: Fingerprint, title: "Personal by design", text: "I write toward the person, not just the occasion — the name, the story, the way the room should feel when the song begins." },
+  { icon: Languages, title: "Kikuyu included", text: "Kikuyu can sit naturally beside English and Kiswahili, bringing family memory, home language, and cultural warmth into the music." },
+  { icon: Church, title: "Sacred without stiffness", text: "The work can serve prayer and still feel alive: graceful, singable, emotionally clear, and ready for real singers." },
 ];
 
-const beliefs = [
-  { icon: Lightbulb, title: "The melody is the gift", text: "Harmony serves melody, not the other way around. If you can hum it on the bus, it's nearly finished." },
-  { icon: Library, title: "Singable beats clever", text: "I'd rather write a line a child can sing on Sunday than a passage only a professor could analyse." },
-  { icon: Feather, title: "Quiet authorship", text: "My name belongs at the bottom of the page. The song belongs to the singer, and through them, to the room." },
+const craftMap = [
+  { icon: PenLine, title: "Words first", text: "Before notes, I look for the phrase that carries the whole story." },
+  { icon: Mic2, title: "Voice next", text: "The melody is tested like a singer will use it — breath by breath." },
+  { icon: Layers3, title: "Harmony after", text: "Parts support the main line so choirs sound full without feeling overloaded." },
+  { icon: FileMusic, title: "Clean delivery", text: "Finished pages are prepared for rehearsal, printing, sharing, and performance." },
+];
+
+const languageUses = [
+  { label: "English", text: "Clear storytelling, dedications, worship lyrics, and songs meant for broad audiences." },
+  { label: "Kiswahili", text: "Warm congregational flow, thanksgiving, praise, and East African sacred expression." },
+  { label: "Kikuyu", text: "Family-rooted pieces, heritage moments, home celebrations, and lyrics that feel close to the heart." },
 ];
 
 export default function About() {
   useBackgroundCycle(5000);
   const headingColor = useColorCycle(3000);
-  const heading = useTextReveal("Behind the Music", 80, 200, true, 60000);
+  const heading = useTextReveal("The Composer's Hand", 80, 200, true, 60000);
   const subtitle = useRotatingSubtitles(aboutSubtitles, 8000);
 
   return (
     <>
       <SEO
-        title="About Boniface Kagunda — Composer & Arranger"
-        description="Meet Boniface Kagunda — a Nairobi-based composer writing original songs, Mass settings, psalms, and bespoke scores for singers around the world."
+        title="About BK Music — Boniface Kagunda"
+        description="Learn about Boniface Kagunda's fresh approach to original songs, Kikuyu music, Kiswahili and English sacred compositions, and personal commissions."
         path="/about"
         jsonLd={aboutJsonLd}
       />
@@ -65,123 +72,125 @@ export default function About() {
             {heading.revealed}
             {!heading.done && <span className="typing-cursor" />}
           </h1>
-          <p className="text-center text-muted-foreground text-sm mt-4 max-w-md mx-auto transition-opacity duration-700">
+          <p className="text-center text-muted-foreground text-sm mt-4 max-w-xl mx-auto transition-opacity duration-700">
             {subtitle}
           </p>
         </Section>
 
-        {/* Intro card */}
         <Section delay={80}>
-          <div className="glass-card shine mt-12 max-w-3xl mx-auto text-center relative overflow-hidden">
-            <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden />
-            <div className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden />
-            <div className="relative">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 font-body inline-flex items-center gap-2">
-                <MapPin size={12} /> Nairobi, Kenya
-              </p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
-                Hello — I'm <span className="text-gradient">Boniface Kagunda</span>.
+          <div className="mt-12 max-w-5xl mx-auto rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md p-8 sm:p-12 aurora shine">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
+              <MapPin size={12} /> Kenya · Worldwide
+            </p>
+            <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-8 items-center">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05]">
+                I build songs that feel like they were <span className="text-gradient">already waiting</span> for the right voice.
               </h2>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                I write songs. Some are sacred, some are personal, all of them are made for someone in particular.
-                What follows isn't a CV — it's a short walk around the desk where the music gets made.
-              </p>
+              <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                <p>
+                  BK Music is not only a catalog. It is a writing room for dedications, worship moments, family celebrations, graduations, choir pieces, and quiet prayers that need melody.
+                </p>
+                <p>
+                  My focus is simple: make the song sound personal, make the score readable, and make the melody strong enough to be remembered after the first hearing.
+                </p>
+              </div>
             </div>
           </div>
         </Section>
 
-        {/* Long form letter */}
-        <Section delay={120}>
-          <article className="mt-10 max-w-3xl mx-auto glass-card shine">
-            <div className="flex items-center gap-2 mb-4">
-              <Pen size={14} className="text-primary" />
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary">A short letter</p>
-            </div>
-            <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
-              <p>
-                I came to composition the long way around — singing first, listening longer, and writing only when
-                I could no longer find a song that said the thing I needed to say. That gap between what I felt and
-                what existed is still where every new piece begins.
-              </p>
-              <p>
-                Most of my work is sacred music — Mass settings, psalms, communion and offertory pieces — but the
-                heart of the studio is bespoke songwriting. Birthdays, ordinations, weddings, graduations, ordinary
-                Sundays that quietly mattered. Someone tells me about a moment; I send back a finished score.
-              </p>
-              <p>
-                I keep the studio small on purpose. One project at a time, one voice at a time. It's the only way
-                I know to make sure each page sounds like it was always meant for the person on the cover.
-              </p>
-              <p className="text-foreground">
-                If you've read this far, you're already part of the music. Thank you.
-              </p>
-            </div>
-          </article>
-        </Section>
-
-        {/* A day in the studio */}
-        <Section delay={180}>
-          <div className="mt-12 max-w-5xl mx-auto">
-            <div className="text-center mb-8">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
-                <Coffee size={12} /> A day in the studio
-              </p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
-                How a piece actually <span className="text-gradient">comes together</span>.
-              </h2>
-            </div>
-            <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {dayInTheStudio.map((d) => (
-                <li key={d.title} className="glass-card shine relative hover:-translate-y-1 transition-transform duration-500">
-                  <p className="text-[10px] uppercase tracking-widest text-primary mb-2">{d.time}</p>
-                  <d.icon size={20} className="text-accent mb-3" />
-                  <h3 className="font-display font-semibold text-sm mb-1.5">{d.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{d.text}</p>
-                </li>
-              ))}
-            </ol>
+        <Section delay={130}>
+          <div className="mt-12 grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+            {identityCards.map((item) => (
+              <article key={item.title} className="glass-card shine hover:-translate-y-1 transition-transform duration-500">
+                <item.icon size={22} className="text-primary mb-3" />
+                <h3 className="font-display font-semibold text-base mb-2">{item.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.text}</p>
+              </article>
+            ))}
           </div>
         </Section>
 
-        {/* Three beliefs */}
-        <Section delay={220}>
-          <div className="mt-12 max-w-5xl mx-auto">
+        <Section delay={170}>
+          <div className="mt-16 max-w-6xl mx-auto">
             <div className="text-center mb-8">
               <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
-                <Lightbulb size={12} /> Things I believe about songs
+                <BookMarked size={12} /> Language palette
               </p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold">Three short convictions.</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                The right language changes <span className="text-gradient">the temperature of a song</span>.
+              </h2>
             </div>
-            <div className="grid sm:grid-cols-3 gap-4">
-              {beliefs.map((b) => (
-                <div key={b.title} className="premium-card shine hover:-translate-y-1 transition-transform duration-500">
-                  <b.icon size={22} className="text-primary mb-3" />
-                  <h3 className="font-display font-semibold text-base mb-2">{b.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{b.text}</p>
+            <div className="grid md:grid-cols-3 gap-4">
+              {languageUses.map((lang) => (
+                <div key={lang.label} className="premium-card shine">
+                  <p className="font-display text-2xl font-bold text-primary mb-2">{lang.label}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{lang.text}</p>
                 </div>
               ))}
             </div>
           </div>
         </Section>
 
-        {/* Closing quote */}
-        <Section delay={260}>
-          <div className="mt-12 max-w-3xl mx-auto text-center">
-            <blockquote className="text-lg sm:text-xl font-display italic text-foreground/90 leading-relaxed">
-              <Quote size={16} className="inline text-primary mr-2 -mt-1" />
-              "I'm not trying to be the loudest voice in the room.
-              I'm trying to write the song the room ends up singing on the way home."
-            </blockquote>
-            <p className="text-[10px] uppercase tracking-widest text-accent mt-4">— A note above the desk</p>
+        <Section delay={210}>
+          <div className="mt-16 max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
+                <Volume2 size={12} /> How I hear a new piece
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-display font-bold">Four decisions before the final score.</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {craftMap.map((item) => (
+                <div key={item.title} className="glass-card shine hover:-translate-y-1 transition-transform duration-500">
+                  <item.icon size={20} className="text-accent mb-3" />
+                  <h3 className="font-display font-semibold text-sm mb-2">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </Section>
 
-        {/* Footer signature */}
-        <Section delay={300}>
+        <Section delay={250}>
+          <div className="mt-16 max-w-5xl mx-auto grid md:grid-cols-[0.8fr_1.2fr] gap-5 items-stretch">
+            <div className="glass-card glow-border shine flex flex-col justify-center">
+              <Globe2 size={24} className="text-primary mb-4" />
+              <h3 className="text-2xl font-display font-bold mb-3">For choirs, families, parishes, and solo voices.</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                A commission can be a full choir piece, a small piano song, a Kikuyu family dedication, a graduation celebration, or a new sacred melody for worship.
+              </p>
+            </div>
+            <div className="glass-card shine">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-4 inline-flex items-center gap-2">
+                <UsersRound size={12} /> What matters most
+              </p>
+              <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                <p>
+                  I listen for the part of the story that cannot be copied into another song. That is where the title, melodic shape, and emotional center usually come from.
+                </p>
+                <p>
+                  The goal is never to make music feel complicated. The goal is to make it feel true: easy enough to sing, rich enough to keep, and personal enough to belong to the people who requested it.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        <Section delay={290}>
+          <div className="mt-16 max-w-3xl mx-auto text-center">
+            <blockquote className="text-lg sm:text-xl font-display italic text-foreground/90 leading-relaxed">
+              <Quote size={16} className="inline text-primary mr-2 -mt-1" />
+              "A good song does not only sound beautiful. It remembers why it was written."
+            </blockquote>
+            <p className="text-[10px] uppercase tracking-widest text-accent mt-4">— BK Music studio note</p>
+          </div>
+        </Section>
+
+        <Section delay={320}>
           <div className="mt-12 max-w-3xl mx-auto glass-card shine text-center">
             <Music size={20} className="text-primary mx-auto mb-3" />
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xl mx-auto">
-              The catalog refreshes itself from MuseScore — so anything new on the desk shows up here automatically.
+              New MuseScore uploads are checked automatically, and the compositions page now refreshes itself when a fresh score is found.
             </p>
           </div>
         </Section>

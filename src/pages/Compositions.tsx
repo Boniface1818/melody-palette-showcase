@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import SEO from "@/components/SEO";
-import SyncScoresButton from "@/components/SyncScoresButton";
+import SyncScoresButton, { syncScoresNow } from "@/components/SyncScoresButton";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -12,7 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ExternalLink, Music, Loader2, Sparkles, Quote, Flame, Search, ArrowUpDown,
   LayoutGrid, List, Shuffle, Eye, FileMusic, Users, Clock, X, Share2, Check,
-  ChevronLeft, ChevronRight, Download, History, Trophy, Copy, Mail, Heart, Music2,
+  ChevronLeft, ChevronRight, Download, History, Trophy, Copy, Mail, Heart, Music2, Languages,
 } from "lucide-react";
 
 
@@ -27,6 +27,7 @@ const compositionsJsonLd = {
 
 type SortKey = "newest" | "oldest" | "views" | "title" | "parts";
 type ViewMode = "grid" | "list";
+type LanguageFilter = "All Languages" | "English" | "Kiswahili" | "Kikuyu";
 
 interface Score {
   id: string;
@@ -55,10 +56,18 @@ const compositionSubtitles = [
 
 type Filter = "All" | "Piano Duo" | "String Duet" | "Mixed Quartet" | "Mixed Trio";
 const filters: Filter[] = ["All", "Piano Duo", "String Duet", "Mixed Quartet", "Mixed Trio"];
+const languageFilters: LanguageFilter[] = ["All Languages", "English", "Kiswahili", "Kikuyu"];
 
 const FAV_KEY = "bk_favorites";
 const RECENT_KEY = "bk_recent";
 const RECENT_MAX = 6;
+
+const inferScoreLanguage = (score: Pick<Score, "title" | "story">): Exclude<LanguageFilter, "All Languages"> => {
+  const text = `${score.title} ${score.story ?? ""}`.toUpperCase();
+  if (/MATEGA|MAITU|MWATHANI|NGAI|WENDO|THIINI/.test(text)) return "Kikuyu";
+  if (/ASANTE|HEKO|MUNGU|BWANA|SADAKA|SIFA|UTUKUFU|NJONI|FADHILI|MNYONGE|HALELUYA/.test(text)) return "Kiswahili";
+  return "English";
+};
 
 export default function Compositions() {
   useBackgroundCycle(5000);
@@ -69,6 +78,7 @@ export default function Compositions() {
   const [scores, setScores] = useState<Score[]>([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<Filter>("All");
+  const [language, setLanguage] = useState<LanguageFilter>("All Languages");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("newest");
   const [view, setView] = useState<ViewMode>("grid");
@@ -77,6 +87,7 @@ export default function Compositions() {
   const [preview, setPreview] = useState<Score | null>(null);
   const [shared, setShared] = useState<string | null>(null);
   const [recent, setRecent] = useState<string[]>([]);
+  const [autoSyncStatus, setAutoSyncStatus] = useState("Checking MuseScore for new scores…");
   const searchRef = useRef<HTMLInputElement>(null);
 
   const fetchScores = async () => {
@@ -96,6 +107,30 @@ export default function Compositions() {
       const r = localStorage.getItem(RECENT_KEY);
       if (r) setRecent(JSON.parse(r));
     } catch {}
+
+    let cancelled = false;
+    const runAutomaticSync = async () => {
+      try {
+        const result = await syncScoresNow();
+        if (cancelled) return;
+        if ((result.added ?? 0) > 0) {
+          setAutoSyncStatus(`Auto-loaded ${result.added} new score${result.added === 1 ? "" : "s"} from MuseScore.`);
+          await fetchScores();
+        } else {
+          setAutoSyncStatus(`MuseScore checked automatically · ${result.total ?? "all"} scores loaded.`);
+        }
+        window.setTimeout(() => {
+          if (!cancelled) setAutoSyncStatus("");
+        }, 6000);
+      } catch (error) {
+        console.error("Automatic MuseScore sync failed:", error);
+        if (!cancelled) setAutoSyncStatus("Automatic check paused — use Sync New Scores to retry.");
+      }
+    };
+    runAutomaticSync();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Keyboard "/" focus search, Esc close, ←/→ navigate preview
@@ -154,6 +189,7 @@ export default function Compositions() {
 
   const filtered = useMemo(() => scores
     .filter((s) => active === "All" || s.ensemble_type === active)
+    .filter((s) => language === "All Languages" || inferScoreLanguage(s) === language)
     .filter((s) => !favOnly || favorites.has(s.id))
     .filter((s) => {
       if (!query.trim()) return true;
@@ -174,7 +210,7 @@ export default function Compositions() {
         case "newest":
         default: return 0;
       }
-    }), [scores, active, favOnly, favorites, query, sort]);
+    }), [scores, active, language, favOnly, favorites, query, sort]);
 
   const featured = scores.find((s) => s.featured) ?? scores[0];
 
@@ -281,6 +317,11 @@ export default function Compositions() {
               <Mail size={14} /> Request a Custom Song
             </a>
           </div>
+          {autoSyncStatus && (
+            <p className="mt-3 text-center text-[11px] uppercase tracking-widest text-muted-foreground">
+              {autoSyncStatus}
+            </p>
+          )}
 
 
           {/* Stats dashboard */}
@@ -396,6 +437,26 @@ export default function Compositions() {
                 {f}
               </button>
             ))}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground inline-flex items-center gap-1.5 mr-1">
+              <Languages size={12} className="text-primary" /> Language
+            </span>
+            {languageFilters.map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang)}
+                className={`px-4 py-2 rounded-full text-xs font-body tracking-wide transition-all duration-300 active:scale-95 ${
+                  language === lang
+                    ? "bg-accent text-accent-foreground shadow-lg shadow-accent/20"
+                    : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+                }`}
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
             <button
               onClick={() => setFavOnly((v) => !v)}
               className={`px-5 py-2 rounded-full text-xs font-body tracking-wide transition-all duration-300 active:scale-95 inline-flex items-center gap-1.5 ${

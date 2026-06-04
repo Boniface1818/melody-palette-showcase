@@ -6,8 +6,8 @@ import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
-  ArrowRight, Music, Sparkles, Mail, Headphones, Feather,
-  Compass, Layers, Sun, Moon, Star, Quote, PlayCircle, Disc3,
+  ArrowRight, BookOpen, Disc3, Globe2, Headphones, HeartHandshake, Languages,
+  Mail, Mic2, Music2, PenLine, PlayCircle, Quote, Radio, Sparkles, Wand2,
 } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
@@ -18,9 +18,9 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Boniface Kagunda",
-  jobTitle: "Composer & Arranger",
+  jobTitle: "Composer & Songwriter",
   description:
-    "Kenyan composer writing original songs and sacred scores — Mass settings, psalms, SATB arrangements, and bespoke pieces for cantors, choirs and soloists.",
+    "Kenyan composer creating original sacred music, personal songs, Kikuyu pieces, Kiswahili songs, and English compositions for choirs, soloists, and families.",
   url: "https://bk-melodies.lovable.app/",
   image: "https://bk-melodies.lovable.app/bk-logo.png",
   nationality: "Kenyan",
@@ -33,34 +33,25 @@ const personJsonLd = {
   ],
 };
 
-const pillars = [
-  {
-    icon: Compass,
-    title: "Direction",
-    text: "Every score begins with a single question — what should the listener feel at the final bar? Everything I write points there.",
-  },
-  {
-    icon: Layers,
-    title: "Texture",
-    text: "Voicings, instrumentation and silence — layered so the singer rises, never strains, and the assembly answers without thinking.",
-  },
-  {
-    icon: Sun,
-    title: "Daylight",
-    text: "Bright, singable melodies that survive a parish hall, a wedding tent, a small chapel and a borrowed keyboard.",
-  },
-  {
-    icon: Moon,
-    title: "Stillness",
-    text: "Some songs are written to be whispered. I leave room for those, too — for adoration, for grief, for late prayers.",
-  },
+const listeningPaths = [
+  { icon: Disc3, title: "Fresh MuseScore shelf", text: "The catalog checks MuseScore automatically so the newest score can appear without waiting for a manual update." },
+  { icon: Languages, title: "English · Kiswahili · Kikuyu", text: "Songs can carry the words your people already use for prayer, thanksgiving, celebration, and memory." },
+  { icon: Mic2, title: "Voice-first writing", text: "Each melody is shaped around real breathing, real range, and the emotional weight of the person singing." },
 ];
 
-const catalogStats = [
-  { value: "12+", label: "Live scores" },
-  { value: "4", label: "Ensemble types" },
-  { value: "100+", label: "Plays on MuseScore" },
-  { value: "24h", label: "Reply window" },
+const requestTypes = [
+  "Graduation tributes",
+  "Thanksgiving songs",
+  "Wedding moments",
+  "Choir pieces",
+  "Kikuyu hymns",
+  "Personal dedications",
+];
+
+const studioFlow = [
+  { step: "Listen", text: "Your story, occasion, language, voice range, and the feeling behind the song." },
+  { step: "Shape", text: "Melody, harmony, text setting, and a structure that can be learned quickly." },
+  { step: "Deliver", text: "A polished score with learning audio so singers can rehearse confidently." },
 ];
 
 export default function Home() {
@@ -71,25 +62,23 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Boniface Kagunda — Composer, Arranger & Songwriter"
-        description="Original songs and sacred scores from Kenyan composer Boniface Kagunda. Bespoke pieces for soloists, cantors, choirs and parishes — delivered worldwide."
+        title="Boniface Kagunda — Elegance In Every Note"
+        description="BK Music by Boniface Kagunda: original sacred songs, Kikuyu pieces, Kiswahili and English compositions, choir scores, and personal music commissions."
         path="/"
         type="profile"
         jsonLd={personJsonLd}
       />
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
-        {/* Hero */}
-        <section className="min-h-[75vh] flex flex-col items-center justify-center text-center relative">
+        <section className="min-h-[76vh] flex flex-col items-center justify-center text-center relative">
           <Section>
             <div className="relative mb-6 inline-block">
               <div className="absolute inset-0 rounded-full bg-primary/30 blur-3xl animate-pulse" aria-hidden />
               <img
                 src={logo}
-                alt="BK Music — Boniface Kagunda monogram"
+                alt="BK Music — Boniface Kagunda profile mark"
                 width={160}
                 height={160}
-                fetchPriority="high"
                 decoding="async"
                 className="relative h-36 w-36 sm:h-40 sm:w-40 rounded-full object-cover ring-2 ring-primary/50 shadow-2xl mx-auto"
               />
@@ -102,7 +91,7 @@ export default function Home() {
             </p>
 
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6 font-body">
-              Composer · Arranger · Songwriter
+              Composer · Songwriter · Score Maker
             </p>
           </Section>
 
@@ -114,8 +103,8 @@ export default function Home() {
               <span className="text-gradient">{heading.revealed}</span>
               {!heading.done && <span className="typing-cursor" />}
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-muted-foreground font-body">
-              Songs written for the people who will sing them.
+            <p className="mt-5 text-base sm:text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
+              A home for sacred songs, personal dedications, Kikuyu melodies, choir scores, and original music written for real people.
             </p>
           </Section>
 
@@ -130,7 +119,7 @@ export default function Home() {
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Link to="/compositions" className="btn-primary shine group hover-scale">
                 <PlayCircle size={16} />
-                Open the Catalog
+                Hear the Latest Scores
                 <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
@@ -139,120 +128,115 @@ export default function Home() {
                 style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
               >
                 <Mail size={14} />
-                Commission a Song
+                Start a Commission
               </Link>
             </div>
           </Section>
         </section>
 
-        {/* Studio statement */}
         <Section delay={100}>
-          <div className="relative mt-16 max-w-5xl mx-auto">
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-2xl pointer-events-none" aria-hidden />
-            <div className="relative grid md:grid-cols-[auto_1fr] gap-8 p-8 sm:p-12 rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md aurora shine">
-              <div className="hidden md:flex flex-col items-center gap-3">
-                <Feather size={26} className="text-primary" />
-                <div className="w-px flex-1 bg-gradient-to-b from-primary/60 via-accent/40 to-transparent" />
-                <Headphones size={20} className="text-accent" />
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 font-body">
-                  The studio · In one breath
-                </p>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05] mb-5">
-                  Music made <span className="text-gradient">to fit one voice</span> —<br className="hidden sm:block" />
-                  and one moment at a time.
-                </h2>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-                  I'm a composer working from Nairobi, writing original songs and sacred scores for singers
-                  around the world. The desk stays small on purpose — one project at a time, one voice at a time,
-                  so every page feels like it was always meant for you.
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Listen to what's on the shelf, or write to me about a piece that doesn't exist yet.
-                  Both doors are open.
-                </p>
-              </div>
+          <div className="mt-16 max-w-6xl mx-auto grid lg:grid-cols-[1.15fr_0.85fr] gap-5 items-stretch">
+            <div className="glass-card glow-border shine p-8 sm:p-10 flex flex-col justify-center">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <Radio size={12} /> New signal
+              </p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-[1.05] mb-5">
+                Music that knows the <span className="text-gradient">name, place, and prayer</span> behind it.
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                BK Music is built around moments people want to keep: a graduate walking into a new life, a singer thanking God, a choir preparing Sunday, or a family asking for a song in English, Kiswahili, or Kikuyu.
+              </p>
+            </div>
+            <div className="grid gap-4">
+              {studioFlow.map((item, index) => (
+                <div key={item.step} className="premium-card shine flex gap-4 items-start">
+                  <span className="font-display text-3xl font-bold text-primary/30 leading-none">0{index + 1}</span>
+                  <div>
+                    <h3 className="font-display font-semibold text-base mb-1">{item.step}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{item.text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </Section>
 
-        {/* Four pillars */}
         <Section delay={150}>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 max-w-6xl mx-auto">
-            {pillars.map((p) => (
-              <div key={p.title} className="glass-card shine hover:-translate-y-1 transition-transform duration-500">
-                <p.icon size={22} className="text-primary mb-3" />
-                <h3 className="font-display font-semibold text-base mb-2">{p.title}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{p.text}</p>
-              </div>
+          <div className="grid md:grid-cols-3 gap-4 mt-12 max-w-6xl mx-auto">
+            {listeningPaths.map((path) => (
+              <article key={path.title} className="glass-card shine hover:-translate-y-1 transition-transform duration-500">
+                <path.icon size={22} className="text-primary mb-3" />
+                <h3 className="font-display font-semibold text-base mb-2">{path.title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{path.text}</p>
+              </article>
             ))}
           </div>
         </Section>
 
-        {/* Stats */}
         <Section delay={200}>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10">
-            {catalogStats.map((s, i) => (
-              <div
-                key={s.label}
-                className="glass-card text-center group cursor-default py-8 hover-scale"
-                style={{ transitionDelay: `${i * 80}ms` }}
-              >
-                <Star size={20} className="mx-auto mb-3 text-primary transition-all duration-300 group-hover:text-accent group-hover:scale-110" />
-                <p className="text-2xl font-display font-bold text-foreground tabular-nums">{s.value}</p>
-                <p className="text-[11px] text-muted-foreground mt-1 tracking-wide">{s.label}</p>
-              </div>
-            ))}
+          <div className="mt-14 max-w-5xl mx-auto text-center">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-4 inline-flex items-center gap-2">
+              <Wand2 size={12} /> What can be written
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {requestTypes.map((type) => (
+                <Link
+                  key={type}
+                  to="/contact"
+                  className="px-4 py-2 rounded-full bg-secondary/60 border border-border/60 text-xs text-foreground/80 hover:border-primary/60 hover:text-primary transition"
+                >
+                  {type}
+                </Link>
+              ))}
+            </div>
           </div>
         </Section>
 
-        {/* MuseScore link */}
-        <Section delay={300}>
-          <a
-            href="https://musescore.com/user/108485503"
-            target="_blank"
-            rel="noreferrer"
-            className="glass-card glow-border shine flex items-center gap-4 group mt-10 max-w-lg mx-auto"
-          >
-            <Disc3 size={32} className="text-primary transition-colors duration-300 group-hover:text-accent" />
-            <div>
-              <p className="font-display font-semibold text-sm">Listen on MuseScore</p>
-              <p className="text-xs text-muted-foreground">Stream every score and download the sheet music.</p>
-            </div>
-            <ArrowRight size={16} className="ml-auto text-muted-foreground transition-transform duration-300 group-hover:translate-x-1 group-hover:text-accent" />
-          </a>
-        </Section>
-
-        {/* Score of the Day */}
-        <Section delay={320}>
+        <Section delay={260}>
           <div className="mt-16">
             <ScoreOfTheDay />
           </div>
         </Section>
 
-        {/* Testimonials */}
+        <Section delay={300}>
+          <div className="mt-16 max-w-6xl mx-auto grid md:grid-cols-3 gap-4">
+            {[
+              { icon: Music2, label: "Catalog", value: "Auto-synced", text: "New MuseScore uploads are checked and pulled into the compositions page." },
+              { icon: BookOpen, label: "Languages", value: "3", text: "English, Kiswahili, and Kikuyu options for commissions and worship pieces." },
+              { icon: HeartHandshake, label: "Commission path", value: "Simple", text: "Share the story, voice, language, deadline, and the feeling you want the song to carry." },
+            ].map((item) => (
+              <div key={item.label} className="glass-card text-center group cursor-default py-8 hover-scale">
+                <item.icon size={20} className="mx-auto mb-3 text-primary transition-all duration-300 group-hover:text-accent group-hover:scale-110" />
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">{item.label}</p>
+                <p className="text-2xl font-display font-bold text-foreground mt-1">{item.value}</p>
+                <p className="text-xs text-muted-foreground mt-2 leading-relaxed">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+
         <Section delay={330}>
           <div className="mt-20">
             <Testimonials />
           </div>
         </Section>
 
-        {/* Closing invitation */}
         <Section delay={350}>
           <div className="mt-16 max-w-3xl mx-auto text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-accent mb-3">
-              <Sparkles size={12} className="inline mr-1" /> One last note
+              <Sparkles size={12} className="inline mr-1" /> One invitation
             </p>
             <blockquote className="text-lg sm:text-xl font-display italic text-foreground/90 leading-relaxed">
               <Quote size={16} className="inline text-primary mr-2 -mt-1" />
-              If a song has been waiting inside you, the pen is warm.
-              Send a message — I'll write back the same day, and we'll start.
+              Bring the name, the reason, and the language. I will bring the melody.
             </blockquote>
-            <div className="mt-6">
+            <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
               <Link to="/contact" className="btn-primary shine inline-flex">
-                <Mail size={14} /> Start a Conversation
+                <PenLine size={14} /> Write Your Brief
               </Link>
+              <a href="https://musescore.com/user/108485503" target="_blank" rel="noreferrer" className="btn-primary shine inline-flex" style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}>
+                <Headphones size={14} /> Listen on MuseScore
+              </a>
             </div>
           </div>
         </Section>
