@@ -2,6 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { RefreshCw, CheckCircle2, AlertCircle } from "lucide-react";
 
+export const syncScoresNow = async () => {
+  const { data, error } = await supabase.functions.invoke("trigger-sync", { body: { refresh: Date.now() } });
+  if (error) throw error;
+  return data as { success?: boolean; added?: number; synced?: number; total?: number; source?: string; warning?: string | null };
+};
+
 interface Props {
   onSynced?: () => void;
   label?: string;
@@ -56,10 +62,9 @@ export default function SyncScoresButton({
     setState("loading");
     setMessage("");
     try {
-      const { data, error } = await supabase.functions.invoke("trigger-sync", { body: {} });
-      if (error) throw error;
-      const added = (data as any)?.added ?? 0;
-      const total = (data as any)?.total ?? 0;
+      const data = await syncScoresNow();
+      const added = data?.added ?? 0;
+      const total = data?.total ?? 0;
       setMessage(added ? `Added ${added} new · ${total} total` : `Catalog up to date · ${total} scores`);
       setState("done");
       onSynced?.();
