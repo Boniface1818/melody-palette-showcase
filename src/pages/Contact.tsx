@@ -62,7 +62,7 @@ const services = [
     image: serviceCommissions,
     title: "Solo Catholic Artists",
     desc: "Bespoke songs for solo artists carrying the gospel through their own voice — custom-pitched to your range, with sheet music, chord chart, backing track and guide vocal included.",
-    tags: ["Custom Key", "Chord Chart", "Backing Track", "Guide Vocal"],
+    tags: ["Custom Key", "Chord Chart", "Kikuyu", "Guide Vocal"],
   },
 ];
 
@@ -92,7 +92,7 @@ const audiences = [
     icon: BookOpen,
     color: "text-accent",
     title: "Are you a Parish or Movement?",
-    body: "Jubilees, ordinations, novenas, patronal feasts — I compose pieces your community will return to year after year. Bilingual welcome: Kiswahili, Latin, English, or all three at once.",
+    body: "Jubilees, ordinations, novenas, patronal feasts — I compose pieces your community will return to year after year. Language options include English, Kiswahili, Kikuyu, or a thoughtful blend that fits your people.",
     cta: "Commission a parish piece",
   },
   {
@@ -120,8 +120,8 @@ const faqs = [
     a: "Most pieces take 2–4 weeks from first sketch to finished score. Rush jobs are possible — let me know your deadline up front and I'll be honest about whether it can be done well in the time you have.",
   },
   {
-    q: "Do you write in Kiswahili, English, Latin?",
-    a: "All three, often in the same piece. Tell me which liturgical languages your community uses, and I'll shape the text accordingly.",
+    q: "Do you write in English, Kiswahili, and Kikuyu?",
+    a: "Yes. I can write in English, Kiswahili, Kikuyu, or a careful blend of those languages depending on your family, choir, or community.",
   },
   {
     q: "What do I receive when the song is done?",
