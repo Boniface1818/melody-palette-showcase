@@ -408,7 +408,7 @@ export default function Contact() {
                 { n: "01", t: "The moment", d: "What's the occasion? A graduation, a wedding, a thanksgiving, an ordinary Tuesday that needs marking." },
                 { n: "02", t: "The person", d: "Who is this song for? Their name, their voice, one detail no one else would think to include." },
                 { n: "03", t: "The feeling", d: "What should the listener feel by the last note? Gratitude, joy, surrender, peace, courage." },
-                { n: "04", t: "The language", d: "Kiswahili, English, Latin, mixed — tell me which words the heart already prays in." },
+                { n: "04", t: "The language", d: "English, Kiswahili, Kikuyu, or a blend — tell me which words already feel like home." },
                 { n: "05", t: "The voice", d: "Soprano, alto, tenor, bass — or full choir. If you can hum your range, even better." },
                 { n: "06", t: "The deadline", d: "When does it need to be sung? Be honest about urgency and I'll be honest about timing." },
               ].map((s) => (
