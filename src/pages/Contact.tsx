@@ -132,8 +132,12 @@ const faqs = [
     a: "A small deposit confirms the brief; the rest is due once you've heard a draft you love. M-Pesa, bank transfer, and international options are all supported.",
   },
   {
-    q: "Can I request edits after delivery?",
-    a: "Yes — two rounds of revisions are included on every commission. Beyond that we can talk, but it's almost never needed.",
+    q: "Do you write for non-liturgical occasions too?",
+    a: "Absolutely. Graduations, birthdays, weddings, tributes, and quiet personal moments — if it deserves a song, it can have one.",
+  },
+  {
+    q: "Can I commission a song from outside Kenya?",
+    a: "Yes. Most of my commissions are delivered worldwide as PDFs, MIDI, MP3 mock-ups and backing tracks — no shipping, no borders.",
   },
 ];
 
