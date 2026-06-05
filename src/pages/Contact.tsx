@@ -9,9 +9,10 @@ import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
   Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
-  HelpCircle, ChevronDown, Calendar, Globe2,
+  HelpCircle, ChevronDown, Calendar, Globe2, CheckCircle2, Star, Video, Zap, Award, Shield, Send,
 } from "lucide-react";
 import { useState } from "react";
+import CommissionForm from "@/components/CommissionForm";
 import { useNairobiClock } from "@/hooks/useNairobiClock";
 import serviceLiturgical from "@/assets/service-liturgical.jpg";
 import serviceFestivals from "@/assets/service-festivals.jpg";
