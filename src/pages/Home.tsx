@@ -215,6 +215,48 @@ export default function Home() {
           </div>
         </Section>
 
+        {/* Marquee — request types scrolling */}
+        <Section delay={310}>
+          <div className="mt-16 max-w-6xl mx-auto overflow-hidden relative rounded-2xl border border-border/60 bg-background/30 backdrop-blur-md py-5">
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            <div className="flex gap-10 animate-marquee whitespace-nowrap will-change-transform">
+              {[...Array(2)].map((_, dup) => (
+                <div key={dup} className="flex gap-10 shrink-0">
+                  {[
+                    "Graduation Tributes", "Wedding Songs", "Funeral Hymns", "Mass Settings",
+                    "Kikuyu Dedications", "Kiswahili Praise", "Soloist Brand Songs", "SATB Choir Pieces",
+                    "Thanksgiving Anthems", "Marian Feasts", "Ordination Music", "Birthday Tributes",
+                  ].map((t) => (
+                    <span key={`${dup}-${t}`} className="font-display text-2xl sm:text-3xl text-foreground/40 hover:text-gradient transition-colors">
+                      ✦ {t}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* Credibility numbers */}
+        <Section delay={320}>
+          <div className="mt-16 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { v: "50+", l: "Songs delivered" },
+              { v: "3", l: "Languages written in" },
+              { v: "24h", l: "Average reply time" },
+              { v: "100%", l: "Personal commissions" },
+            ].map((s) => (
+              <div key={s.l} className="glass-card text-center py-6">
+                <p className="font-display text-4xl font-bold text-gradient">{s.v}</p>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground mt-2">{s.l}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+
+
         <Section delay={330}>
           <div className="mt-20">
             <Testimonials />
