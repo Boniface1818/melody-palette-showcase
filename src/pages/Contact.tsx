@@ -9,10 +9,9 @@ import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
   Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
-  HelpCircle, ChevronDown, Calendar, Globe2, CheckCircle2, Star, Video, Zap, Award, Shield, Send,
+  HelpCircle, ChevronDown, Calendar, Globe2, Shield, Zap, FileMusic, FileAudio2,
 } from "lucide-react";
 import { useState } from "react";
-import CommissionForm from "@/components/CommissionForm";
 import { useNairobiClock } from "@/hooks/useNairobiClock";
 import serviceLiturgical from "@/assets/service-liturgical.jpg";
 import serviceFestivals from "@/assets/service-festivals.jpg";
@@ -126,7 +125,7 @@ const faqs = [
   },
   {
     q: "What do I receive when the song is done?",
-    a: "A clean PDF score, MIDI file, an MP3 mock-up, and (for soloists) a backing track and guide vocal — everything you need to learn the piece without me there.",
+    a: "A clean engraved PDF score and a MIDI file — everything you need to print, rehearse, and play the piece back on any notation app or keyboard.",
   },
   {
     q: "How do payments work?",
@@ -138,7 +137,7 @@ const faqs = [
   },
   {
     q: "Can I commission a song from outside Kenya?",
-    a: "Yes. Most of my commissions are delivered worldwide as PDFs, MIDI, MP3 mock-ups and backing tracks — no shipping, no borders.",
+    a: "Yes. Every commission is delivered worldwide as a PDF score and MIDI file — no shipping, no borders.",
   },
 ];
 
@@ -499,123 +498,36 @@ export default function Contact() {
           </div>
         </Section>
 
-        {/* What you receive — deliverables */}
+        {/* What you receive — deliverables (PDF + MIDI only) */}
         <Section delay={220}>
-          <div className="mt-20 max-w-5xl mx-auto">
+          <div className="mt-20 max-w-4xl mx-auto">
             <div className="text-center mb-8">
               <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
                 <Sparkles size={12} /> What lands in your inbox
               </p>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
-                Every commission ships with <span className="text-gradient">everything you need to sing it</span>.
+                Every commission ships as a <span className="text-gradient">PDF score and a MIDI file</span>.
               </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { t: "Engraved PDF score", d: "Clean typography, sensible page turns, ready to print or rehearse from a tablet." },
-                { t: "MIDI + MP3 mock-up", d: "Hear every voice before the first rehearsal — useful for soloists and section leads alike." },
-                { t: "Backing track", d: "A polished, performance-ready accompaniment in your key, mixed for live or studio use." },
-                { t: "Guide vocal", d: "A reference recording you can sing along with until the melody feels like yours." },
-              ].map((d) => (
-                <div key={d.t} className="premium-card shine hover:-translate-y-1 transition-transform duration-500">
-                  <h3 className="font-display font-semibold text-base mb-2">{d.t}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{d.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Section>
-
-        {/* Pricing — clear, marketable tiers */}
-        <Section delay={230}>
-          <div className="mt-20 max-w-6xl mx-auto">
-            <div className="text-center mb-10">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
-                <Award size={12} /> Commission packages
-              </p>
-              <h2
-                className="text-3xl sm:text-4xl font-display font-bold mb-3"
-                style={{ color: headingColor, transition: "color 1.5s ease" }}
-              >
-                Three ways to begin. One promise: it sounds like <span className="text-gradient">you</span>.
-              </h2>
-              <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
-                Indicative starting points — every quote is tailored to the moment, language, and ensemble.
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto mt-3">
+                Two clean files, ready to print, rehearse, and play back on any notation app or keyboard.
               </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-5">
-              {[
-                {
-                  name: "Solo Song",
-                  tag: "Most popular for soloists",
-                  price: "From KSh 12,000",
-                  usd: "≈ $95 USD",
-                  desc: "A bespoke song in your key, your story, your voice. Perfect for graduations, dedications, thanksgiving moments.",
-                  features: ["PDF score in your key", "Chord chart", "MP3 mock-up", "Backing track", "Guide vocal", "2–3 weeks delivery"],
-                  highlight: false,
-                  cta: "Commission a Solo Song",
-                },
-                {
-                  name: "Choir Piece",
-                  tag: "Best value for parishes",
-                  price: "From KSh 25,000",
-                  usd: "≈ $190 USD",
-                  desc: "SATB, SAB, SSA, or unison — written around your singers' real ranges and rehearsal time.",
-                  features: ["Full SATB score", "Section practice tracks", "Cantor/assembly parts", "Print-ready PDF", "Conductor notes", "3–4 weeks delivery"],
-                  highlight: true,
-                  cta: "Commission a Choir Piece",
-                },
-                {
-                  name: "Mass Setting · Custom",
-                  tag: "Signature project",
-                  price: "On request",
-                  usd: "Tailored quote",
-                  desc: "A complete Mass setting, multi-movement work, jubilee piece, or commemorative composition built for your community.",
-                  features: ["Full ordinary of the Mass", "Custom orchestration", "Rehearsal stems", "Premiere support", "Lifetime parish license", "6–10 weeks delivery"],
-                  highlight: false,
-                  cta: "Discuss a Custom Project",
-                },
-              ].map((p) => (
-                <div
-                  key={p.name}
-                  className={`premium-card h-full flex flex-col ${p.highlight ? "ring-2 ring-primary/40" : ""}`}
-                >
-                  {p.highlight && (
-                    <span className="inline-flex items-center gap-1 self-start text-[10px] uppercase tracking-[0.2em] text-accent-foreground bg-accent px-2.5 py-1 rounded-full mb-3">
-                      <Star size={10} /> Most chosen
-                    </span>
-                  )}
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground">{p.tag}</p>
-                  <h3 className="font-display text-2xl font-bold mt-1">{p.name}</h3>
-                  <p className="font-display text-3xl font-bold text-gradient mt-3">{p.price}</p>
-                  <p className="text-[11px] text-muted-foreground">{p.usd}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed mt-3">{p.desc}</p>
-                  <ul className="mt-4 space-y-2 flex-1">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-xs text-foreground/85">
-                        <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href={gmailLink(p.cta)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`mt-6 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-body tracking-wide transition ${
-                      p.highlight
-                        ? "btn-primary shine"
-                        : "border border-border/60 hover:border-primary/60 text-foreground hover:text-primary"
-                    }`}
-                  >
-                    <Mail size={13} /> {p.cta}
-                  </a>
-                </div>
-              ))}
+            <div className="grid sm:grid-cols-2 gap-5">
+              <div className="premium-card shine hover:-translate-y-1 transition-transform duration-500">
+                <FileMusic size={22} className="text-primary mb-3" />
+                <h3 className="font-display font-semibold text-lg mb-2">Engraved PDF score</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Clean typography, sensible page turns, and a layout that's ready to print or rehearse from a tablet.
+                </p>
+              </div>
+              <div className="premium-card shine hover:-translate-y-1 transition-transform duration-500">
+                <FileAudio2 size={22} className="text-accent mb-3" />
+                <h3 className="font-display font-semibold text-lg mb-2">MIDI file</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Open it in MuseScore, Sibelius, Logic, or any keyboard — hear every voice and change the key freely.
+                </p>
+              </div>
             </div>
-            <p className="text-center text-[11px] text-muted-foreground mt-6">
-              Small deposit confirms the brief · Balance due after you've heard a draft you love · M-Pesa, bank transfer, PayPal accepted
-            </p>
           </div>
         </Section>
 
@@ -633,9 +545,9 @@ export default function Contact() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { n: "01", t: "You write", d: "Send your story, occasion, language, voice or ensemble — even a voice note works.", icon: Mail },
-                { n: "02", t: "We talk", d: "A short call or thread to lock the feeling, key, length, and deadline. Deposit confirms the slot.", icon: Video },
-                { n: "03", t: "I write", d: "First sketch within days, then a polished draft you can react to before final engraving.", icon: Feather },
-                { n: "04", t: "You sing", d: "Final PDF, MIDI, MP3, backing track, and guide vocal delivered to your inbox — yours to keep.", icon: Music },
+                { n: "02", t: "We agree", d: "A short thread to lock the feeling, key, length, and deadline. Deposit confirms the slot.", icon: Feather },
+                { n: "03", t: "I write", d: "First sketch within days, then a polished draft you can react to before final engraving.", icon: Music },
+                { n: "04", t: "You sing", d: "Final PDF score and MIDI file delivered straight to your inbox — yours to keep.", icon: FileMusic },
               ].map((s) => (
                 <div key={s.n} className="glass-card glow-border h-full">
                   <div className="flex items-center justify-between mb-3">
@@ -656,7 +568,7 @@ export default function Contact() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
               {[
                 { icon: Shield, label: "Deposit-protected", text: "Pay the rest only after you love the draft." },
-                { icon: Globe2, label: "Worldwide delivery", text: "PDFs & audio — no shipping, no borders." },
+                { icon: Globe2, label: "Worldwide delivery", text: "PDF & MIDI — no shipping, no borders." },
                 { icon: Heart, label: "Personal, never templated", text: "Every song built from your story alone." },
                 { icon: Clock, label: "Replies in 24 hours", text: "Weekday turnaround on every message." },
               ].map((t) => (
@@ -670,52 +582,7 @@ export default function Contact() {
           </div>
         </Section>
 
-        {/* Free discovery call */}
-        <Section delay={260}>
-          <div className="mt-16 max-w-4xl mx-auto rounded-3xl p-8 sm:p-10 border border-accent/30 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 relative overflow-hidden">
-            <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-accent/20 blur-3xl pointer-events-none" aria-hidden />
-            <div className="relative grid md:grid-cols-[auto_1fr_auto] gap-6 items-center">
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-accent/20 to-primary/20 inline-flex w-fit">
-                <Video size={32} className="text-accent" />
-              </div>
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2">Free · 15 minutes · No pressure</p>
-                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">
-                  Not sure where to start? Let's <span className="text-gradient">talk it through</span>.
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Book a quick discovery call. Tell me the moment, the voice, the language — I'll tell you exactly what's possible and what it would cost. No commitment, no upsell.
-                </p>
-              </div>
-              <a
-                href={gmailLink("Book a free 15-min discovery call")}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-primary shine inline-flex whitespace-nowrap"
-              >
-                <Calendar size={14} /> Book the Call
-              </a>
-            </div>
-          </div>
-        </Section>
 
-        {/* Embedded commission form */}
-        <Section delay={270}>
-          <div className="mt-20 max-w-3xl mx-auto">
-            <div className="text-center mb-8">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
-                <Send size={12} /> Or start right here
-              </p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
-                Tell me about your song.
-              </h2>
-              <p className="text-muted-foreground text-sm max-w-xl mx-auto mt-3">
-                Skip email entirely — fill the brief below and I'll personally reply within 48 hours with next steps and an honest quote.
-              </p>
-            </div>
-            <CommissionForm />
-          </div>
-        </Section>
 
 
         {/* Thank you — bottom */}
