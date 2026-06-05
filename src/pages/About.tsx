@@ -210,10 +210,9 @@ export default function About() {
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/40 via-accent/40 to-transparent -translate-x-1/2 hidden md:block" aria-hidden />
               <div className="space-y-6">
                 {[
-                  { y: "First hymn", t: "A boy with a melody", d: "Humming during morning chores became scribbled notes by candlelight. The habit never stopped." },
-                  { y: "Choir years", t: "Learning from many voices", d: "Singing SATB in parish choirs taught me what really works for real singers, not just on paper." },
-                  { y: "First commission", t: "A song for someone's moment", d: "The first paid commission — a wedding piece — proved music could be both bespoke and sacred." },
-                  { y: "BK Music", t: "A home for the work", d: "Today, BK Music carries songs in English, Kiswahili and Kikuyu to families, soloists, choirs, and parishes worldwide." },
+                  { y: "The spark", t: "A melody that wouldn't leave", d: "A simple tune hummed during ordinary days slowly turned into a habit of writing songs down — the beginning of a long conversation with music." },
+                  { y: "The craft", t: "Years inside real choirs", d: "Singing and writing alongside parish choirs shaped my ear for what truly works for living voices — not just for the page." },
+                  { y: "BK Music today", t: "Songs with names attached", d: "Now BK Music carries personal commissions, sacred pieces, and Kikuyu, Kiswahili and English songs to families, soloists, and choirs around the world." },
                 ].map((s, i) => (
                   <div key={s.y} className={`md:grid md:grid-cols-2 md:gap-8 relative ${i % 2 ? "md:[&>:first-child]:order-2" : ""}`}>
                     <div className="glass-card glow-border">
@@ -231,22 +230,7 @@ export default function About() {
           </div>
         </Section>
 
-        {/* By the numbers */}
-        <Section delay={360}>
-          <div className="mt-16 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { v: "50+", l: "Songs written" },
-              { v: "3", l: "Languages" },
-              { v: "12+", l: "Choirs served" },
-              { v: "∞", l: "Stories ahead" },
-            ].map((s) => (
-              <div key={s.l} className="premium-card text-center py-6">
-                <p className="font-display text-4xl font-bold text-gradient">{s.v}</p>
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground mt-2">{s.l}</p>
-              </div>
-            ))}
-          </div>
-        </Section>
+
 
 
       </main>
