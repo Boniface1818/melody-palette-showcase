@@ -253,6 +253,9 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </Section>
+
+
 
         <Section delay={330}>
           <div className="mt-20">
