@@ -194,6 +194,61 @@ export default function About() {
             </p>
           </div>
         </Section>
+
+        {/* Journey timeline */}
+        <Section delay={340}>
+          <div className="mt-20 max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
+                <BookMarked size={12} /> The journey so far
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                Songs come from <span className="text-gradient">a long, quiet road</span>.
+              </h2>
+            </div>
+            <div className="relative">
+              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary/40 via-accent/40 to-transparent -translate-x-1/2 hidden md:block" aria-hidden />
+              <div className="space-y-6">
+                {[
+                  { y: "First hymn", t: "A boy with a melody", d: "Humming during morning chores became scribbled notes by candlelight. The habit never stopped." },
+                  { y: "Choir years", t: "Learning from many voices", d: "Singing SATB in parish choirs taught me what really works for real singers, not just on paper." },
+                  { y: "First commission", t: "A song for someone's moment", d: "The first paid commission — a wedding piece — proved music could be both bespoke and sacred." },
+                  { y: "BK Music", t: "A home for the work", d: "Today, BK Music carries songs in English, Kiswahili and Kikuyu to families, soloists, choirs, and parishes worldwide." },
+                ].map((s, i) => (
+                  <div key={s.y} className={`md:grid md:grid-cols-2 md:gap-8 relative ${i % 2 ? "md:[&>:first-child]:order-2" : ""}`}>
+                    <div className="glass-card glow-border">
+                      <p className="text-[10px] uppercase tracking-widest text-accent">{s.y}</p>
+                      <h3 className="font-display font-semibold text-lg mt-1 mb-2">{s.t}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{s.d}</p>
+                    </div>
+                    <div className="hidden md:flex items-center justify-center">
+                      <div className="w-4 h-4 rounded-full bg-primary ring-4 ring-background relative z-10" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        {/* By the numbers */}
+        <Section delay={360}>
+          <div className="mt-16 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { v: "50+", l: "Songs written" },
+              { v: "3", l: "Languages" },
+              { v: "12+", l: "Choirs served" },
+              { v: "∞", l: "Stories ahead" },
+            ].map((s) => (
+              <div key={s.l} className="premium-card text-center py-6">
+                <p className="font-display text-4xl font-bold text-gradient">{s.v}</p>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground mt-2">{s.l}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+
       </main>
       <Footer />
     </>
