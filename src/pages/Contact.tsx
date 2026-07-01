@@ -117,7 +117,7 @@ const gmailLink = (subject: string) =>
 const faqs = [
   {
     q: "How long does a commission take?",
-    a: "Most pieces take 2–4 weeks from first sketch to finished score. Rush jobs are possible — let me know your deadline up front and I'll be honest about whether it can be done well in the time you have.",
+    a: "Maximum 1–2 weeks from first sketch to finished score. The exact time depends on the type of song — a short solo piece may be quicker, while a full choral work can take the full window. Rush jobs are possible; share your deadline and I'll be honest about what can be delivered well in the time you have.",
   },
   {
     q: "Do you write in English, Kiswahili, and Kikuyu?",
@@ -608,21 +608,28 @@ export default function Contact() {
             <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 blur-2xl" aria-hidden />
             <div className="rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md p-8 sm:p-10">
               <Heart size={28} className="text-accent mx-auto mb-3" />
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3">Thank you for being here</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3">With gratitude</p>
               <h3 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
-                For visiting, for listening, for singing along.
+                Thank you for listening, for singing, and for being here.
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xl mx-auto">
-                Whether you came to download a score, commission a piece, or simply to listen — your presence here means more than you know.
-                Every note on this site exists because someone, somewhere, decided that a moment deserved a melody. Thank you for being part of that long, beautiful song.
+                Every score on this site began as a prayer for someone, somewhere. Whether you came to commission a song, download a score, or simply let the music find you — your presence is part of the melody. I would love to write something with you.
               </p>
               <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/85 text-sm max-w-md mx-auto text-left">
                 <Quote size={14} className="inline text-primary mr-1 -mt-1" />
                 "Give cheerfully — both your gift and your song."
                 <span className="block text-[11px] text-muted-foreground not-italic mt-1">— Studio note</span>
               </blockquote>
+              <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
+                <a href={gmailLink("I would love to work with you")} target="_blank" rel="noreferrer" className="btn-primary shine inline-flex">
+                  <Mail size={14} /> Send a Message
+                </a>
+                <a href="tel:+254104586361" className="btn-primary shine inline-flex" style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}>
+                  <Phone size={14} /> Call Me
+                </a>
+              </div>
               <p className="mt-6 text-xs text-muted-foreground">
-                — With gratitude, <span className="text-foreground font-display font-semibold">Boniface Kagunda</span>
+                — With warm regards, <span className="text-foreground font-display font-semibold">Boniface Kagunda</span>
               </p>
             </div>
           </div>

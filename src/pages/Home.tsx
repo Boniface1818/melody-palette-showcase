@@ -6,7 +6,7 @@ import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
-  ArrowRight, BookOpen, Disc3, Globe2, Headphones, HeartHandshake, Languages,
+  ArrowRight, BookOpen, Disc3, Globe2, HeartHandshake, Languages,
   Mail, Mic2, Music2, PenLine, PlayCircle, Quote, Radio, Sparkles, Wand2,
 } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
@@ -104,7 +104,7 @@ export default function Home() {
               {!heading.done && <span className="typing-cursor" />}
             </h1>
             <p className="mt-5 text-base sm:text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
-              A home for sacred songs, personal dedications, Sweet Melodies, choir scores, and original music written for real people.
+              A home for sacred songs, personal dedications, Sweet Melodies, choir scores, and original music written for you.
             </p>
           </Section>
 
@@ -122,16 +122,6 @@ export default function Home() {
                 Hear the Latest Scores
                 <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-              <a
-                href="https://musescore.com/user/108485503/sets"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-primary shine group hover-scale"
-                style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
-              >
-                <Disc3 size={14} />
-                Download Scores (PDF)
-              </a>
               <Link
                 to="/contact"
                 className="btn-primary shine group hover-scale"
@@ -249,9 +239,6 @@ export default function Home() {
               <Link to="/contact" className="btn-primary shine inline-flex">
                 <PenLine size={14} /> Write Your Brief
               </Link>
-              <a href="https://musescore.com/user/108485503" target="_blank" rel="noreferrer" className="btn-primary shine inline-flex" style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}>
-                <Headphones size={14} /> Listen on MuseScore
-              </a>
             </div>
           </div>
         </Section>
