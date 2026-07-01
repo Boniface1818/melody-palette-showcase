@@ -6,7 +6,7 @@ import Section from "@/components/Section";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
-  ArrowRight, BookOpen, Disc3, Globe2, Headphones, HeartHandshake, Languages,
+  ArrowRight, BookOpen, Globe2, HeartHandshake, Languages,
   Mail, Mic2, Music2, PenLine, PlayCircle, Quote, Radio, Sparkles, Wand2,
 } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
