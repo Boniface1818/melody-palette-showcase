@@ -122,16 +122,6 @@ export default function Home() {
                 Hear the Latest Scores
                 <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-              <a
-                href="https://musescore.com/user/108485503/sets"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-primary shine group hover-scale"
-                style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
-              >
-                <Disc3 size={14} />
-                Download Scores (PDF)
-              </a>
               <Link
                 to="/contact"
                 className="btn-primary shine group hover-scale"
