@@ -148,6 +148,14 @@ export default function Contact() {
   const subtitle = useRotatingSubtitles(contactSubtitles, 8000);
   const nairobiTime = useNairobiClock();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [emailCopied, setEmailCopied] = useState(false);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("Kagundaboniface98@gmail.com");
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 1600);
+    } catch {}
+  };
 
   return (
     <>
