@@ -104,7 +104,7 @@ export default function Home() {
               {!heading.done && <span className="typing-cursor" />}
             </h1>
             <p className="mt-5 text-base sm:text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
-              A home for sacred songs, personal dedications, Sweet Melodies, choir scores, and original music written for real people.
+              A home for sacred songs, personal dedications, Sweet Melodies, choir scores, and original music written for you.
             </p>
           </Section>
 
@@ -249,9 +249,6 @@ export default function Home() {
               <Link to="/contact" className="btn-primary shine inline-flex">
                 <PenLine size={14} /> Write Your Brief
               </Link>
-              <a href="https://musescore.com/user/108485503" target="_blank" rel="noreferrer" className="btn-primary shine inline-flex" style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}>
-                <Headphones size={14} /> Listen on MuseScore
-              </a>
             </div>
           </div>
         </Section>
