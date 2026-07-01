@@ -230,8 +230,32 @@ export default function About() {
           </div>
         </Section>
 
-
-
+        {/* Signature sounds — new feature */}
+        <Section delay={370}>
+          <div className="mt-20 max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <Sparkles size={12} /> Signature sounds
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                Recurring textures you'll <span className="text-gradient">hear across the catalog</span>.
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { t: "Warm inner voices", d: "Alto and tenor lines that carry real melody, not just filler harmony." },
+                { t: "Breath-shaped phrases", d: "Lines built around where a singer would naturally rest." },
+                { t: "Text-first pacing", d: "The words are never rushed to fit the meter — the meter bends first." },
+                { t: "Quiet climaxes", d: "The loudest moment isn't always the highest note. Sometimes it's the softest." },
+              ].map((s) => (
+                <div key={s.t} className="glass-card shine hover:-translate-y-1 transition-transform duration-500">
+                  <h3 className="font-display font-semibold text-sm mb-2">{s.t}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{s.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Section>
 
       </main>
       <Footer />
