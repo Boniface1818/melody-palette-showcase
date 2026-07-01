@@ -213,16 +213,17 @@ export default function Contact() {
                 <span className="text-foreground">Choirs · Cantors · Soloists · Parishes</span>
               </div>
             </div>
+            <div className="relative mt-5 flex justify-center">
+              <button
+                onClick={copyEmail}
+                className="px-4 py-2 rounded-full text-xs font-body tracking-wide bg-background/60 border border-border/60 hover:border-primary/60 hover:text-primary transition inline-flex items-center gap-2"
+                title="Copy email to clipboard"
+              >
+                {emailCopied ? "Email copied ✓" : "Copy email address"}
+              </button>
+            </div>
           </div>
         </Section>
-
-        {/* Response promise + global timezones */}
-        <Section delay={90}>
-          <div className="mt-6 max-w-5xl mx-auto grid sm:grid-cols-3 gap-4">
-            <div className="glass-card">
-              <Clock size={18} className="text-primary mb-2" />
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Reply Window</p>
-              <p className="font-display text-sm font-semibold mt-1">Within 24 hours, every weekday.</p>
               <p className="text-xs text-muted-foreground mt-2 leading-relaxed">Weekend messages get a Monday-morning answer with a draft timeline attached.</p>
             </div>
             <div className="glass-card">
