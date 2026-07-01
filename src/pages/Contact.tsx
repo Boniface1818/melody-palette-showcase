@@ -148,6 +148,14 @@ export default function Contact() {
   const subtitle = useRotatingSubtitles(contactSubtitles, 8000);
   const nairobiTime = useNairobiClock();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [emailCopied, setEmailCopied] = useState(false);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("Kagundaboniface98@gmail.com");
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 1600);
+    } catch {}
+  };
 
   return (
     <>
@@ -204,6 +212,15 @@ export default function Contact() {
                 <Handshake size={16} className="text-primary" />
                 <span className="text-foreground">Choirs · Cantors · Soloists · Parishes</span>
               </div>
+            </div>
+            <div className="relative mt-5 flex justify-center">
+              <button
+                onClick={copyEmail}
+                className="px-4 py-2 rounded-full text-xs font-body tracking-wide bg-background/60 border border-border/60 hover:border-primary/60 hover:text-primary transition inline-flex items-center gap-2"
+                title="Copy email to clipboard"
+              >
+                {emailCopied ? "Email copied ✓" : "Copy email address"}
+              </button>
             </div>
           </div>
         </Section>

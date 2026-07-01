@@ -104,7 +104,7 @@ export default function Home() {
               {!heading.done && <span className="typing-cursor" />}
             </h1>
             <p className="mt-5 text-base sm:text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
-              A home for sacred songs, personal dedications, Kikuyu melodies, choir scores, and original music written for real people.
+              A home for sacred songs, personal dedications, Sweet Melodies, choir scores, and original music written for real people.
             </p>
           </Section>
 
@@ -116,12 +116,22 @@ export default function Home() {
           </Section>
 
           <Section delay={500}>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 flex-wrap justify-center">
               <Link to="/compositions" className="btn-primary shine group hover-scale">
                 <PlayCircle size={16} />
                 Hear the Latest Scores
                 <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
+              <a
+                href="https://musescore.com/user/108485503/sets"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-primary shine group hover-scale"
+                style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
+              >
+                <Disc3 size={14} />
+                Download Scores (PDF)
+              </a>
               <Link
                 to="/contact"
                 className="btn-primary shine group hover-scale"

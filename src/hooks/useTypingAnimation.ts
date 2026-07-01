@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 const defaultPhrases = [
   "Composer of Sacred Music",
   "Arranger for Choirs & Cantors",
-  "Liturgical Music Specialist",
+  "Auto-synced with MuseScore",
   "SATB · SAB · SSA · Unison",
   "Bespoke Songs for Soloists",
-  "Mass Settings · Psalms · Hymns",
+  "PDF & MIDI · delivered worldwide",
+  "Powered by melody + modern tech",
+  "Cloud-backed catalog · always fresh",
   "Music shaped for prayer",
 ];
 

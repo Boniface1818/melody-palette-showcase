@@ -650,19 +650,31 @@ export default function Compositions() {
                         </span>
                       )}
 
-                      <div className="mt-auto pt-2 flex items-center justify-between">
+                      <div className="mt-auto pt-2 flex items-center justify-between gap-2 flex-wrap">
                         <span className="color-shift text-xs font-medium inline-flex items-center gap-1.5">
                           Quick preview
                         </span>
-                        <a
-                          href={score.musescore_url}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-xs font-medium inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition"
-                        >
-                          MuseScore <ExternalLink size={12} />
-                        </a>
+                        <div className="flex items-center gap-2">
+                          <a
+                            href={`https://musescore.com/score/${score.musescore_id}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-xs font-medium inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition"
+                            title="Download PDF on MuseScore"
+                          >
+                            <Download size={12} /> PDF
+                          </a>
+                          <a
+                            href={score.musescore_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-xs font-medium inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition"
+                          >
+                            MuseScore <ExternalLink size={12} />
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -745,6 +757,15 @@ export default function Compositions() {
                   className="btn-primary"
                 >
                   Open on MuseScore <ExternalLink size={14} />
+                </a>
+                <a
+                  href={`https://musescore.com/score/${preview.musescore_id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-3 rounded-xl border border-border/60 text-xs font-medium inline-flex items-center gap-2 hover:border-accent/60 hover:text-accent transition active:scale-95"
+                  title="Download PDF from MuseScore"
+                >
+                  <Download size={14} /> Download PDF
                 </a>
                 <button
                   onClick={(e) => handleShare(e as any, preview)}
