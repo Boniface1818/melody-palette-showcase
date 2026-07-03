@@ -109,8 +109,16 @@ export default function Compositions() {
     } catch {}
 
     let cancelled = false;
+    const AUTO_SYNC_KEY = "bk_last_sync_ts";
+    const AUTO_SYNC_COOLDOWN_MS = 6 * 60 * 60 * 1000; // 6 hours between automatic syncs
     const runAutomaticSync = async () => {
       try {
+        const last = Number(localStorage.getItem(AUTO_SYNC_KEY) ?? 0);
+        if (last && Date.now() - last < AUTO_SYNC_COOLDOWN_MS) {
+          return; // Skip: recent sync already occurred
+        }
+        // Reserve the slot BEFORE the network call so rapid remounts/reloads don't stack requests.
+        localStorage.setItem(AUTO_SYNC_KEY, String(Date.now()));
         const result = await syncScoresNow();
         if (cancelled) return;
         if ((result.added ?? 0) > 0) {
@@ -128,6 +136,7 @@ export default function Compositions() {
       }
     };
     runAutomaticSync();
+
     return () => {
       cancelled = true;
     };
