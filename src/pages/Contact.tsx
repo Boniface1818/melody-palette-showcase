@@ -161,7 +161,7 @@ export default function Contact() {
     <>
       <SEO
         title="Contact Boniface Kagunda — Commission Sacred Music"
-        description="Commission a Mass setting, psalm, or bespoke sacred song from composer Boniface Kagunda. Reach out by email or phone — choirs, cantors, soloists, and parishes welcome."
+        description="Commission a sacred song from composer Boniface Kagunda. Reach out by email or phone — choirs, cantors, soloists, and parishes welcome."
         path="/contact"
         jsonLd={{
           "@context": "https://schema.org",
