@@ -57,7 +57,7 @@ const studioFlow = [
 export default function Home() {
   const typedText = useTypingAnimation();
   useBackgroundCycle(5000);
-  const heading = useTextReveal("Boniface Kagunda", 70, 300, true, 60000);
+  const heading = useTextReveal("Boniface Kagunda — Sacred Music Composer", 70, 300, true, 60000);
 
   return (
     <>
@@ -80,6 +80,7 @@ export default function Home() {
                 width={160}
                 height={160}
                 decoding="async"
+                fetchPriority="high"
                 className="relative h-36 w-36 sm:h-40 sm:w-40 rounded-full object-cover ring-2 ring-primary/50 shadow-2xl mx-auto"
               />
             </div>
