@@ -57,7 +57,7 @@ const studioFlow = [
 export default function Home() {
   const typedText = useTypingAnimation();
   useBackgroundCycle(5000);
-  const heading = useTextReveal("Boniface Kagunda", 70, 300, true, 60000);
+  const heading = useTextReveal("Boniface Kagunda — Sacred Music Composer", 70, 300, true, 60000);
 
   return (
     <>
