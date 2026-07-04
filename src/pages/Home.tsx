@@ -199,22 +199,6 @@ export default function Home() {
           </div>
         </Section>
 
-        <Section delay={300}>
-          <div className="mt-16 max-w-6xl mx-auto grid md:grid-cols-3 gap-4">
-            {[
-              { icon: Music2, label: "Catalog", value: "Auto-synced", text: "New MuseScore uploads are checked and pulled into the compositions page." },
-              { icon: BookOpen, label: "Languages", value: "3", text: "English, Kiswahili, and Kikuyu options for commissions and worship pieces." },
-              { icon: HeartHandshake, label: "Commission path", value: "Simple", text: "Share the story, voice, language, deadline, and the feeling you want the song to carry." },
-            ].map((item) => (
-              <div key={item.label} className="glass-card text-center group cursor-default py-8 hover-scale">
-                <item.icon size={20} className="mx-auto mb-3 text-primary transition-all duration-300 group-hover:text-accent group-hover:scale-110" />
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground">{item.label}</p>
-                <p className="text-2xl font-display font-bold text-foreground mt-1">{item.value}</p>
-                <p className="text-xs text-muted-foreground mt-2 leading-relaxed">{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </Section>
 
 
 
