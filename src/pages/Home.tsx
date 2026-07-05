@@ -103,6 +103,7 @@ export default function Home() {
             >
               <span className="text-gradient">{heading.revealed}</span>
               {!heading.done && <span className="typing-cursor" />}
+              <span className="sr-only"> — Sacred Music Composer & Song Commissions</span>
             </h1>
             <p className="mt-5 text-base sm:text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
               A home for sacred songs, personal dedications, Sweet Melodies, choir scores, and original music written for you.
