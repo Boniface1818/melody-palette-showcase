@@ -62,7 +62,8 @@ export default function Studio() {
   }
 
   async function toggle(field: "enabled" | "auto_reply_inquiries", value: boolean) {
-    const { error } = await supabase.from("agent_settings").update({ [field]: value, updated_at: new Date().toISOString() }).eq("id", 1);
+    const update = field === "enabled" ? { enabled: value } : { auto_reply_inquiries: value };
+    const { error } = await supabase.from("agent_settings").update({ ...update, updated_at: new Date().toISOString() }).eq("id", 1);
     if (error) { toast.error(error.message); return; }
     toast.success("Updated");
     loadSettings();
