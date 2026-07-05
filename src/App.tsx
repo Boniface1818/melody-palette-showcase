@@ -7,6 +7,8 @@ import About from "./pages/About";
 import Compositions from "./pages/Compositions";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import Auth from "./pages/Auth";
+import Studio from "./pages/Studio";
 import FloatingNotes from "./components/FloatingNotes";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/compositions" element={<Compositions />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/studio" element={<Studio />} />
           {/* Legacy redirect */}
           <Route path="/projects" element={<Compositions />} />
           <Route path="*" element={<NotFound />} />
