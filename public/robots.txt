@@ -12,5 +12,7 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /auth
+Disallow: /studio
 
 Sitemap: https://bk-melodies.lovable.app/sitemap.xml
