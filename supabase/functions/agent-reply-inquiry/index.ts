@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
         status: "skipped",
         subject_id: rowId,
         summary: "Agent disabled — reply skipped",
-        payload: { source },
+        payload: { source: safeSource },
       });
       return json({ skipped: true });
     }
@@ -70,12 +70,12 @@ Deno.serve(async (req) => {
 
     // Load the inquiry row
     const { data: row, error: rowErr } = await admin
-      .from(source).select("*").eq("id", rowId).maybeSingle();
+      .from(safeSource).select("*").eq("id", rowId).maybeSingle();
     if (rowErr || !row) throw new Error(`Row not found: ${rowErr?.message ?? "no row"}`);
 
     // Build a prompt tailored to which form it came from
     const context =
-      source === "commission_inquiries"
+      safeSource === "commission_inquiries"
         ? `A new COMMISSION inquiry.
 Name: ${row.name}
 Email: ${row.email}
@@ -125,11 +125,11 @@ Return ONLY the email body text — no subject line, no markdown headers, no pre
       subject_id: rowId,
       summary: `Drafted reply to ${row.name} <${row.email}>`,
       payload: {
-        source,
+        source: safeSource,
         to: row.email,
         name: row.name,
         subject:
-          source === "commission_inquiries"
+          safeSource === "commission_inquiries"
             ? `Re: your commission — thank you, ${String(row.name).split(" ")[0]}`
             : `Re: ${row.subject ?? "your message"}`,
         body: draft,
