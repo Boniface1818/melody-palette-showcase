@@ -9,6 +9,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Studio from "./pages/Studio";
+import LiturgicalMusicSuggestions from "./pages/LiturgicalMusicSuggestions";
 import FloatingNotes from "./components/FloatingNotes";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/studio" element={<Studio />} />
+          <Route path="/liturgical-music-suggestions" element={<LiturgicalMusicSuggestions />} />
           {/* Legacy redirect */}
           <Route path="/projects" element={<Compositions />} />
           <Route path="*" element={<NotFound />} />
