@@ -21,6 +21,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://bk-melodies.lovable.app/liturgical-music-suggestions</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://bk-melodies.lovable.app/projects</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
