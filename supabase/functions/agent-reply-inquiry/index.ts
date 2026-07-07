@@ -7,20 +7,46 @@ import { createLovableAiGatewayProvider, corsHeaders } from "../_shared/ai-gatew
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY")!;
+const SYNC_SECRET = Deno.env.get("SYNC_SECRET") ?? "";
+const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+
+const ALLOWED_SOURCES = ["commission_inquiries", "contact_submissions"] as const;
+type AllowedSource = typeof ALLOWED_SOURCES[number];
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  // Require a shared secret OR the project's anon-key bearer (used by the DB trigger).
+  const authHeader = req.headers.get("authorization") ?? "";
+  const bearer = authHeader.toLowerCase().startsWith("bearer ")
+    ? authHeader.slice(7).trim()
+    : "";
+  const providedSecret = req.headers.get("x-sync-secret") ?? "";
+  const authorized =
+    (SYNC_SECRET && providedSecret === SYNC_SECRET) ||
+    (ANON_KEY && bearer === ANON_KEY);
+  if (!authorized) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+
   const admin = createClient(SUPABASE_URL, SERVICE_ROLE);
 
   try {
-    const body = await req.json();
-    const source: "commission_inquiries" | "contact_submissions" = body.source;
-    const rowId: string = body.id;
+    const body = await req.json().catch(() => ({}));
+    const source = body?.source as string | undefined;
+    const rowId = body?.id as string | undefined;
 
     if (!source || !rowId) {
       return json({ error: "Missing source or id" }, 400);
     }
+    if (!ALLOWED_SOURCES.includes(source as AllowedSource)) {
+      return json({ error: "Invalid source" }, 400);
+    }
+    if (typeof rowId !== "string" || !/^[0-9a-f-]{36}$/i.test(rowId)) {
+      return json({ error: "Invalid id" }, 400);
+    }
+    const safeSource = source as AllowedSource;
+
 
     // Kill-switch check
     const { data: settings } = await admin
