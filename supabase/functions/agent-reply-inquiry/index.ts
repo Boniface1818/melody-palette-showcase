@@ -8,7 +8,6 @@ const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY")!;
 const SYNC_SECRET = Deno.env.get("SYNC_SECRET") ?? "";
-const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
 
 const ALLOWED_SOURCES = ["commission_inquiries", "contact_submissions"] as const;
 type AllowedSource = typeof ALLOWED_SOURCES[number];
@@ -16,18 +15,14 @@ type AllowedSource = typeof ALLOWED_SOURCES[number];
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
-  // Require a shared secret OR the project's anon-key bearer (used by the DB trigger).
-  const authHeader = req.headers.get("authorization") ?? "";
-  const bearer = authHeader.toLowerCase().startsWith("bearer ")
-    ? authHeader.slice(7).trim()
-    : "";
+  // Require the private shared secret. The public anon key is NOT accepted
+  // (it ships in the client bundle and provides no real authorization).
   const providedSecret = req.headers.get("x-sync-secret") ?? "";
-  const authorized =
-    (SYNC_SECRET && providedSecret === SYNC_SECRET) ||
-    (ANON_KEY && bearer === ANON_KEY);
+  const authorized = !!SYNC_SECRET && providedSecret === SYNC_SECRET;
   if (!authorized) {
     return json({ error: "Unauthorized" }, 401);
   }
+
 
   const admin = createClient(SUPABASE_URL, SERVICE_ROLE);
 
