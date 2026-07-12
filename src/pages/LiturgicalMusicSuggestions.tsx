@@ -111,7 +111,7 @@ export default function LiturgicalMusicSuggestions() {
   return (
     <>
       <SEO
-        title="Catholic Liturgical Music Suggestions for Ordinary Time & Feasts"
+        title="Catholic Liturgical Music for Ordinary Time & Feasts"
         description="A choir director's guide to Catholic liturgical music — hymn and composition picks by season and Mass part (Entrance, Offertory, Communion, Recessional)."
         path="/liturgical-music-suggestions"
         type="article"
