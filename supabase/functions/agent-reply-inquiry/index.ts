@@ -7,7 +7,6 @@ import { createLovableAiGatewayProvider, corsHeaders } from "../_shared/ai-gatew
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY")!;
-const SYNC_SECRET = Deno.env.get("SYNC_SECRET") ?? "";
 
 const ALLOWED_SOURCES = ["commission_inquiries", "contact_submissions"] as const;
 type AllowedSource = typeof ALLOWED_SOURCES[number];
@@ -15,13 +14,20 @@ type AllowedSource = typeof ALLOWED_SOURCES[number];
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
-  // Require the private shared secret. The public anon key is NOT accepted
-  // (it ships in the client bundle and provides no real authorization).
+  const admin = createClient(SUPABASE_URL, SERVICE_ROLE);
+
+  // Require the private shared secret stored in the database. The public
+  // anon key is NOT accepted — it ships in the client bundle and provides
+  // no real authorization.
   const providedSecret = req.headers.get("x-sync-secret") ?? "";
-  const authorized = !!SYNC_SECRET && providedSecret === SYNC_SECRET;
+  const { data: secretRow } = await admin
+    .from("agent_shared_secret").select("secret").eq("id", 1).maybeSingle();
+  const expected = secretRow?.secret ?? "";
+  const authorized = !!expected && providedSecret === expected;
   if (!authorized) {
     return json({ error: "Unauthorized" }, 401);
   }
+
 
 
   const admin = createClient(SUPABASE_URL, SERVICE_ROLE);
