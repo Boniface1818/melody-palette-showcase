@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Studio from "./pages/Studio";
 import LiturgicalMusicSuggestions from "./pages/LiturgicalMusicSuggestions";
+import HolySpiritHymns from "./pages/HolySpiritHymns";
 import FloatingNotes from "./components/FloatingNotes";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/studio" element={<Studio />} />
           <Route path="/liturgical-music-suggestions" element={<LiturgicalMusicSuggestions />} />
+          <Route path="/resources/holy-spirit-hymns" element={<HolySpiritHymns />} />
           {/* Legacy redirect */}
           <Route path="/projects" element={<Compositions />} />
           <Route path="*" element={<NotFound />} />
