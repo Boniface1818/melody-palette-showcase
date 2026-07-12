@@ -71,6 +71,21 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_shared_secret: {
+        Row: {
+          id: number
+          secret: string
+        }
+        Insert: {
+          id?: number
+          secret: string
+        }
+        Update: {
+          id?: number
+          secret?: string
+        }
+        Relationships: []
+      }
       commission_inquiries: {
         Row: {
           created_at: string
