@@ -75,7 +75,7 @@ export default function Home() {
             <div className="relative mb-6 inline-block">
               <div className="absolute inset-0 rounded-full bg-primary/30 blur-3xl animate-pulse" aria-hidden />
               <img
-                src={logo}
+                src="/bk-logo.png"
                 alt="BK Music — Boniface Kagunda profile mark"
                 width={160}
                 height={160}
