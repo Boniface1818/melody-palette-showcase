@@ -12,6 +12,7 @@ import Studio from "./pages/Studio";
 import LiturgicalMusicSuggestions from "./pages/LiturgicalMusicSuggestions";
 import HolySpiritHymns from "./pages/HolySpiritHymns";
 import FuneralHymns from "./pages/FuneralHymns";
+import ChristmasHymns from "./pages/ChristmasHymns";
 import FloatingNotes from "./components/FloatingNotes";
 
 const queryClient = new QueryClient();
