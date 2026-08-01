@@ -30,8 +30,6 @@ Deno.serve(async (req) => {
 
 
 
-  const admin = createClient(SUPABASE_URL, SERVICE_ROLE);
-
   try {
     const body = await req.json().catch(() => ({}));
     const source = body?.source as string | undefined;
