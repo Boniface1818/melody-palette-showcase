@@ -9,7 +9,7 @@ import {
   ArrowRight, BookOpen, Disc3, Globe2, HeartHandshake, Languages,
   Mail, Mic2, Music2, PenLine, PlayCircle, Quote, Radio, Sparkles, Wand2,
 } from "lucide-react";
-import logo from "@/assets/bk-logo.png";
+
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
