@@ -33,6 +33,8 @@ const App = () => (
           <Route path="/liturgical-music-suggestions" element={<LiturgicalMusicSuggestions />} />
           <Route path="/resources/holy-spirit-hymns" element={<HolySpiritHymns />} />
           <Route path="/resources/funeral-hymns" element={<FuneralHymns />} />
+          <Route path="/resources/christmas-hymns" element={<ChristmasHymns />} />
+
           {/* Legacy redirect */}
           <Route path="/projects" element={<Compositions />} />
           <Route path="*" element={<NotFound />} />
