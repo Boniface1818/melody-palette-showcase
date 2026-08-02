@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
+import profileAsset from "@/assets/bk-profile.jpg.asset.json";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
 
@@ -75,8 +76,8 @@ export default function Home() {
             <div className="relative mb-6 inline-block">
               <div className="absolute inset-0 rounded-full bg-primary/30 blur-3xl animate-pulse" aria-hidden />
               <img
-                src="/bk-logo.png"
-                alt="BK Music — Boniface Kagunda profile mark"
+                src={profileAsset.url}
+                alt="Boniface Kagunda — composer and developer portrait"
                 width={160}
                 height={160}
                 decoding="async"
