@@ -175,6 +175,7 @@ export default function Home() {
                 <p className="text-xs text-muted-foreground leading-relaxed">{path.text}</p>
               </article>
             ))}
+            </div>
           </div>
         </Section>
 
