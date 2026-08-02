@@ -165,7 +165,9 @@ export default function Home() {
         </Section>
 
         <Section delay={150}>
-          <div className="grid md:grid-cols-3 gap-4 mt-12 max-w-6xl mx-auto">
+          <div className="mt-12 max-w-6xl mx-auto">
+            <h2 className="sr-only">How the music reaches you</h2>
+            <div className="grid md:grid-cols-3 gap-4">
             {listeningPaths.map((path) => (
               <article key={path.title} className="glass-card shine hover:-translate-y-1 transition-transform duration-500">
                 <path.icon size={22} className="text-primary mb-3" />

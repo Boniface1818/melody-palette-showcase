@@ -615,9 +615,9 @@ export default function Contact() {
             <div className="rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md p-8 sm:p-10">
               <Heart size={28} className="text-accent mx-auto mb-3" />
               <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3">With gratitude</p>
-              <h3 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
+              <h2 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
                 Thank you for listening, for singing, and for being here.
-              </h3>
+              </h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xl mx-auto">
                 Every score on this site began as a prayer for someone, somewhere. Whether you came to commission a song, download a score, or simply let the music find you — your presence is part of the melody. I would love to write something with you.
               </p>
