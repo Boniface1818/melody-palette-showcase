@@ -155,7 +155,7 @@ export default function About() {
           <div className="mt-16 max-w-5xl mx-auto grid md:grid-cols-[0.8fr_1.2fr] gap-5 items-stretch">
             <div className="glass-card glow-border shine flex flex-col justify-center">
               <Globe2 size={24} className="text-primary mb-4" />
-              <h3 className="text-2xl font-display font-bold mb-3">For choirs, families, parishes, and solo voices.</h3>
+              <h2 className="text-2xl font-display font-bold mb-3">For choirs, families, parishes, and solo voices.</h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 A commission can be a full choir piece, a small piano song, a Kikuyu family dedication, a graduation celebration, or a new sacred melody for worship.
               </p>
