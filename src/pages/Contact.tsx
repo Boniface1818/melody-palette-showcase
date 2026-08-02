@@ -350,9 +350,9 @@ export default function Contact() {
               </div>
               <div className="text-center md:text-left">
                 <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-2">Got a tune in your head?</p>
-                <h3 className="text-xl sm:text-2xl font-display font-bold mb-2">
+                <h2 className="text-xl sm:text-2xl font-display font-bold mb-2">
                   If you already have a melody you want — <span className="text-primary">I'll bring it to life.</span>
-                </h3>
+                </h2>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                   Hum it into your phone, sing it on a voice note, sketch it on paper, or describe it in words.
                   I'll arrange it, harmonise it, and deliver a finished score with backing track — fully yours.
