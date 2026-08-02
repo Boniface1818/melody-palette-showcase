@@ -31,36 +31,42 @@ const services = [
   {
     image: serviceLiturgical,
     title: "Catholic Liturgical Music",
+    alt: "Choir singing a Mass setting during a Catholic liturgy",
     desc: "Mass settings, communion hymns, offertory pieces, and entrance antiphons crafted to follow the rhythm of the liturgy and elevate every part of the celebration.",
     tags: ["Mass Settings", "Offertory", "Communion", "Entrance"],
   },
   {
     image: servicePsalms,
     title: "Responsorial Psalms",
+    alt: "Cantor leading a responsorial psalm from the ambo",
     desc: "Fresh, singable psalm settings — written so the cantor leads with confidence and the assembly answers with joy.",
     tags: ["Cantor", "Assembly", "Lectionary"],
   },
   {
     image: serviceFestivals,
     title: "Festival & Feast Day Pieces",
+    alt: "Festive choir and instrumentalists performing at a feast day celebration",
     desc: "Bold, joyful compositions for Easter, Christmas, Marian feasts, ordinations, and parish jubilees — music that turns a celebration into a memory.",
     tags: ["Easter", "Christmas", "Marian", "Jubilees"],
   },
   {
     image: serviceArrangements,
     title: "SATB & Multi-Part Arrangements",
+    alt: "Four-part SATB choir rehearsing from sheet music",
     desc: "Existing hymns reimagined for SATB, SAB, SSA, or unison voices — arranged thoughtfully around your choir's actual voice ranges and skill level.",
     tags: ["SATB", "SAB", "SSA", "Unison"],
   },
   {
     image: serviceWeddings,
     title: "Weddings & Sacraments",
+    alt: "Musicians performing during a Catholic wedding ceremony",
     desc: "Music for weddings, baptisms, confirmations, and funerals — tender, dignified, and shaped to the personal story behind the moment.",
     tags: ["Weddings", "Baptism", "Funerals"],
   },
   {
     image: serviceCommissions,
     title: "Solo Catholic Artists",
+    alt: "Solo Catholic vocalist recording a bespoke song in a studio",
     desc: "Bespoke songs for solo artists carrying the gospel through their own voice — custom-pitched to your range, with sheet music, chord chart, backing track and guide vocal included.",
     tags: ["Custom Key", "Chord Chart", "Kikuyu", "Guide Vocal"],
   },
@@ -307,7 +313,7 @@ export default function Contact() {
                     <div className="relative aspect-[16/10] overflow-hidden">
                       <img
                         src={s.image}
-                        alt={s.title}
+                        alt={s.alt}
                         loading="lazy"
                         width={1024}
                         height={640}
