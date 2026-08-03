@@ -34,6 +34,17 @@ const personJsonLd = {
   ],
 };
 
+const webSiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "BK Music — Boniface Kagunda",
+  url: "https://bk-melodies.lovable.app/",
+  inLanguage: "en",
+  description:
+    "Original sacred music, choir scores, and personal song commissions by Kenyan composer Boniface Kagunda.",
+  publisher: { "@type": "Person", name: "Boniface Kagunda" },
+};
+
 const listeningPaths = [
   { icon: Disc3, title: "Fresh MuseScore shelf", text: "The catalog checks MuseScore automatically so the newest score can appear without waiting for a manual update." },
   { icon: Languages, title: "English · Kiswahili · Kikuyu", text: "Songs can carry the words your people already use for prayer, thanksgiving, celebration, and memory." },
