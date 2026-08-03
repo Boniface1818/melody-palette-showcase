@@ -2,8 +2,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import SEO from "@/components/SEO";
-import ResourceGuides from "@/components/ResourceGuides";
-
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -259,40 +257,8 @@ export default function About() {
           </div>
         </Section>
 
-        {/* Notable dedications */}
-        <Section delay={400}>
-          <div className="mt-20 max-w-5xl mx-auto">
-            <div className="text-center mb-8">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
-                <Music size={12} /> Notable dedications
-              </p>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
-                Songs written for <span className="text-gradient">real people, real days</span>.
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { t: "Asante", d: "A thanksgiving song written for Cynthia, giving words to a season of answered prayer." },
-                { t: "Heko", d: "A celebration piece for Kinani, marking his graduation with joy the whole family could sing." },
-              ].map((w) => (
-                <div key={w.t} className="premium-card shine">
-                  <p className="font-display text-2xl font-bold text-primary mb-2">{w.t}</p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{w.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Section>
-
-        <Section delay={430}>
-          <div className="mt-20">
-            <ResourceGuides />
-          </div>
-        </Section>
-
       </main>
       <Footer />
-
     </>
   );
 }

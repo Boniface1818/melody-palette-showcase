@@ -14,8 +14,6 @@ import ScoreOfTheDay from "@/components/ScoreOfTheDay";
 import profileAsset from "@/assets/bk-profile.jpg.asset.json";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
-import ResourceGuides from "@/components/ResourceGuides";
-
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -229,14 +227,7 @@ export default function Home() {
           </div>
         </Section>
 
-        <Section delay={340}>
-          <div className="mt-20">
-            <ResourceGuides />
-          </div>
-        </Section>
-
         <Section delay={350}>
-
           <div className="mt-16 max-w-3xl mx-auto text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-accent mb-3">
               <Sparkles size={12} className="inline mr-1" /> One invitation

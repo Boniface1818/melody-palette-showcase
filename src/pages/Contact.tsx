@@ -2,8 +2,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import SEO from "@/components/SEO";
-import ResourceGuides from "@/components/ResourceGuides";
-
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -610,15 +608,8 @@ export default function Contact() {
 
 
 
-        <Section delay={245}>
-          <div className="mt-20">
-            <ResourceGuides />
-          </div>
-        </Section>
-
         {/* Thank you — bottom */}
         <Section delay={250}>
-
           <div className="mt-20 max-w-3xl mx-auto text-center relative">
             <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 blur-2xl" aria-hidden />
             <div className="rounded-3xl border border-border/60 bg-background/40 backdrop-blur-md p-8 sm:p-10">

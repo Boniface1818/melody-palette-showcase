@@ -2,8 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
-import ResourceGuides from "@/components/ResourceGuides";
-
 import SEO from "@/components/SEO";
 import SyncScoresButton, { syncScoresNow } from "@/components/SyncScoresButton";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
@@ -695,14 +693,7 @@ export default function Compositions() {
           </div>
         )}
 
-        <Section delay={220}>
-          <div className="mt-20">
-            <ResourceGuides />
-          </div>
-        </Section>
-
       </main>
-
 
       {/* Preview modal */}
       {preview && (
