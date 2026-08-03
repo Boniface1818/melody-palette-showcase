@@ -1,5 +1,7 @@
 import { Music, Heart, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
+import BackToTop from "@/components/BackToTop";
+
 
 const socials = [
   { href: "https://musescore.com/user/108485503", icon: Music, label: "MuseScore" },
