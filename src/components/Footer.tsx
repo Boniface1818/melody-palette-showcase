@@ -16,11 +16,17 @@ export default function Footer() {
       <div className="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <img src={logo} alt="BK Music logo" width={32} height={32} className="h-8 w-8 rounded-md object-cover ring-1 ring-primary/30" />
-          <p className="text-muted-foreground text-xs flex items-center gap-1">
-            © {new Date().getFullYear()} Boniface Kagunda Music. Made with
-            <Heart size={12} className="text-accent" />
-          </p>
+          <div className="text-muted-foreground text-xs leading-relaxed">
+            <p className="flex items-center gap-1">
+              © {new Date().getFullYear()} Boniface Kagunda Music. All rights reserved. Made with
+              <Heart size={12} className="text-accent" />
+            </p>
+            <p className="mt-1 text-[10px] text-muted-foreground/70">
+              All compositions, scores, recordings, and site content are the intellectual property of Boniface Kagunda and may not be copied, performed for profit, or redistributed without written permission.
+            </p>
+          </div>
         </div>
+
         <div className="flex items-center gap-4 flex-wrap justify-center">
           {socials.map((s) => (
             <a
