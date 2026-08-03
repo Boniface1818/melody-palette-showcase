@@ -1,5 +1,7 @@
 import { Music, Heart, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import logo from "@/assets/bk-logo.png";
+import BackToTop from "@/components/BackToTop";
+
 
 const socials = [
   { href: "https://musescore.com/user/108485503", icon: Music, label: "MuseScore" },
@@ -13,7 +15,9 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="border-t border-border mt-24 py-8">
+      <BackToTop />
       <div className="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+
         <div className="flex items-center gap-3">
           <img src={logo} alt="BK Music logo" width={32} height={32} className="h-8 w-8 rounded-md object-cover ring-1 ring-primary/30" />
           <div className="text-muted-foreground text-xs leading-relaxed">
