@@ -78,7 +78,7 @@ export default function Home() {
         description="BK Music by Boniface Kagunda: original sacred songs, Kikuyu pieces, Kiswahili and English compositions, choir scores, and personal music commissions."
         path="/"
         type="profile"
-        jsonLd={personJsonLd}
+        jsonLd={[personJsonLd, webSiteJsonLd]}
       />
       <Navbar />
       <main className="pt-24 pb-12 container mx-auto px-6">
