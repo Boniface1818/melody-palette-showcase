@@ -14,6 +14,8 @@ import ScoreOfTheDay from "@/components/ScoreOfTheDay";
 import profileAsset from "@/assets/bk-profile.jpg.asset.json";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
+import ResourceGuides from "@/components/ResourceGuides";
+
 
 const personJsonLd = {
   "@context": "https://schema.org",
