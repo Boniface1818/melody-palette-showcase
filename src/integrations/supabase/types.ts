@@ -209,6 +209,21 @@ export type Database = {
         }
         Relationships: []
       }
+      sync_rate_limit: {
+        Row: {
+          id: number
+          last_run_at: string
+        }
+        Insert: {
+          id?: number
+          last_run_at?: string
+        }
+        Update: {
+          id?: number
+          last_run_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -240,6 +255,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      try_consume_sync_slot: {
+        Args: { _cooldown_seconds: number }
         Returns: boolean
       }
     }
