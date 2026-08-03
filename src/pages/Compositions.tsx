@@ -695,7 +695,14 @@ export default function Compositions() {
           </div>
         )}
 
+        <Section delay={220}>
+          <div className="mt-20">
+            <ResourceGuides />
+          </div>
+        </Section>
+
       </main>
+
 
       {/* Preview modal */}
       {preview && (
