@@ -74,8 +74,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Boniface Kagunda — Elegance In Every Note"
-        description="BK Music by Boniface Kagunda: original sacred songs, Kikuyu pieces, Kiswahili and English compositions, choir scores, and personal music commissions."
+        title="Boniface Kagunda — Sacred Music Composer, Kenya"
+        description="Original sacred music by Kenyan composer Boniface Kagunda: Mass settings, psalms, SATB choir scores, and songs written for you."
         path="/"
         type="profile"
         jsonLd={[personJsonLd, webSiteJsonLd]}
