@@ -96,7 +96,7 @@ export default function Studio() {
 
   return (
     <>
-      <SEO title="Studio Agent — BK Music" description="AI agent activity log and controls." path="/studio" />
+      <SEO title="Studio Agent — BK Music" description="Private studio dashboard for BK Music: review the AI agent activity log, monitor score syncing, and manage commission inquiry replies." path="/studio" />
       <Navbar />
       <main className="pt-28 pb-16 container mx-auto px-6 max-w-5xl">
         <header className="flex items-start justify-between mb-8 flex-wrap gap-4">
