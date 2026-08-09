@@ -512,6 +512,24 @@ export default function Compositions() {
               </button>
             ))}
           </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
+            <span className="text-[10px] uppercase tracking-widest text-muted-foreground inline-flex items-center gap-1.5 mr-1">
+              <Music size={12} className="text-primary" /> Liturgical order
+            </span>
+            {(["All Categories", ...LITURGICAL_ORDER] as const).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`px-4 py-2 rounded-full text-xs font-body tracking-wide transition-all duration-300 active:scale-95 ${
+                  category === cat
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                    : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
           <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
             <button
               onClick={() => setFavOnly((v) => !v)}
