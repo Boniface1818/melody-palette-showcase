@@ -69,6 +69,34 @@ const inferScoreLanguage = (score: Pick<Score, "title" | "story">): Exclude<Lang
   return "English";
 };
 
+// ---- Liturgical ordering -------------------------------------------------
+const LITURGICAL_ORDER = [
+  "Entrance Songs",
+  "Psalms",
+  "Marian Hymns",
+  "Bible Procession",
+  "Offertory Songs",
+  "Communion Hymns",
+  "Mass Settings",
+  "Motivational Hymns",
+  "Others",
+] as const;
+type LiturgicalCategory = (typeof LITURGICAL_ORDER)[number];
+
+const inferLiturgicalCategory = (score: Pick<Score, "title" | "story" | "mood">): LiturgicalCategory => {
+  const text = `${score.title} ${score.story ?? ""} ${score.mood ?? ""}`.toUpperCase();
+  if (/\bMISA\b|\bMASS\b|KYRIE|GLORIA|SANCTUS|AGNUS|CREDO/.test(text)) return "Mass Settings";
+  if (/ENTRANCE|NJONI|TUINGIE|PROCESSIONAL|GATHER|WELCOM/.test(text)) return "Entrance Songs";
+  if (/PSALM|ZABURI|RESPONSORIAL/.test(text)) return "Psalms";
+  if (/MARIA|MARIAN|MAITU|AVE|ROSARY|MAMA WA/.test(text)) return "Marian Hymns";
+  if (/BIBLE|NENO|WORD OF GOD|GOSPEL|HALELUYA|ALLELUIA|ACCLAMATION/.test(text)) return "Bible Procession";
+  if (/OFFERTORY|SADAKA|MATEGA|OFFERING|MEZANI/.test(text)) return "Offertory Songs";
+  if (/COMMUNION|EKARISTIA|EUCHARIST|KOMUNIO|MWILI WA/.test(text)) return "Communion Hymns";
+  if (/HEKO|ASANTE|THANKSGIV|GRADUAT|CELEBRAT|MOTIVAT|ENCOURAG|CONGRATUL/.test(text)) return "Motivational Hymns";
+  return "Others";
+};
+
+
 export default function Compositions() {
   useBackgroundCycle(5000);
   const headingColor = useColorCycle(3000);
