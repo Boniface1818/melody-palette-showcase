@@ -766,6 +766,9 @@ export default function Compositions() {
               );
             })}
           </div>
+          </section>
+          ))}
+          </div>
         )}
 
       </main>
