@@ -107,6 +107,7 @@ export default function Compositions() {
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<Filter>("All");
   const [language, setLanguage] = useState<LanguageFilter>("All Languages");
+  const [category, setCategory] = useState<"All Categories" | LiturgicalCategory>("All Categories");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("newest");
   const [view, setView] = useState<ViewMode>("grid");
