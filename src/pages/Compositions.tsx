@@ -228,6 +228,7 @@ export default function Compositions() {
   const filtered = useMemo(() => scores
     .filter((s) => active === "All" || s.ensemble_type === active)
     .filter((s) => language === "All Languages" || inferScoreLanguage(s) === language)
+    .filter((s) => category === "All Categories" || inferLiturgicalCategory(s) === category)
     .filter((s) => !favOnly || favorites.has(s.id))
     .filter((s) => {
       if (!query.trim()) return true;
@@ -240,6 +241,10 @@ export default function Compositions() {
       );
     })
     .sort((a, b) => {
+      const order =
+        LITURGICAL_ORDER.indexOf(inferLiturgicalCategory(a)) -
+        LITURGICAL_ORDER.indexOf(inferLiturgicalCategory(b));
+      if (order !== 0) return order;
       switch (sort) {
         case "oldest": return (a.published_date ?? "").localeCompare(b.published_date ?? "");
         case "views": return (b.views ?? 0) - (a.views ?? 0);
@@ -248,7 +253,20 @@ export default function Compositions() {
         case "newest":
         default: return 0;
       }
-    }), [scores, active, language, favOnly, favorites, query, sort]);
+    }), [scores, active, language, category, favOnly, favorites, query, sort]);
+
+  // Grouped in liturgical order for display
+  const groupedSections = useMemo(() => {
+    const map = new Map<LiturgicalCategory, Score[]>();
+    for (const s of filtered) {
+      const cat = inferLiturgicalCategory(s);
+      map.set(cat, [...(map.get(cat) ?? []), s]);
+    }
+    return LITURGICAL_ORDER
+      .map((cat) => ({ cat, items: map.get(cat) ?? [] }))
+      .filter((g) => g.items.length > 0);
+  }, [filtered]);
+
 
   const featured = scores.find((s) => s.featured) ?? scores[0];
 
