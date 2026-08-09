@@ -69,34 +69,6 @@ const inferScoreLanguage = (score: Pick<Score, "title" | "story">): Exclude<Lang
   return "English";
 };
 
-// ---- Liturgical ordering -------------------------------------------------
-const LITURGICAL_ORDER = [
-  "Entrance Songs",
-  "Psalms",
-  "Marian Hymns",
-  "Bible Procession",
-  "Offertory Songs",
-  "Communion Hymns",
-  "Mass Settings",
-  "Motivational Hymns",
-  "Others",
-] as const;
-type LiturgicalCategory = (typeof LITURGICAL_ORDER)[number];
-
-const inferLiturgicalCategory = (score: Pick<Score, "title" | "story" | "mood">): LiturgicalCategory => {
-  const text = `${score.title} ${score.story ?? ""} ${score.mood ?? ""}`.toUpperCase();
-  if (/\bMISA\b|\bMASS\b|KYRIE|GLORIA|SANCTUS|AGNUS|CREDO/.test(text)) return "Mass Settings";
-  if (/ENTRANCE|NJONI|TUINGIE|PROCESSIONAL|GATHER|WELCOM/.test(text)) return "Entrance Songs";
-  if (/PSALM|ZABURI|RESPONSORIAL/.test(text)) return "Psalms";
-  if (/MARIA|MARIAN|MAITU|AVE|ROSARY|MAMA WA/.test(text)) return "Marian Hymns";
-  if (/BIBLE|NENO|WORD OF GOD|GOSPEL|HALELUYA|ALLELUIA|ACCLAMATION/.test(text)) return "Bible Procession";
-  if (/OFFERTORY|SADAKA|MATEGA|OFFERING|MEZANI/.test(text)) return "Offertory Songs";
-  if (/COMMUNION|EKARISTIA|EUCHARIST|KOMUNIO|MWILI WA/.test(text)) return "Communion Hymns";
-  if (/HEKO|ASANTE|THANKSGIV|GRADUAT|CELEBRAT|MOTIVAT|ENCOURAG|CONGRATUL/.test(text)) return "Motivational Hymns";
-  return "Others";
-};
-
-
 export default function Compositions() {
   useBackgroundCycle(5000);
   const headingColor = useColorCycle(3000);
@@ -107,7 +79,6 @@ export default function Compositions() {
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<Filter>("All");
   const [language, setLanguage] = useState<LanguageFilter>("All Languages");
-  const [category, setCategory] = useState<"All Categories" | LiturgicalCategory>("All Categories");
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortKey>("newest");
   const [view, setView] = useState<ViewMode>("grid");
@@ -228,7 +199,6 @@ export default function Compositions() {
   const filtered = useMemo(() => scores
     .filter((s) => active === "All" || s.ensemble_type === active)
     .filter((s) => language === "All Languages" || inferScoreLanguage(s) === language)
-    .filter((s) => category === "All Categories" || inferLiturgicalCategory(s) === category)
     .filter((s) => !favOnly || favorites.has(s.id))
     .filter((s) => {
       if (!query.trim()) return true;
@@ -241,10 +211,6 @@ export default function Compositions() {
       );
     })
     .sort((a, b) => {
-      const order =
-        LITURGICAL_ORDER.indexOf(inferLiturgicalCategory(a)) -
-        LITURGICAL_ORDER.indexOf(inferLiturgicalCategory(b));
-      if (order !== 0) return order;
       switch (sort) {
         case "oldest": return (a.published_date ?? "").localeCompare(b.published_date ?? "");
         case "views": return (b.views ?? 0) - (a.views ?? 0);
@@ -253,20 +219,7 @@ export default function Compositions() {
         case "newest":
         default: return 0;
       }
-    }), [scores, active, language, category, favOnly, favorites, query, sort]);
-
-  // Grouped in liturgical order for display
-  const groupedSections = useMemo(() => {
-    const map = new Map<LiturgicalCategory, Score[]>();
-    for (const s of filtered) {
-      const cat = inferLiturgicalCategory(s);
-      map.set(cat, [...(map.get(cat) ?? []), s]);
-    }
-    return LITURGICAL_ORDER
-      .map((cat) => ({ cat, items: map.get(cat) ?? [] }))
-      .filter((g) => g.items.length > 0);
-  }, [filtered]);
-
+    }), [scores, active, language, favOnly, favorites, query, sort]);
 
   const featured = scores.find((s) => s.featured) ?? scores[0];
 
@@ -512,24 +465,6 @@ export default function Compositions() {
               </button>
             ))}
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground inline-flex items-center gap-1.5 mr-1">
-              <Music size={12} className="text-primary" /> Liturgical order
-            </span>
-            {(["All Categories", ...LITURGICAL_ORDER] as const).map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-body tracking-wide transition-all duration-300 active:scale-95 ${
-                  category === cat
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                    : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
           <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
             <button
               onClick={() => setFavOnly((v) => !v)}
@@ -632,20 +567,10 @@ export default function Compositions() {
             </p>
           </Section>
         ) : (
-          <div className="mt-12 space-y-14">
-          {groupedSections.map((group) => (
-          <section key={group.cat}>
-            <div className="flex items-center gap-3 mb-6">
-              <h2 className="font-display text-xl sm:text-2xl font-bold text-gradient">{group.cat}</h2>
-              <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                {group.items.length} {group.items.length === 1 ? "score" : "scores"}
-              </span>
-              <span className="flex-1 h-px bg-border/60" />
-            </div>
           <div className={view === "grid"
-            ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            : "flex flex-col gap-4 max-w-4xl mx-auto"}>
-            {group.items.map((score, i) => {
+            ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+            : "flex flex-col gap-4 mt-12 max-w-4xl mx-auto"}>
+            {filtered.map((score, i) => {
               const isFav = favorites.has(score.id);
               const isList = view === "list";
               return (
@@ -765,9 +690,6 @@ export default function Compositions() {
                 </Section>
               );
             })}
-          </div>
-          </section>
-          ))}
           </div>
         )}
 
