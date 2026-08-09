@@ -632,10 +632,20 @@ export default function Compositions() {
             </p>
           </Section>
         ) : (
+          <div className="mt-12 space-y-14">
+          {groupedSections.map((group) => (
+          <section key={group.cat}>
+            <div className="flex items-center gap-3 mb-6">
+              <h2 className="font-display text-xl sm:text-2xl font-bold text-gradient">{group.cat}</h2>
+              <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                {group.items.length} {group.items.length === 1 ? "score" : "scores"}
+              </span>
+              <span className="flex-1 h-px bg-border/60" />
+            </div>
           <div className={view === "grid"
-            ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
-            : "flex flex-col gap-4 mt-12 max-w-4xl mx-auto"}>
-            {filtered.map((score, i) => {
+            ? "grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            : "flex flex-col gap-4 max-w-4xl mx-auto"}>
+            {group.items.map((score, i) => {
               const isFav = favorites.has(score.id);
               const isList = view === "list";
               return (
