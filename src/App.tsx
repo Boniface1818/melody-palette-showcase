@@ -30,6 +30,7 @@ const App = () => (
           <Route path="/compositions" element={<Compositions />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
           <Route path="/studio" element={<Studio />} />
           <Route path="/liturgical-music-suggestions" element={<LiturgicalMusicSuggestions />} />
           <Route path="/resources/holy-spirit-hymns" element={<HolySpiritHymns />} />
