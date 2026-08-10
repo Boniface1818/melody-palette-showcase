@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,16 @@ import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 
+function safeNext(raw: string | null): string {
+  if (!raw) return "/studio";
+  if (!raw.startsWith("/") || raw.startsWith("//")) return "/studio";
+  return raw;
+}
+
 export default function Auth() {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const next = safeNext(params.get("next"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -18,13 +26,13 @@ export default function Auth() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate("/studio", { replace: true });
+      if (data.session) navigate(next, { replace: true });
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) navigate("/studio", { replace: true });
+      if (session) navigate(next, { replace: true });
     });
     return () => sub.subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, next]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -33,7 +41,7 @@ export default function Auth() {
       const fn = mode === "signin" ? supabase.auth.signInWithPassword : supabase.auth.signUp;
       const { error } = await fn({
         email, password,
-        ...(mode === "signup" && { options: { emailRedirectTo: `${window.location.origin}/studio` } }),
+        ...(mode === "signup" && { options: { emailRedirectTo: `${window.location.origin}${next}` } }),
       } as any);
       if (error) throw error;
       if (mode === "signup") toast.success("Check your email to confirm your account.");
@@ -48,7 +56,7 @@ export default function Auth() {
     setBusy(true);
     try {
       const { error } = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: `${window.location.origin}/studio`,
+        redirect_uri: `${window.location.origin}${next}`,
       });
       if (error) throw error;
     } catch (err: any) {
@@ -56,6 +64,7 @@ export default function Auth() {
       setBusy(false);
     }
   }
+
 
   return (
     <>
