@@ -25,7 +25,7 @@ export default function Navbar() {
             height={36}
             className="h-9 w-9 rounded-md object-cover ring-1 ring-primary/30 group-hover:ring-primary/60 transition-all"
           />
-          <span className="color-shift">BK Music</span>
+          <span className="color-shift">BK Melodies</span>
         </RouterNavLink>
 
         {/* Desktop */}
