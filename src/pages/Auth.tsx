@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 
+const NEXT_KEY = "bk_auth_next";
+
 function safeNext(raw: string | null): string {
   if (!raw) return "/studio";
   if (!raw.startsWith("/") || raw.startsWith("//")) return "/studio";
@@ -18,35 +20,49 @@ function safeNext(raw: string | null): string {
 export default function Auth() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const next = safeNext(params.get("next"));
+  const paramNext = params.get("next");
+  const next = safeNext(paramNext ?? sessionStorage.getItem(NEXT_KEY));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"signin" | "signup">("signin");
 
   useEffect(() => {
+    if (paramNext) sessionStorage.setItem(NEXT_KEY, paramNext);
+    const finish = () => {
+      sessionStorage.removeItem(NEXT_KEY);
+      navigate(next, { replace: true });
+    };
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate(next, { replace: true });
+      if (data.session) finish();
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) navigate(next, { replace: true });
+      if (session) finish();
     });
     return () => sub.subscription.unsubscribe();
-  }, [navigate, next]);
+  }, [navigate, next, paramNext]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
     try {
-      const fn = mode === "signin" ? supabase.auth.signInWithPassword : supabase.auth.signUp;
-      const { error } = await fn({
-        email, password,
-        ...(mode === "signup" && { options: { emailRedirectTo: `${window.location.origin}${next}` } }),
-      } as any);
-      if (error) throw error;
-      if (mode === "signup") toast.success("Check your email to confirm your account.");
+      if (mode === "signin") {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+      } else {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: `${window.location.origin}/auth` },
+        });
+        if (error) throw error;
+        if (!data.session) {
+          toast.success("Check your email to confirm your account.");
+          return;
+        }
+      }
     } catch (err: any) {
-      toast.error(err.message ?? "Auth failed");
+      toast.error("Sign-in failed. Check your details and try again.");
     } finally {
       setBusy(false);
     }
@@ -55,25 +71,29 @@ export default function Auth() {
   async function google() {
     setBusy(true);
     try {
-      const { error } = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: `${window.location.origin}${next}`,
+      const { error, redirected } = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: `${window.location.origin}/auth`,
       });
       if (error) throw error;
-    } catch (err: any) {
-      toast.error(err.message ?? "Google sign-in failed");
+      if (redirected) return;
+    } catch {
+      toast.error("Google sign-in failed. Please try again.");
       setBusy(false);
     }
   }
 
-
   return (
     <>
-      <SEO title="Studio Sign In — BK Music" description="Admin sign in for the BK Music studio agent dashboard." path="/auth" />
+      <SEO title="Sign In — BK Melodies" description="Sign in to your BK Melodies account with email or Google." path="/auth" />
       <Navbar />
       <main className="pt-28 pb-12 container mx-auto px-6 max-w-md">
         <div className="glass-card p-8">
-          <h1 className="font-display text-3xl font-bold mb-2 text-gradient">Studio Sign In</h1>
-          <p className="text-sm text-muted-foreground mb-6">Access the AI agent dashboard.</p>
+          <h1 className="font-display text-3xl font-bold mb-2 text-gradient">
+            {mode === "signin" ? "Welcome Back" : "Create Your Account"}
+          </h1>
+          <p className="text-sm text-muted-foreground mb-6">
+            Sign in with Google or your email to continue.
+          </p>
 
           <Button onClick={google} disabled={busy} className="w-full mb-4" variant="outline">
             Continue with Google
