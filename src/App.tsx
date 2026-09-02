@@ -9,10 +9,6 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Studio from "./pages/Studio";
-import LiturgicalMusicSuggestions from "./pages/LiturgicalMusicSuggestions";
-import HolySpiritHymns from "./pages/HolySpiritHymns";
-import FuneralHymns from "./pages/FuneralHymns";
-import ChristmasHymns from "./pages/ChristmasHymns";
 import OAuthConsent from "./pages/OAuthConsent";
 import FloatingNotes from "./components/FloatingNotes";
 
@@ -32,10 +28,6 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
           <Route path="/studio" element={<Studio />} />
-          <Route path="/liturgical-music-suggestions" element={<LiturgicalMusicSuggestions />} />
-          <Route path="/resources/holy-spirit-hymns" element={<HolySpiritHymns />} />
-          <Route path="/resources/funeral-hymns" element={<FuneralHymns />} />
-          <Route path="/resources/christmas-hymns" element={<ChristmasHymns />} />
 
           {/* Legacy redirect */}
           <Route path="/projects" element={<Compositions />} />
