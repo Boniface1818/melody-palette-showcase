@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import Studio from "./pages/Studio";
 import OAuthConsent from "./pages/OAuthConsent";
 import FloatingNotes from "./components/FloatingNotes";
+import RequireAuth from "./components/RequireAuth";
 
 const queryClient = new QueryClient();
 
