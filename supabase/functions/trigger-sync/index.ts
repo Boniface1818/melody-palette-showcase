@@ -42,11 +42,15 @@ Deno.serve(async (req) => {
       const { data } = await admin.auth.getClaims(token);
       const userId = data?.claims?.sub as string | undefined;
       if (userId) {
-        const { data: hasRole } = await admin.rpc("has_role", {
-          _user_id: userId,
-          _role: "admin",
-        });
-        isAdmin = hasRole === true;
+        // has_role lives in the non-exposed `private` schema, so check the
+        // role table directly with the service-role client instead.
+        const { data: roleRow } = await admin
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", userId)
+          .eq("role", "admin")
+          .maybeSingle();
+        isAdmin = !!roleRow;
       }
     }
 
