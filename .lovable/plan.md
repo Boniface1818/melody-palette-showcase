@@ -1,51 +1,43 @@
+# Full site test pass + security hardening
 
-# BK Music AI Agent — Build Plan
+## Current state (verified this session)
 
-One "Studio Agent" powered by Lovable AI (Gemini) that handles four jobs autonomously, with an admin log page where you can review everything it did.
+- Dependency audit: no high or critical vulnerabilities. `@lovable.dev/mcp-js` 1.0.0, lockfile is text `bun.lock`.
+- Fresh backend security scan: only one warning remains — anonymous-access policy on `cron.job`, which is a platform-managed table, not something in this app's schema.
+- Backend functions deployed: `agent-reply-inquiry`, `mcp`, `sync-musescore`, `trigger-sync`.
+- TypeScript check passes with no errors.
 
-## Phase 1 — Foundation (built first)
+## Part 1 — Test everything
 
-- **Admin route `/studio`** protected by Lovable Cloud auth (you sign in with your email; no public sign-ups). Shows agent activity, drafts, and toggles.
-- **`agent_actions` table** — every action the agent takes (reply sent, score tagged, digest emailed) is logged here with status, payload, timestamp. Your source of truth.
-- **`user_roles` table** (`admin` role) so only you can access `/studio`.
-- **Lovable Emails** set up for outbound (auto-replies + your weekly digest).
+End-to-end checks with a real browser against the running app:
 
-## Phase 2 — Reply to commission inquiries (auto-act, notify you)
+1. Signed-out gate: `/`, `/about`, `/compositions`, `/contact`, `/studio` all redirect to the sign-in page with the return path preserved; `/auth` and the OAuth consent page stay public.
+2. Signed-in flow: sign in, confirm redirect back to the originally requested page, and confirm the navbar shows Studio + Sign out.
+3. Page-by-page render check (Home, About, Compositions, Contact, Studio) for console errors, broken images, and missing data.
+4. Compositions: score list loads, language/ensemble filters work, MuseScore sync button runs and reports a correct result (synced vs. throttled) instead of failing silently.
+5. Contact: submit a test message and confirm it lands in the database and the agent auto-reply log records the action.
+6. Studio: agent activity log, settings, and inquiry list load for the admin account.
+7. MCP tools: re-run all five tools with an authenticated agent to confirm they still respond.
+8. Production build.
 
-- Edge function `agent-reply-inquiry` triggered by a database webhook whenever a new row lands in `commission_inquiries` or `contact_submissions`.
-- Gemini drafts a warm, personalized reply using your bio, languages (English/Kiswahili/Kikuyu), and the inquiry's occasion/ensemble/voice type.
-- Auto-sends from your Lovable Emails domain, CCs you, and logs to `agent_actions`. You get an email notification with the draft + a "flag as wrong" link.
+Anything broken gets fixed in the same pass, then re-tested.
 
-## Phase 3 — Visitor chatbot
+## Part 2 — Upgrade the security
 
-- Floating chat widget on every page ("Ask BK's Studio").
-- Streaming edge function `chat` using `google/gemini-3-flash-preview` with a system prompt loaded with: your bio, services, languages, commission flow, and live catalog from the `scores` table (tool call: `list_scores`).
-- Suggests scores, quotes prices/ranges you set, and routes serious commission asks straight into the inquiry form.
-- One-conversation-per-visitor, stored in `localStorage` (no thread history table needed).
+1. **Leaked password protection** — enable the Have I Been Pwned check so signup and password changes reject known-breached passwords.
+2. **Password strength policy** — require a minimum length and character mix at the auth level, with matching client-side validation and clear error copy on the sign-up form.
+3. **Edge function auth posture** — audit each function: `mcp` and `agent-reply-inquiry` must stay locked to verified OAuth tokens / shared secret, `trigger-sync` must keep its server-side cooldown, and `sync-musescore` must not be publicly invocable without throttling.
+4. **Row-level policy re-audit** — confirm every public table's grants match its policies exactly (no wider `anon` grant than the policies allow) and that write paths on submission tables stay insert-only.
+5. **Client error hygiene** — sweep all forms and auth flows so no raw backend error text reaches the user; generic messages only.
+6. **Security headers / robots** — confirm private routes (`/studio`, OAuth consent) stay excluded from indexing and the sitemap.
+7. Re-run the dependency and backend scans at the end to confirm a clean result.
 
-## Phase 4 — Curate & tag new scores
+## Not in scope
 
-- Extend the existing `sync-musescore` function: after each new score is inserted, call Gemini to generate `mood`, `story` (short blurb), and detect liturgical season / language from the title.
-- Writes back to the `scores` row. Auto-promotes 1 score/week to `featured=true` based on freshness + variety.
+The `cron.job` anonymous-policy warning is on a platform-managed table outside this app's schema and cannot be safely changed here; it will be left as-is.
 
-## Phase 5 — Weekly summary email
+## Technical notes
 
-- Scheduled edge function `agent-weekly-digest` running Mondays 8am Nairobi via pg_cron.
-- Aggregates: new inquiries (with agent's reply status), new scores synced + tagged, top-viewed scores, site traffic snippet, and 2–3 suggested follow-ups written by Gemini.
-- Emails you a nicely formatted HTML digest.
-
-## Technical section
-
-- **Model**: `google/gemini-3-flash-preview` via Lovable AI Gateway (no API key needed from you).
-- **Backend**: Supabase Edge Functions (`agent-reply-inquiry`, `chat`, `agent-curate-score`, `agent-weekly-digest`) + one shared `_shared/ai-gateway.ts` provider helper.
-- **Triggers**:
-  - Inquiry reply → Supabase database webhook on `INSERT` to inquiries tables.
-  - Score curation → called inline from `sync-musescore` after `INSERT`.
-  - Weekly digest → `pg_cron` + `pg_net` calling the function.
-- **Auth**: `user_roles` table with `has_role()` security-definer function; `/studio` route redirects non-admins.
-- **Safety rails**: every outbound action is idempotent (dedup by `commission_inquiries.id`), and you have a global kill switch in `/studio` that pauses all agent activity.
-
-## What I need from you before starting
-
-1. **Your email address** — where notifications and the weekly digest are sent.
-2. Confirm you'd like me to build all 5 phases in one go, or stop after Phase 2 (inquiry replies) so you can test it live first before I continue.
+- Auth settings changed via the auth configuration tool (HIBP + password policy), not code.
+- Browser testing via Playwright against `localhost:8080`; authenticated checks need an active preview session — if none is injected, those steps are verified by code review plus signed-out behaviour and reported as such.
+- No schema changes are expected unless the grant audit turns up a mismatch.
