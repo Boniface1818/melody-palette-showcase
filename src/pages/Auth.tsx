@@ -139,7 +139,7 @@ export default function Auth() {
             {mode === "signin" ? "Welcome Back" : "Create Your Account"}
           </h1>
           <p className="text-sm text-muted-foreground mb-6">
-            Sign in with Google, Microsoft, or your email to continue.
+            Sign in with Google, Microsoft, Apple, or your email to continue.
           </p>
 
           <div className="space-y-3 mb-4">
@@ -148,6 +148,9 @@ export default function Auth() {
             </Button>
             <Button onClick={microsoft} disabled={busy} className="w-full" variant="outline">
               Continue with Microsoft
+            </Button>
+            <Button onClick={apple} disabled={busy} className="w-full" variant="outline">
+              Continue with Apple
             </Button>
           </div>
 
