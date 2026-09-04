@@ -101,6 +101,20 @@ export default function Auth() {
     }
   }
 
+  async function microsoft() {
+    setBusy(true);
+    try {
+      const { error, redirected } = await lovable.auth.signInWithOAuth("microsoft", {
+        redirect_uri: `${window.location.origin}/auth`,
+      });
+      if (error) throw error;
+      if (redirected) return;
+    } catch {
+      toast.error("Microsoft sign-in failed. Please try again.");
+      setBusy(false);
+    }
+  }
+
   return (
     <>
       <SEO title="Sign In — BK Melodies" description="Sign in to your BK Melodies account with email or Google." path="/auth" />
