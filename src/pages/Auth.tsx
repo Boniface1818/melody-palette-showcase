@@ -127,7 +127,20 @@ export default function Auth() {
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+              <Input
+                id="password"
+                type="password"
+                autoComplete={mode === "signin" ? "current-password" : "new-password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={mode === "signin" ? 6 : 10}
+              />
+              {mode === "signup" && (
+                <p className="mt-1.5 text-[11px] text-muted-foreground">
+                  At least 10 characters with upper and lower case, a number, and a symbol.
+                </p>
+              )}
             </div>
             <Button type="submit" disabled={busy} className="w-full btn-primary">
               {busy ? "Working..." : mode === "signin" ? "Sign In" : "Create Account"}
