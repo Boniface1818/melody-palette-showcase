@@ -101,9 +101,23 @@ export default function Auth() {
     }
   }
 
+  async function microsoft() {
+    setBusy(true);
+    try {
+      const { error, redirected } = await lovable.auth.signInWithOAuth("microsoft", {
+        redirect_uri: `${window.location.origin}/auth`,
+      });
+      if (error) throw error;
+      if (redirected) return;
+    } catch {
+      toast.error("Microsoft sign-in failed. Please try again.");
+      setBusy(false);
+    }
+  }
+
   return (
     <>
-      <SEO title="Sign In — BK Melodies" description="Sign in to your BK Melodies account with email or Google." path="/auth" />
+      <SEO title="Sign In — BK Melodies" description="Sign in to your BK Melodies account with email, Google, or Microsoft." path="/auth" />
       <Navbar />
       <main className="pt-28 pb-12 container mx-auto px-6 max-w-md">
         <div className="glass-card p-8">
@@ -111,12 +125,17 @@ export default function Auth() {
             {mode === "signin" ? "Welcome Back" : "Create Your Account"}
           </h1>
           <p className="text-sm text-muted-foreground mb-6">
-            Sign in with Google or your email to continue.
+            Sign in with Google, Microsoft, or your email to continue.
           </p>
 
-          <Button onClick={google} disabled={busy} className="w-full mb-4" variant="outline">
-            Continue with Google
-          </Button>
+          <div className="space-y-3 mb-4">
+            <Button onClick={google} disabled={busy} className="w-full" variant="outline">
+              Continue with Google
+            </Button>
+            <Button onClick={microsoft} disabled={busy} className="w-full" variant="outline">
+              Continue with Microsoft
+            </Button>
+          </div>
 
           <div className="ornament-divider text-xs mb-4">or with email</div>
 
