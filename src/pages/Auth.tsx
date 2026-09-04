@@ -42,8 +42,23 @@ export default function Auth() {
     return () => sub.subscription.unsubscribe();
   }, [navigate, next, paramNext]);
 
+  function passwordProblem(pw: string): string | null {
+    if (pw.length < 10) return "Password must be at least 10 characters.";
+    if (!/[a-z]/.test(pw) || !/[A-Z]/.test(pw)) return "Password must include both upper and lower case letters.";
+    if (!/[0-9]/.test(pw)) return "Password must include at least one number.";
+    if (!/[^A-Za-z0-9]/.test(pw)) return "Password must include at least one symbol.";
+    return null;
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (mode === "signup") {
+      const problem = passwordProblem(password);
+      if (problem) {
+        toast.error(problem);
+        return;
+      }
+    }
     setBusy(true);
     try {
       if (mode === "signin") {
