@@ -76,8 +76,12 @@ export default function Auth() {
           return;
         }
       }
-    } catch (err: any) {
-      toast.error("Sign-in failed. Check your details and try again.");
+    } catch {
+      toast.error(
+        mode === "signin"
+          ? "Sign-in failed. Check your details and try again."
+          : "Sign-up failed. Try a different email or a stronger password.",
+      );
     } finally {
       setBusy(false);
     }
