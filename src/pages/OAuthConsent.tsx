@@ -30,7 +30,7 @@ export default function OAuthConsent() {
       }
       const { data, error } = await oauth.getAuthorizationDetails(authorizationId);
       if (!active) return;
-      if (error) return setError(error.message);
+      if (error) return setError("This authorization request is invalid or has expired.");
       const immediate = data?.redirect_url ?? data?.redirect_to;
       if (immediate && !data?.client) {
         window.location.href = immediate;
@@ -50,7 +50,7 @@ export default function OAuthConsent() {
       : await oauth.denyAuthorization(authorizationId);
     if (error) {
       setBusy(false);
-      return setError(error.message);
+      return setError("Could not complete the authorization. Please try again.");
     }
     const target = data?.redirect_url ?? data?.redirect_to;
     if (!target) {

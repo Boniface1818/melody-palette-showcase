@@ -42,8 +42,23 @@ export default function Auth() {
     return () => sub.subscription.unsubscribe();
   }, [navigate, next, paramNext]);
 
+  function passwordProblem(pw: string): string | null {
+    if (pw.length < 10) return "Password must be at least 10 characters.";
+    if (!/[a-z]/.test(pw) || !/[A-Z]/.test(pw)) return "Password must include both upper and lower case letters.";
+    if (!/[0-9]/.test(pw)) return "Password must include at least one number.";
+    if (!/[^A-Za-z0-9]/.test(pw)) return "Password must include at least one symbol.";
+    return null;
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (mode === "signup") {
+      const problem = passwordProblem(password);
+      if (problem) {
+        toast.error(problem);
+        return;
+      }
+    }
     setBusy(true);
     try {
       if (mode === "signin") {
@@ -61,8 +76,12 @@ export default function Auth() {
           return;
         }
       }
-    } catch (err: any) {
-      toast.error("Sign-in failed. Check your details and try again.");
+    } catch {
+      toast.error(
+        mode === "signin"
+          ? "Sign-in failed. Check your details and try again."
+          : "Sign-up failed. Try a different email or a stronger password.",
+      );
     } finally {
       setBusy(false);
     }
@@ -108,7 +127,20 @@ export default function Auth() {
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+              <Input
+                id="password"
+                type="password"
+                autoComplete={mode === "signin" ? "current-password" : "new-password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={mode === "signin" ? 6 : 10}
+              />
+              {mode === "signup" && (
+                <p className="mt-1.5 text-[11px] text-muted-foreground">
+                  At least 10 characters with upper and lower case, a number, and a symbol.
+                </p>
+              )}
             </div>
             <Button type="submit" disabled={busy} className="w-full btn-primary">
               {busy ? "Working..." : mode === "signin" ? "Sign In" : "Create Account"}
