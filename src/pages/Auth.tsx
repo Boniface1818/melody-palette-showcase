@@ -115,9 +115,23 @@ export default function Auth() {
     }
   }
 
+  async function apple() {
+    setBusy(true);
+    try {
+      const { error, redirected } = await lovable.auth.signInWithOAuth("apple", {
+        redirect_uri: `${window.location.origin}/auth`,
+      });
+      if (error) throw error;
+      if (redirected) return;
+    } catch {
+      toast.error("Apple sign-in failed. Please try again.");
+      setBusy(false);
+    }
+  }
+
   return (
     <>
-      <SEO title="Sign In — BK Melodies" description="Sign in to your BK Melodies account with email, Google, or Microsoft." path="/auth" />
+      <SEO title="Sign In — BK Melodies" description="Sign in to your BK Melodies account with email, Google, Microsoft, or Apple." path="/auth" />
       <Navbar />
       <main className="pt-28 pb-12 container mx-auto px-6 max-w-md">
         <div className="glass-card p-8">
@@ -125,7 +139,7 @@ export default function Auth() {
             {mode === "signin" ? "Welcome Back" : "Create Your Account"}
           </h1>
           <p className="text-sm text-muted-foreground mb-6">
-            Sign in with Google, Microsoft, or your email to continue.
+            Sign in with Google, Microsoft, Apple, or your email to continue.
           </p>
 
           <div className="space-y-3 mb-4">
@@ -134,6 +148,9 @@ export default function Auth() {
             </Button>
             <Button onClick={microsoft} disabled={busy} className="w-full" variant="outline">
               Continue with Microsoft
+            </Button>
+            <Button onClick={apple} disabled={busy} className="w-full" variant="outline">
+              Continue with Apple
             </Button>
           </div>
 
