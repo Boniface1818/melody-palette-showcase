@@ -131,7 +131,7 @@ export default function Auth() {
 
   return (
     <>
-      <SEO title="Sign In — BK Melodies" description="Sign in to your BK Melodies account with email, Google, or Microsoft." path="/auth" />
+      <SEO title="Sign In — BK Melodies" description="Sign in to your BK Melodies account with email, Google, Microsoft, or Apple." path="/auth" />
       <Navbar />
       <main className="pt-28 pb-12 container mx-auto px-6 max-w-md">
         <div className="glass-card p-8">
