@@ -23,6 +23,28 @@ type Action = {
 
 type Settings = { enabled: boolean; auto_reply_inquiries: boolean; notify_email: string };
 
+type Inquiry = {
+  id: string;
+  name: string;
+  email: string;
+  occasion: string | null;
+  ensemble: string | null;
+  voice_type: string | null;
+  deadline: string | null;
+  message: string;
+  status: string;
+  created_at: string;
+};
+
+const STATUSES = ["received", "reviewing", "composing", "delivered", "declined"] as const;
+const STATUS_LABEL: Record<string, string> = {
+  received: "Received",
+  reviewing: "Reviewing",
+  composing: "Composing",
+  delivered: "Delivered",
+  declined: "Declined",
+};
+
 export default function Studio() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
