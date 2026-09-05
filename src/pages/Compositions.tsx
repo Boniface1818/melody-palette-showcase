@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import SEO from "@/components/SEO";
 import SyncScoresButton, { syncScoresNow } from "@/components/SyncScoresButton";
+import ScoreAlertsSignup from "@/components/ScoreAlertsSignup";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -692,6 +693,10 @@ export default function Compositions() {
             })}
           </div>
         )}
+
+        <div className="mt-20 max-w-3xl mx-auto">
+          <ScoreAlertsSignup />
+        </div>
 
       </main>
 
