@@ -455,6 +455,24 @@ export default function Contact() {
           </div>
         </Section>
 
+        {/* Commission request form */}
+        <Section delay={175}>
+          <div className="mt-20 max-w-3xl mx-auto" id="commission">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <Feather size={12} /> Commission a song
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                Send the brief — I'll <span className="text-gradient">track it to delivery</span>.
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-2xl mx-auto mt-3">
+                Every request is logged and moves through review, composing, and delivery — so nothing gets lost in an inbox.
+              </p>
+            </div>
+            <CommissionForm />
+          </div>
+        </Section>
+
         {/* FAQ */}
         <Section delay={180}>
           <div className="mt-20 max-w-3xl mx-auto">
