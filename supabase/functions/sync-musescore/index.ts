@@ -189,7 +189,6 @@ Deno.serve(async (req) => {
 
     let synced = 0;
     let added = 0;
-    const newTitles: string[] = [];
     for (const score of scores) {
       const { data: existing } = await supabase
         .from("scores")
@@ -207,7 +206,6 @@ Deno.serve(async (req) => {
         payload.story = generated.story;
         payload.mood = generated.mood;
         added++;
-        newTitles.push(score.title);
       } else {
         delete payload.story;
         delete payload.mood;
@@ -220,56 +218,8 @@ Deno.serve(async (req) => {
       else console.error("Upsert error:", error);
     }
 
-    // Announce brand-new scores to the mailing list (once per score).
-    let notified = 0;
-    if (newTitles.length > 0) {
-      try {
-        const { data: pending } = await supabase
-          .from("scores")
-          .select("id, title, musescore_url")
-          .is("announced_at", null)
-          .in("title", newTitles);
-
-        const { data: subs } = await supabase
-          .from("score_subscribers")
-          .select("email")
-          .eq("active", true);
-
-        for (const score of pending ?? []) {
-          for (const sub of subs ?? []) {
-            try {
-              await supabase.functions.invoke("send-transactional-email", {
-                body: {
-                  templateName: "new-score",
-                  recipientEmail: sub.email,
-                  idempotencyKey: `new-score-${score.id}-${sub.email}`,
-                  templateData: { title: score.title, url: score.musescore_url },
-                },
-              });
-              notified++;
-            } catch (_) {
-              // Email delivery is best-effort; the score is still recorded.
-            }
-          }
-          await supabase
-            .from("scores")
-            .update({ announced_at: new Date().toISOString() })
-            .eq("id", score.id);
-        }
-
-        await supabase.from("agent_actions").insert({
-          kind: "new_score_announcement",
-          status: "success",
-          summary: `${(pending ?? []).length} new score(s) published: ${newTitles.join(", ")}. Notified ${subs?.length ?? 0} subscriber(s).`,
-          payload: { titles: newTitles, subscribers: subs?.length ?? 0 },
-        });
-      } catch (e) {
-        console.error("Announcement error:", e);
-      }
-    }
-
     return new Response(
-      JSON.stringify({ success: true, synced, added, notified, total: scores.length, source, warning }),
+      JSON.stringify({ success: true, synced, added, total: scores.length, source, warning }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (error) {

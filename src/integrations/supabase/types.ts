@@ -88,7 +88,6 @@ export type Database = {
       }
       commission_inquiries: {
         Row: {
-          admin_notes: string | null
           created_at: string
           deadline: string | null
           email: string
@@ -97,12 +96,9 @@ export type Database = {
           message: string
           name: string
           occasion: string | null
-          status: string
-          updated_at: string
           voice_type: string | null
         }
         Insert: {
-          admin_notes?: string | null
           created_at?: string
           deadline?: string | null
           email: string
@@ -111,12 +107,9 @@ export type Database = {
           message: string
           name: string
           occasion?: string | null
-          status?: string
-          updated_at?: string
           voice_type?: string | null
         }
         Update: {
-          admin_notes?: string | null
           created_at?: string
           deadline?: string | null
           email?: string
@@ -125,8 +118,6 @@ export type Database = {
           message?: string
           name?: string
           occasion?: string | null
-          status?: string
-          updated_at?: string
           voice_type?: string | null
         }
         Relationships: []
@@ -158,33 +149,8 @@ export type Database = {
         }
         Relationships: []
       }
-      score_subscribers: {
-        Row: {
-          active: boolean
-          created_at: string
-          email: string
-          id: string
-          updated_at: string
-        }
-        Insert: {
-          active?: boolean
-          created_at?: string
-          email: string
-          id?: string
-          updated_at?: string
-        }
-        Update: {
-          active?: boolean
-          created_at?: string
-          email?: string
-          id?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       scores: {
         Row: {
-          announced_at: string | null
           created_at: string
           duration: string | null
           ensemble_type: string | null
@@ -204,7 +170,6 @@ export type Database = {
           views: number | null
         }
         Insert: {
-          announced_at?: string | null
           created_at?: string
           duration?: string | null
           ensemble_type?: string | null
@@ -224,7 +189,6 @@ export type Database = {
           views?: number | null
         }
         Update: {
-          announced_at?: string | null
           created_at?: string
           duration?: string | null
           ensemble_type?: string | null

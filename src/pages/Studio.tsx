@@ -23,28 +23,6 @@ type Action = {
 
 type Settings = { enabled: boolean; auto_reply_inquiries: boolean; notify_email: string };
 
-type Inquiry = {
-  id: string;
-  name: string;
-  email: string;
-  occasion: string | null;
-  ensemble: string | null;
-  voice_type: string | null;
-  deadline: string | null;
-  message: string;
-  status: string;
-  created_at: string;
-};
-
-const STATUSES = ["received", "reviewing", "composing", "delivered", "declined"] as const;
-const STATUS_LABEL: Record<string, string> = {
-  received: "Received",
-  reviewing: "Reviewing",
-  composing: "Composing",
-  delivered: "Delivered",
-  declined: "Declined",
-};
-
 export default function Studio() {
   const navigate = useNavigate();
   const [ready, setReady] = useState(false);
@@ -52,7 +30,6 @@ export default function Studio() {
   const [actions, setActions] = useState<Action[]>([]);
   const [settings, setSettings] = useState<Settings | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -67,7 +44,7 @@ export default function Studio() {
       setReady(true);
 
       if (admin) {
-        await Promise.all([loadActions(), loadSettings(), loadInquiries()]);
+        await Promise.all([loadActions(), loadSettings()]);
       }
     })();
   }, [navigate]);
@@ -77,20 +54,6 @@ export default function Studio() {
       .from("agent_actions").select("*")
       .order("created_at", { ascending: false }).limit(50);
     setActions((data ?? []) as Action[]);
-  }
-
-  async function loadInquiries() {
-    const { data } = await supabase
-      .from("commission_inquiries").select("*")
-      .order("created_at", { ascending: false }).limit(50);
-    setInquiries((data ?? []) as Inquiry[]);
-  }
-
-  async function setStatus(id: string, status: string) {
-    const { error } = await supabase.from("commission_inquiries").update({ status }).eq("id", id);
-    if (error) { toast.error("Could not update the request. Please try again."); return; }
-    setInquiries((list) => list.map((i) => (i.id === id ? { ...i, status } : i)));
-    toast.success(`Marked as ${STATUS_LABEL[status] ?? status}`);
   }
 
   async function loadSettings() {
@@ -169,60 +132,6 @@ export default function Studio() {
             </div>
           </section>
         )}
-
-        <section className="mb-10">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="font-display text-lg font-semibold">Commission requests</h2>
-            <Button variant="ghost" size="sm" onClick={loadInquiries}>Refresh</Button>
-          </div>
-
-          {inquiries.length === 0 ? (
-            <div className="glass-card p-8 text-center text-sm text-muted-foreground">
-              No commission requests yet. New ones from the contact page appear here.
-            </div>
-          ) : (
-            <ul className="space-y-3">
-              {inquiries.map((q) => (
-                <li key={q.id} className="glass-card p-5">
-                  <div className="flex items-start justify-between gap-4 flex-wrap mb-2">
-                    <div>
-                      <p className="font-display font-semibold text-sm">
-                        {q.name} <span className="text-muted-foreground font-body">· {q.email}</span>
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {[q.occasion, q.ensemble, q.voice_type, q.deadline].filter(Boolean).join(" · ") || "No extra details"}
-                        {" — "}
-                        {formatDistanceToNow(new Date(q.created_at), { addSuffix: true })}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-[10px]">{STATUS_LABEL[q.status] ?? q.status}</Badge>
-                      <select
-                        value={q.status}
-                        onChange={(e) => setStatus(q.id, e.target.value)}
-                        aria-label={`Status for ${q.name}`}
-                        className="bg-secondary/50 border border-border rounded-lg px-2 py-1.5 text-xs"
-                      >
-                        {STATUSES.map((s) => (
-                          <option key={s} value={s}>{STATUS_LABEL[s]}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{q.message}</p>
-                  <a
-                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(q.email)}&su=${encodeURIComponent("Your song commission")}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xs text-primary hover:underline inline-block mt-3"
-                  >
-                    Reply by email →
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
 
         <section>
           <div className="flex items-center justify-between mb-4">
