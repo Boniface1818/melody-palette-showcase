@@ -52,6 +52,7 @@ export default function Studio() {
   const [actions, setActions] = useState<Action[]>([]);
   const [settings, setSettings] = useState<Settings | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -66,7 +67,7 @@ export default function Studio() {
       setReady(true);
 
       if (admin) {
-        await Promise.all([loadActions(), loadSettings()]);
+        await Promise.all([loadActions(), loadSettings(), loadInquiries()]);
       }
     })();
   }, [navigate]);
@@ -76,6 +77,20 @@ export default function Studio() {
       .from("agent_actions").select("*")
       .order("created_at", { ascending: false }).limit(50);
     setActions((data ?? []) as Action[]);
+  }
+
+  async function loadInquiries() {
+    const { data } = await supabase
+      .from("commission_inquiries").select("*")
+      .order("created_at", { ascending: false }).limit(50);
+    setInquiries((data ?? []) as Inquiry[]);
+  }
+
+  async function setStatus(id: string, status: string) {
+    const { error } = await supabase.from("commission_inquiries").update({ status }).eq("id", id);
+    if (error) { toast.error("Could not update the request. Please try again."); return; }
+    setInquiries((list) => list.map((i) => (i.id === id ? { ...i, status } : i)));
+    toast.success(`Marked as ${STATUS_LABEL[status] ?? status}`);
   }
 
   async function loadSettings() {
