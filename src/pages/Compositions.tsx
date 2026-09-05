@@ -693,6 +693,10 @@ export default function Compositions() {
           </div>
         )}
 
+        <div className="mt-20 max-w-3xl mx-auto">
+          <ScoreAlertsSignup />
+        </div>
+
       </main>
 
       {/* Preview modal */}
