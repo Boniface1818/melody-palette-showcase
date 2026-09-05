@@ -170,6 +170,60 @@ export default function Studio() {
           </section>
         )}
 
+        <section className="mb-10">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display text-lg font-semibold">Commission requests</h2>
+            <Button variant="ghost" size="sm" onClick={loadInquiries}>Refresh</Button>
+          </div>
+
+          {inquiries.length === 0 ? (
+            <div className="glass-card p-8 text-center text-sm text-muted-foreground">
+              No commission requests yet. New ones from the contact page appear here.
+            </div>
+          ) : (
+            <ul className="space-y-3">
+              {inquiries.map((q) => (
+                <li key={q.id} className="glass-card p-5">
+                  <div className="flex items-start justify-between gap-4 flex-wrap mb-2">
+                    <div>
+                      <p className="font-display font-semibold text-sm">
+                        {q.name} <span className="text-muted-foreground font-body">· {q.email}</span>
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {[q.occasion, q.ensemble, q.voice_type, q.deadline].filter(Boolean).join(" · ") || "No extra details"}
+                        {" — "}
+                        {formatDistanceToNow(new Date(q.created_at), { addSuffix: true })}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="text-[10px]">{STATUS_LABEL[q.status] ?? q.status}</Badge>
+                      <select
+                        value={q.status}
+                        onChange={(e) => setStatus(q.id, e.target.value)}
+                        aria-label={`Status for ${q.name}`}
+                        className="bg-secondary/50 border border-border rounded-lg px-2 py-1.5 text-xs"
+                      >
+                        {STATUSES.map((s) => (
+                          <option key={s} value={s}>{STATUS_LABEL[s]}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{q.message}</p>
+                  <a
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(q.email)}&su=${encodeURIComponent("Your song commission")}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs text-primary hover:underline inline-block mt-3"
+                  >
+                    Reply by email →
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-display text-lg font-semibold">Recent activity</h2>
