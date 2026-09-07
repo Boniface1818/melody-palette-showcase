@@ -7,7 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
   ArrowRight, BookOpen, Disc3, Globe2, HeartHandshake, Languages,
-  Mail, Mic2, Music2, PenLine, PlayCircle, Quote, Radio, Sparkles, Wand2,
+  Mail, Mic2, Music2, PenLine, PlayCircle, Quote, Radio, Sparkles, Wand2, Hand, Compass, Headphones, MessageCircleHeart
 } from "lucide-react";
 
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
@@ -66,6 +66,30 @@ const studioFlow = [
   { step: "Deliver", text: "A polished score with learning audio so singers can rehearse confidently." },
 ];
 
+const welcomeCards = [
+  {
+    icon: Headphones,
+    title: "Listen first",
+    text: "Browse compositions in English, Kiswahili, and Kikuyu — each one written for a real voice or occasion.",
+    cta: "Hear the scores",
+    to: "/compositions",
+  },
+  {
+    icon: Compass,
+    title: "Find your sound",
+    text: "Whether you need a choir piece, a graduation tribute, or a song of thanksgiving, there's a place for your story here.",
+    cta: "See what I write",
+    to: "/about",
+  },
+  {
+    icon: MessageCircleHeart,
+    title: "Start a song",
+    text: "Share the name, the occasion, and the language. I'll shape a melody that carries your message with care.",
+    cta: "Say hello",
+    to: "/contact",
+  },
+];
+
 export default function Home() {
   const typedText = useTypingAnimation();
   useBackgroundCycle(5000);
@@ -118,7 +142,7 @@ export default function Home() {
               <span className="sr-only"> — Sacred Music Composer & Song Commissions</span>
             </h1>
             <p className="mt-5 text-base sm:text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
-              A home for sacred songs, personal dedications, Sweet Melodies, choir scores, and original music written for you.
+              Welcome. This is a quiet corner for sacred songs, personal dedications, Sweet Melodies, choir scores, and original music written for you.
             </p>
           </Section>
 
@@ -147,6 +171,53 @@ export default function Home() {
             </div>
           </Section>
         </section>
+
+        <Section delay={80}>
+          <div className="mt-10 max-w-5xl mx-auto">
+            <div className="glass-card glow-border shine p-6 sm:p-8 text-center relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary" />
+              <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3 inline-flex items-center gap-2">
+                <Hand size={12} /> A warm welcome
+              </p>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-bold leading-tight mb-3">
+                First time here? You're in the right place.
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                BK Music is where stories become songs. Take a gentle walk through the compositions, learn about the heart behind the music, or reach out if you'd like something written just for you.
+              </p>
+            </div>
+          </div>
+        </Section>
+
+        <Section delay={120}>
+          <div className="mt-14 max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-3 inline-flex items-center gap-2">
+                <Compass size={12} /> Three ways to begin
+              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold leading-tight">
+                Explore, discover, or <span className="text-gradient">create something new</span>.
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-5">
+              {welcomeCards.map((card) => (
+                <article key={card.title} className="premium-card shine flex flex-col items-start text-left hover:-translate-y-1 transition-transform duration-500">
+                  <div className="p-3 rounded-xl bg-primary/10 text-primary mb-4">
+                    <card.icon size={22} />
+                  </div>
+                  <h3 className="font-display font-semibold text-lg mb-2">{card.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-5 flex-1">{card.text}</p>
+                  <Link
+                    to={card.to}
+                    className="inline-flex items-center gap-1.5 text-xs font-body font-medium text-primary hover:text-accent transition-colors"
+                  >
+                    {card.cta} <ArrowRight size={12} />
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </Section>
 
         <Section delay={100}>
           <div className="mt-16 max-w-6xl mx-auto grid lg:grid-cols-[1.15fr_0.85fr] gap-5 items-stretch">
@@ -214,12 +285,6 @@ export default function Home() {
             <ScoreOfTheDay />
           </div>
         </Section>
-
-
-
-
-
-
 
         <Section delay={330}>
           <div className="mt-20">
