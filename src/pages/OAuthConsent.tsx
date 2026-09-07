@@ -24,8 +24,7 @@ export default function OAuthConsent() {
       if (!authorizationId) return setError("Missing authorization_id");
       const { data: sess } = await supabase.auth.getSession();
       if (!sess.session) {
-        const next = window.location.pathname + window.location.search;
-        window.location.href = "/auth?next=" + encodeURIComponent(next);
+        setError("You need an active session to approve this request.");
         return;
       }
       const { data, error } = await oauth.getAuthorizationDetails(authorizationId);
