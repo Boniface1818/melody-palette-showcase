@@ -604,16 +604,17 @@ export default function Contact() {
               <Heart size={28} className="text-accent mx-auto mb-3" />
               <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3">With gratitude</p>
               <h2 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
-                Thank you for listening, for singing, and for being here.
+                Thank you for stopping by — it truly means a lot.
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xl mx-auto">
-                Every score on this site began as a prayer for someone, somewhere. Whether you came to commission a song, download a score, or simply let the music find you — your presence is part of the melody. I would love to write something with you.
+                Whether you came to hear a score, share an idea, or ask for a song of your own, I am grateful you are here. Every piece I write begins with a person and a moment worth remembering, and I would be honoured if the next one were yours.
               </p>
               <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/85 text-sm max-w-md mx-auto text-left">
                 <Quote size={14} className="inline text-primary mr-1 -mt-1" />
-                "Give cheerfully — both your gift and your song."
-                <span className="block text-[11px] text-muted-foreground not-italic mt-1">— Studio note</span>
+                "Tell me the story. I will find the melody that carries it."
+                <span className="block text-[11px] text-muted-foreground not-italic mt-1">— Boniface</span>
               </blockquote>
+
               <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
                 <a href={gmailLink("I would love to work with you")} target="_blank" rel="noreferrer" className="btn-primary shine inline-flex">
                   <Mail size={14} /> Send a Message
