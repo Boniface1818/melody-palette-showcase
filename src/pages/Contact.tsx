@@ -9,7 +9,7 @@ import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
   Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
-  HelpCircle, ChevronDown, Calendar, Globe2, Shield, Zap, FileMusic, FileAudio2,
+  HelpCircle, ChevronDown, Globe2, Shield, Zap, FileMusic, FileAudio2,
 } from "lucide-react";
 import { useState } from "react";
 import { useNairobiClock } from "@/hooks/useNairobiClock";
@@ -231,29 +231,17 @@ export default function Contact() {
           </div>
         </Section>
 
-        {/* Response promise + global timezones */}
         <Section delay={90}>
-          <div className="mt-6 max-w-5xl mx-auto grid sm:grid-cols-3 gap-4">
-            <div className="glass-card">
-              <Clock size={18} className="text-primary mb-2" />
+          <div className="mt-6 max-w-2xl mx-auto">
+            <div className="glass-card text-center">
+              <Clock size={18} className="text-primary mb-2 mx-auto" />
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Reply Window</p>
               <p className="font-display text-sm font-semibold mt-1">Within 24 hours, every weekday.</p>
               <p className="text-xs text-muted-foreground mt-2 leading-relaxed">Weekend messages get a Monday-morning answer with a draft timeline attached.</p>
             </div>
-            <div className="glass-card">
-              <Globe2 size={18} className="text-accent mb-2" />
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Working Across</p>
-              <p className="font-display text-sm font-semibold mt-1">EAT · CET · ET · PT</p>
-              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">I schedule calls for your timezone, not mine. Just say what works.</p>
-            </div>
-            <div className="glass-card">
-              <Calendar size={18} className="text-primary mb-2" />
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Booking Window</p>
-              <p className="font-display text-sm font-semibold mt-1">2–4 weeks for new commissions.</p>
-              <p className="text-xs text-muted-foreground mt-2 leading-relaxed">Rush jobs possible — share your deadline and I'll be honest about it.</p>
-            </div>
           </div>
         </Section>
+
         <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-5xl mx-auto">
           <Section delay={100}>
             <a
@@ -616,16 +604,17 @@ export default function Contact() {
               <Heart size={28} className="text-accent mx-auto mb-3" />
               <p className="text-[10px] uppercase tracking-[0.3em] text-accent mb-3">With gratitude</p>
               <h2 className="text-2xl sm:text-3xl font-display font-bold leading-tight mb-4">
-                Thank you for listening, for singing, and for being here.
+                Thank you for stopping by — it truly means a lot.
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-xl mx-auto">
-                Every score on this site began as a prayer for someone, somewhere. Whether you came to commission a song, download a score, or simply let the music find you — your presence is part of the melody. I would love to write something with you.
+                Whether you came to hear a score, share an idea, or ask for a song of your own, I am grateful you are here. Every piece I write begins with a person and a moment worth remembering, and I would be honoured if the next one were yours.
               </p>
               <blockquote className="border-l-2 border-primary pl-4 italic text-foreground/85 text-sm max-w-md mx-auto text-left">
                 <Quote size={14} className="inline text-primary mr-1 -mt-1" />
-                "Give cheerfully — both your gift and your song."
-                <span className="block text-[11px] text-muted-foreground not-italic mt-1">— Studio note</span>
+                "Tell me the story. I will find the melody that carries it."
+                <span className="block text-[11px] text-muted-foreground not-italic mt-1">— Boniface</span>
               </blockquote>
+
               <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
                 <a href={gmailLink("I would love to work with you")} target="_blank" rel="noreferrer" className="btn-primary shine inline-flex">
                   <Mail size={14} /> Send a Message

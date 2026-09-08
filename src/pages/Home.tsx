@@ -19,7 +19,7 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Boniface Kagunda",
-  jobTitle: "Composer & Songwriter",
+  jobTitle: "Composer & Arranger",
   description:
     "Kenyan composer creating original sacred music, personal songs, Kikuyu pieces, Kiswahili songs, and English compositions for choirs, soloists, and families.",
   url: "https://bk-melodies.lovable.app/",
@@ -128,7 +128,7 @@ export default function Home() {
             </p>
 
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6 font-body">
-              Composer · Songwriter · Score Maker
+              Composer &amp; Arranger
             </p>
           </Section>
 
