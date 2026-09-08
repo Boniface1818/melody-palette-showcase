@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import ScoreOfTheDay from "@/components/ScoreOfTheDay";
-import profileAsset from "@/assets/bk-profile.jpg.asset.json";
+import profilePhoto from "@/assets/bk-profile.png";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
 
