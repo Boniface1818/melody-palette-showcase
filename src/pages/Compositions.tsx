@@ -275,7 +275,7 @@ export default function Compositions() {
     const favs = scores.filter((s) => favorites.has(s.id));
     if (!favs.length) return;
     const lines = [
-      "BK Music — My Favorite Compositions",
+      "BK Melodies — My Favorite Compositions",
       "=".repeat(40),
       "",
       ...favs.map((s, i) =>

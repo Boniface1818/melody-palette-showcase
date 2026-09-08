@@ -57,7 +57,7 @@ export default function About() {
   return (
     <>
       <SEO
-        title="About BK Music — Boniface Kagunda"
+        title="About BK Melodies — Boniface Kagunda"
         description="Learn about Boniface Kagunda's fresh approach to original songs, Kikuyu music, Kiswahili and English sacred compositions, and personal commissions."
         path="/about"
         jsonLd={aboutJsonLd}
@@ -88,7 +88,7 @@ export default function About() {
               </h2>
               <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
                 <p>
-                  BK Music is not only a catalog. It is a writing room for dedications, worship moments, family celebrations, graduations, choir pieces, and quiet prayers that need melody.
+                  BK Melodies is not only a catalog. It is a writing room for dedications, worship moments, family celebrations, graduations, choir pieces, and quiet prayers that need melody.
                 </p>
                 <p>
                   My focus is simple: make the song sound personal, make the score readable, and make the melody strong enough to be remembered after the first hearing.
@@ -182,7 +182,7 @@ export default function About() {
               <Quote size={16} className="inline text-primary mr-2 -mt-1" />
               "A good song does not only sound beautiful. It remembers why it was written."
             </blockquote>
-            <p className="text-[10px] uppercase tracking-widest text-accent mt-4">— BK Music studio note</p>
+            <p className="text-[10px] uppercase tracking-widest text-accent mt-4">— BK Melodies studio note</p>
           </div>
         </Section>
 
@@ -212,7 +212,7 @@ export default function About() {
                 {[
                   { y: "The spark", t: "A melody that wouldn't leave", d: "A simple tune hummed during ordinary days slowly turned into a habit of writing songs down — the beginning of a long conversation with music." },
                   { y: "The craft", t: "Years inside real choirs", d: "Singing and writing alongside parish choirs shaped my ear for what truly works for living voices — not just for the page." },
-                  { y: "BK Music today", t: "Songs with names attached", d: "Now BK Music carries personal commissions, sacred pieces, and Kikuyu, Kiswahili and English songs to families, soloists, and choirs around the world." },
+                  { y: "BK Melodies today", t: "Songs with names attached", d: "Now BK Melodies carries personal commissions, sacred pieces, and Kikuyu, Kiswahili and English songs to families, soloists, and choirs around the world." },
                 ].map((s, i) => (
                   <div key={s.y} className={`md:grid md:grid-cols-2 md:gap-8 relative ${i % 2 ? "md:[&>:first-child]:order-2" : ""}`}>
                     <div className="glass-card glow-border">
