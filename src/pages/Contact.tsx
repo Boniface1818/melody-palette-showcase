@@ -9,7 +9,7 @@ import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
   Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
-  HelpCircle, ChevronDown, Calendar, Globe2, Shield, Zap, FileMusic, FileAudio2,
+  HelpCircle, ChevronDown, Globe2, Shield, Zap, FileMusic, FileAudio2,
 } from "lucide-react";
 import { useState } from "react";
 import { useNairobiClock } from "@/hooks/useNairobiClock";
