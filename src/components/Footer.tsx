@@ -15,7 +15,7 @@ export default function Footer() {
     <footer className="border-t border-border mt-24 py-8">
       <div className="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="BK Music logo" width={32} height={32} className="h-8 w-8 rounded-md object-cover ring-1 ring-primary/30" />
+          <img src={logo} alt="BK Melodies logo" width={32} height={32} className="h-8 w-8 rounded-md object-cover ring-1 ring-primary/30" />
           <div className="text-muted-foreground text-xs leading-relaxed">
             <p className="flex items-center gap-1">
               © {new Date().getFullYear()} Boniface Kagunda Music. All rights reserved. Made with

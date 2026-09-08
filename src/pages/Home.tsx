@@ -37,7 +37,7 @@ const personJsonLd = {
 const webSiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "BK Music — Boniface Kagunda",
+  name: "BK Melodies — Boniface Kagunda",
   url: "https://bk-melodies.lovable.app/",
   inLanguage: "en",
   description:
@@ -183,7 +183,7 @@ export default function Home() {
                 First time here? You're in the right place.
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                BK Music is where stories become songs. Take a gentle walk through the compositions, learn about the heart behind the music, or reach out if you'd like something written just for you.
+                BK Melodies is where stories become songs. Take a gentle walk through the compositions, learn about the heart behind the music, or reach out if you'd like something written just for you.
               </p>
             </div>
           </div>
@@ -229,7 +229,7 @@ export default function Home() {
                 Music that knows the <span className="text-gradient">name, place, and prayer</span> behind it.
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                BK Music is built around moments people want to keep: a graduate walking into a new life, a singer thanking God, a choir preparing Sunday, or a family asking for a song in English, Kiswahili, or Kikuyu.
+                BK Melodies is built around moments people want to keep: a graduate walking into a new life, a singer thanking God, a choir preparing Sunday, or a family asking for a song in English, Kiswahili, or Kikuyu.
               </p>
             </div>
             <div className="grid gap-4">
