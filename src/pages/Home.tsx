@@ -128,7 +128,7 @@ export default function Home() {
             </p>
 
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6 font-body">
-              Composer · Songwriter · Score Maker
+              Composer &amp; Arranger
             </p>
           </Section>
 
