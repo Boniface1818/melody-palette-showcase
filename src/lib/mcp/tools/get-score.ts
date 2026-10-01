@@ -16,7 +16,7 @@ export default defineTool({
     }
     const supabase = supabaseForUser(ctx);
     const { data, error } = await supabase.from("scores").select("*").eq("id", id).maybeSingle();
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (error) { console.error("MCP query failed:", error); return { content: [{ type: "text", text: "Could not load data. Please try again later." }], isError: true }; }
     if (!data) return { content: [{ type: "text", text: `No score found with id ${id}` }], isError: true };
     return {
       content: [{ type: "text", text: JSON.stringify(data) }],

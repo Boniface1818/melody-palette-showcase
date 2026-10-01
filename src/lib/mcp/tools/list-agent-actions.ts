@@ -20,7 +20,7 @@ export default defineTool({
       .select("id,kind,summary,status,subject_id,error,created_at")
       .order("created_at", { ascending: false })
       .limit(limit ?? 20);
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (error) { console.error("MCP query failed:", error); return { content: [{ type: "text", text: "Could not load data. Please try again later." }], isError: true }; }
     return {
       content: [{ type: "text", text: JSON.stringify(data ?? []) }],
       structuredContent: { actions: data ?? [] },
