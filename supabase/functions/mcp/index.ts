@@ -76,7 +76,10 @@ var list_scores_default = defineTool({
     let query = supabase.from("scores").select("id,title,musescore_url,ensemble_type,mood,duration,pages,views,published_date,featured").order("published_date", { ascending: false }).limit(limit ?? 20);
     if (search) query = query.ilike("title", `%${search}%`);
     const { data, error } = await query;
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (error) {
+      console.error("MCP query failed:", error);
+      return { content: [{ type: "text", text: "Could not load data. Please try again later." }], isError: true };
+    }
     return {
       content: [{ type: "text", text: JSON.stringify(data ?? []) }],
       structuredContent: { scores: data ?? [] }
@@ -101,7 +104,10 @@ var get_score_default = defineTool2({
     }
     const supabase = supabaseForUser(ctx);
     const { data, error } = await supabase.from("scores").select("*").eq("id", id).maybeSingle();
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (error) {
+      console.error("MCP query failed:", error);
+      return { content: [{ type: "text", text: "Could not load data. Please try again later." }], isError: true };
+    }
     if (!data) return { content: [{ type: "text", text: `No score found with id ${id}` }], isError: true };
     return {
       content: [{ type: "text", text: JSON.stringify(data) }],
@@ -127,7 +133,10 @@ var list_commission_inquiries_default = defineTool3({
     }
     const supabase = supabaseForUser(ctx);
     const { data, error } = await supabase.from("commission_inquiries").select("id,name,email,occasion,ensemble,voice_type,deadline,message,created_at").order("created_at", { ascending: false }).limit(limit ?? 20);
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (error) {
+      console.error("MCP query failed:", error);
+      return { content: [{ type: "text", text: "Could not load data. Please try again later." }], isError: true };
+    }
     return {
       content: [{ type: "text", text: JSON.stringify(data ?? []) }],
       structuredContent: { inquiries: data ?? [] }
@@ -152,7 +161,10 @@ var list_contact_messages_default = defineTool4({
     }
     const supabase = supabaseForUser(ctx);
     const { data, error } = await supabase.from("contact_submissions").select("id,name,email,subject,message,created_at").order("created_at", { ascending: false }).limit(limit ?? 20);
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (error) {
+      console.error("MCP query failed:", error);
+      return { content: [{ type: "text", text: "Could not load data. Please try again later." }], isError: true };
+    }
     return {
       content: [{ type: "text", text: JSON.stringify(data ?? []) }],
       structuredContent: { messages: data ?? [] }
@@ -177,7 +189,10 @@ var list_agent_actions_default = defineTool5({
     }
     const supabase = supabaseForUser(ctx);
     const { data, error } = await supabase.from("agent_actions").select("id,kind,summary,status,subject_id,error,created_at").order("created_at", { ascending: false }).limit(limit ?? 20);
-    if (error) return { content: [{ type: "text", text: error.message }], isError: true };
+    if (error) {
+      console.error("MCP query failed:", error);
+      return { content: [{ type: "text", text: "Could not load data. Please try again later." }], isError: true };
+    }
     return {
       content: [{ type: "text", text: JSON.stringify(data ?? []) }],
       structuredContent: { actions: data ?? [] }
