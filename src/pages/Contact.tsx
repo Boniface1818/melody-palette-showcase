@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
@@ -147,6 +148,14 @@ const faqs = [
   },
 ];
 
+function handleCall(e: React.MouseEvent<HTMLAnchorElement>) {
+  const canDial = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+  if (canDial) return;
+  e.preventDefault();
+  navigator.clipboard?.writeText("+254104586361").catch(() => {});
+  toast.success("Number copied: 0104 586 361", { description: "Dial it from your phone to call (voice only)." });
+}
+
 export default function Contact() {
   useBackgroundCycle(5000);
   const headingColor = useColorCycle(3000);
@@ -258,7 +267,7 @@ export default function Contact() {
             </a>
           </Section>
           <Section delay={150}>
-            <a href="tel:+254104586361" className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group">
+            <a href="tel:+254104586361" onClick={handleCall} aria-label="Call Boniface on 0104 586 361" className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group">
               <Phone size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
               <div>
                 <p className="text-xs text-muted-foreground">Call (voice only)</p>
@@ -619,7 +628,7 @@ export default function Contact() {
                 <a href={gmailLink("I would love to work with you")} target="_blank" rel="noreferrer" className="btn-primary shine inline-flex">
                   <Mail size={14} /> Send a Message
                 </a>
-                <a href="tel:+254104586361" className="btn-primary shine inline-flex" style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}>
+                <a href="tel:+254104586361" onClick={handleCall} aria-label="Call Boniface on 0104 586 361" className="btn-primary shine inline-flex" style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}>
                   <Phone size={14} /> Call Me
                 </a>
               </div>
