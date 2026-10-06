@@ -191,6 +191,7 @@ export type Database = {
           featured: boolean
           id: string
           instruments: string | null
+          language: string | null
           mood: string | null
           musescore_id: string
           musescore_url: string
@@ -211,6 +212,7 @@ export type Database = {
           featured?: boolean
           id?: string
           instruments?: string | null
+          language?: string | null
           mood?: string | null
           musescore_id: string
           musescore_url: string
@@ -231,6 +233,7 @@ export type Database = {
           featured?: boolean
           id?: string
           instruments?: string | null
+          language?: string | null
           mood?: string | null
           musescore_id?: string
           musescore_url?: string

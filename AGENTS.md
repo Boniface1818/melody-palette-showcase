@@ -1,0 +1,1 @@
+- Score language is auto-detected by AI during MuseScore sync and stored in scores.language; the page falls back to a title word-list only when it is empty. Why: song lyrics aren't available from MuseScore.

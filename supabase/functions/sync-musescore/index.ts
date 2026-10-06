@@ -4,6 +4,60 @@ import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2/cors";
 const MUSESCORE_USER_URL = "https://musescore.com/user/108485503";
 const FIRECRAWL_ENDPOINT = "https://api.firecrawl.dev/v2/scrape";
 
+type Lang = "English" | "Kiswahili" | "Kikuyu";
+
+// Ask the AI which language each song's lyrics are sung in (streamed Responses call).
+async function detectLanguages(rows: { id: string; title: string; story: string | null }[]): Promise<Record<string, Lang>> {
+  const apiKey = Deno.env.get("LOVABLE_API_KEY");
+  if (!apiKey) return {};
+  const list = rows.map((r) => ({ id: r.id, title: r.title, notes: (r.story ?? "").slice(0, 300) }));
+  const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "fetch" },
+    body: JSON.stringify({
+      model: "openai/gpt-6-astra",
+      stream: true,
+      store: false,
+      reasoning: { effort: "low" },
+      instructions:
+        "You identify the language a Catholic choral song's lyrics are sung in, from its title (which is the opening lyric) and notes. Choose only English, Kiswahili or Kikuyu (Gikuyu). Words like Mungu, Bwana, Heko, Asante, Sadaka, Misa are Kiswahili; Ngai, Mwathani, Maitu, Wendo are Kikuyu. Latin titles such as Ave Maria count as Kiswahili unless notes say otherwise.",
+      input: JSON.stringify(list),
+      text: {
+        format: {
+          type: "json_schema", name: "languages", strict: true,
+          schema: {
+            type: "object", additionalProperties: false, required: ["items"],
+            properties: { items: { type: "array", items: {
+              type: "object", additionalProperties: false, required: ["id", "language"],
+              properties: { id: { type: "string" }, language: { type: "string", enum: ["English", "Kiswahili", "Kikuyu"] } },
+            } } },
+          },
+        },
+      },
+    }),
+  });
+  if (!res.ok || !res.body) { console.error("AI language detect status", res.status); return {}; }
+  const reader = res.body.getReader();
+  const dec = new TextDecoder();
+  let buf = "", text = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += dec.decode(value, { stream: true });
+    const lines = buf.split("\n"); buf = lines.pop() ?? "";
+    for (const l of lines) {
+      if (!l.startsWith("data:")) continue;
+      try {
+        const ev = JSON.parse(l.slice(5).trim());
+        if (ev.type === "response.output_text.delta") text += ev.delta;
+      } catch { /* ignore */ }
+    }
+  }
+  const out: Record<string, Lang> = {};
+  try { for (const it of JSON.parse(text).items ?? []) out[it.id] = it.language; } catch { /* ignore */ }
+  return out;
+}
+
 interface ScoreData {
   title: string;
   musescore_id: string;
@@ -216,6 +270,21 @@ Deno.serve(async (req) => {
         .upsert(payload, { onConflict: "musescore_id" });
       if (!error) synced++;
       else console.error("Upsert error:", error);
+    }
+
+    // Auto-detect the lyric language of any score that doesn't have one yet.
+    try {
+      const { data: pending } = await supabase
+        .from("scores").select("id, title, story").is("language", null).limit(50);
+      if (pending && pending.length) {
+        const detected = await detectLanguages(pending);
+        for (const row of pending) {
+          const lang = detected[row.id];
+          if (lang) await supabase.from("scores").update({ language: lang }).eq("id", row.id);
+        }
+      }
+    } catch (e) {
+      console.error("Language detection failed:", e);
     }
 
     return new Response(

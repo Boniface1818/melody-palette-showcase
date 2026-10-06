@@ -32,6 +32,7 @@ type LanguageFilter = "All Languages" | "English" | "Kiswahili" | "Kikuyu";
 interface Score {
   id: string;
   title: string;
+  language?: string | null;
   musescore_id: string;
   musescore_url: string;
   thumbnail_url: string | null;
@@ -69,7 +70,8 @@ const LANG_WORDS: Record<Exclude<LanguageFilter, "All Languages">, string[]> = {
   English: ["THE", "OF", "AND", "LORD", "GOD", "PRAISE", "HOLY", "ALLELUIA", "HALLELUJAH", "JESUS", "LOVE", "GRACE", "COME", "SING", "MY", "OUR", "YOUR", "PSALM", "GLORY", "BLESSED", "HYMN", "SPIRIT", "SONG", "HEART", "SOUL", "PEACE", "LIGHT", "JOY", "THANK", "THANKS", "LET", "US", "IS", "TO", "BE", "HAIL", "MARY", "MOTHER", "KING", "LAMB", "HEAVEN", "AMAZING", "WEDDING", "CHRISTMAS", "EASTER", "PRAYER", "OFFERING", "ENTRANCE", "COMMUNION", "MASS", "WE", "YOU", "ME", "IN", "ON", "WITH"],
 };
 
-const inferScoreLanguage = (score: Pick<Score, "title" | "story">): Exclude<LanguageFilter, "All Languages"> => {
+const inferScoreLanguage = (score: Pick<Score, "title" | "story" | "language">): Exclude<LanguageFilter, "All Languages"> => {
+  if (score.language === "English" || score.language === "Kiswahili" || score.language === "Kikuyu") return score.language;
   const story = (score.story ?? "").toLowerCase();
   // An explicit note in the description wins.
   if (/\b(in|sung in) kikuyu\b|\bgikuyu\b/.test(story)) return "Kikuyu";
