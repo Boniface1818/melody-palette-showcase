@@ -62,11 +62,32 @@ const FAV_KEY = "bk_favorites";
 const RECENT_KEY = "bk_recent";
 const RECENT_MAX = 6;
 
+// Word lists used to recognise the language of a song's lyrics (its title words).
+const LANG_WORDS: Record<Exclude<LanguageFilter, "All Languages">, string[]> = {
+  Kikuyu: ["NGAI", "MWATHANI", "MATEGA", "MAITU", "WENDO", "THIINI", "HEKO", "UKAI", "TUTHII", "NIWEGA", "MURATHIMO", "MUTHAMAKI", "JESU", "KIRIMA", "MUOYO", "GUKENA", "TUINI", "NYUMBA", "GWAKA", "WITU", "MUGOOCO", "NGOOCO", "NDINAKUO", "THAYU", "MWENE", "IGURU"],
+  Kiswahili: ["ASANTE", "MUNGU", "BWANA", "SADAKA", "SIFA", "UTUKUFU", "NJONI", "NJOONI", "TUINGIE", "FADHILI", "MNYONGE", "ALILIA", "HALELUYA", "TUTANGAZE", "WATU", "NA", "WAKUTUKUZE", "UTUONYESHE", "ROHO", "YANGU", "ZAKO", "AMEPAA", "MEZANI", "KWA", "SALAMU", "TAKATIFU", "MISA", "YESU", "MAMA", "ENYI", "TUIMBE", "PENDO", "NEEMA", "BARAKA", "MKATE", "UZIMA", "AMANI", "BABA", "NJOO", "TUMSIFU", "SHANGILIENI", "MTAKATIFU", "MALKIA", "MBINGUNI", "ZABURI"],
+  English: ["THE", "OF", "AND", "LORD", "GOD", "PRAISE", "HOLY", "ALLELUIA", "HALLELUJAH", "JESUS", "LOVE", "GRACE", "COME", "SING", "MY", "OUR", "YOUR", "PSALM", "GLORY", "BLESSED", "HYMN", "SPIRIT", "SONG", "HEART", "SOUL", "PEACE", "LIGHT", "JOY", "THANK", "THANKS", "LET", "US", "IS", "TO", "BE", "HAIL", "MARY", "MOTHER", "KING", "LAMB", "HEAVEN", "AMAZING", "WEDDING", "CHRISTMAS", "EASTER", "PRAYER", "OFFERING", "ENTRANCE", "COMMUNION", "MASS", "WE", "YOU", "ME", "IN", "ON", "WITH"],
+};
+
 const inferScoreLanguage = (score: Pick<Score, "title" | "story">): Exclude<LanguageFilter, "All Languages"> => {
-  const text = `${score.title} ${score.story ?? ""}`.toUpperCase();
-  if (/MATEGA|MAITU|MWATHANI|NGAI|WENDO|THIINI/.test(text)) return "Kikuyu";
-  if (/ASANTE|HEKO|MUNGU|BWANA|SADAKA|SIFA|UTUKUFU|NJONI|FADHILI|MNYONGE|HALELUYA/.test(text)) return "Kiswahili";
-  return "English";
+  const story = (score.story ?? "").toLowerCase();
+  // An explicit note in the description wins.
+  if (/\b(in|sung in) kikuyu\b|\bgikuyu\b/.test(story)) return "Kikuyu";
+  if (/\b(in|sung in) (kiswahili|swahili)\b/.test(story)) return "Kiswahili";
+  if (/\b(in|sung in) english\b/.test(story)) return "English";
+
+  const words = score.title.toUpperCase().replace(/[^A-Z\s]/g, " ").split(/\s+/).filter(Boolean);
+  const tally = { Kikuyu: 0, Kiswahili: 0, English: 0 };
+  for (const w of words) {
+    (Object.keys(LANG_WORDS) as (keyof typeof tally)[]).forEach((lang) => {
+      if (LANG_WORDS[lang].includes(w)) tally[lang] += lang === "Kikuyu" ? 2 : 1;
+    });
+    // Sound patterns typical of Kikuyu
+    if (/^(MW|NG|TH)|II|UU/.test(w) && !LANG_WORDS.Kiswahili.includes(w)) tally.Kikuyu += 0.5;
+  }
+  const best = (Object.entries(tally) as [keyof typeof tally, number][]).sort((a, b) => b[1] - a[1])[0];
+  if (best[1] > 0) return best[0];
+  return "Kiswahili";
 };
 
 export default function Compositions() {
