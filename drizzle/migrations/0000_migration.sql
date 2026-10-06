@@ -1,0 +1,1 @@
+ALTER TABLE public.scores ADD COLUMN IF NOT EXISTS language text CHECK (language IN ('English','Kiswahili','Kikuyu'));
