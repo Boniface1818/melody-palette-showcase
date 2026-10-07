@@ -61,6 +61,15 @@ const languageFilters: LanguageFilter[] = ["All Languages", "English", "Kiswahil
 
 const FAV_KEY = "bk_favorites";
 const RECENT_KEY = "bk_recent";
+
+// In Memoriam songs (Misa Anthony) and their Mass order.
+const isMemoriam = (s: { title: string }) => s.title.toUpperCase().includes("MISA ANTHONY");
+const MASS_PARTS = ["UTUHURUMIE", "UTUKUFU", "NASADIKI", "MTAKATIFU", "MWANAKONDOO", "AMINA"];
+const massOrder = (s: { title: string; story?: string | null }) => {
+  const t = `${s.title} ${s.story ?? ""}`.toUpperCase();
+  const i = MASS_PARTS.findIndex((p) => t.includes(p));
+  return i === -1 ? MASS_PARTS.length : i;
+};
 const RECENT_MAX = 6;
 
 // Word lists used to recognise the language of a song's lyrics (its title words).
@@ -106,6 +115,7 @@ export default function Compositions() {
   const [sort, setSort] = useState<SortKey>("newest");
   const [view, setView] = useState<ViewMode>("grid");
   const [favOnly, setFavOnly] = useState(false);
+  const [memoriamOnly, setMemoriamOnly] = useState(false);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [preview, setPreview] = useState<Score | null>(null);
   const [shared, setShared] = useState<string | null>(null);
@@ -223,6 +233,7 @@ export default function Compositions() {
     .filter((s) => active === "All" || s.ensemble_type === active)
     .filter((s) => language === "All Languages" || inferScoreLanguage(s) === language)
     .filter((s) => !favOnly || favorites.has(s.id))
+    .filter((s) => !memoriamOnly || isMemoriam(s))
     .filter((s) => {
       if (!query.trim()) return true;
       const q = query.toLowerCase();
@@ -234,6 +245,7 @@ export default function Compositions() {
       );
     })
     .sort((a, b) => {
+      if (memoriamOnly) return massOrder(a) - massOrder(b);
       switch (sort) {
         case "oldest": return (a.published_date ?? "").localeCompare(b.published_date ?? "");
         case "views": return (b.views ?? 0) - (a.views ?? 0);
@@ -242,7 +254,7 @@ export default function Compositions() {
         case "newest":
         default: return 0;
       }
-    }), [scores, active, language, favOnly, favorites, query, sort]);
+    }), [scores, active, language, favOnly, memoriamOnly, favorites, query, sort]);
 
   const featured = scores.find((s) => s.featured) ?? scores[0];
 
@@ -499,6 +511,17 @@ export default function Compositions() {
               aria-pressed={favOnly}
             >
               ♥ Favorites {favorites.size > 0 && `(${favorites.size})`}
+            </button>
+            <button
+              onClick={() => setMemoriamOnly((v) => !v)}
+              className={`px-5 py-2 rounded-full text-xs font-body tracking-wide transition-all duration-300 active:scale-95 inline-flex items-center gap-1.5 ${
+                memoriamOnly
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                  : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+              }`}
+              aria-pressed={memoriamOnly}
+            >
+              <Flame size={12} /> In Memoriam
             </button>
             {favorites.size > 0 && (
               <button
