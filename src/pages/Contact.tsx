@@ -156,6 +156,14 @@ function handleCall(e: React.MouseEvent<HTMLAnchorElement>) {
   toast.success("Number copied: 0104 586 361", { description: "Dial it from your phone to call (voice only)." });
 }
 
+const WHATSAPP_URL = `https://wa.me/254104586361?text=${encodeURIComponent("Hello Boniface! I'd like to talk about a song.")}`;
+
+function handleWhatsApp(e: React.MouseEvent<HTMLAnchorElement>) {
+  e.preventDefault();
+  const opened = window.open(WHATSAPP_URL, "_blank");
+  if (!opened) window.location.assign(WHATSAPP_URL);
+}
+
 export default function Contact() {
   useBackgroundCycle(5000);
   const headingColor = useColorCycle(3000);
@@ -251,7 +259,7 @@ export default function Contact() {
           </div>
         </Section>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-5xl mx-auto">
           <Section delay={100}>
             <a
               href={gmailLink("Music Inquiry")}
@@ -271,21 +279,6 @@ export default function Contact() {
               <Phone size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
               <div>
                 <p className="text-xs text-muted-foreground">Call (voice only)</p>
-                <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">0104 586 361</p>
-              </div>
-            </a>
-          </Section>
-          <Section delay={200}>
-            <a
-              href={`https://wa.me/254104586361?text=${encodeURIComponent("Hello Boniface! I'd like to talk about a song.")}`}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Start a WhatsApp conversation with Boniface on 0104 586 361"
-              className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group"
-            >
-              <MessageCircle size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
-              <div>
-                <p className="text-xs text-muted-foreground">WhatsApp</p>
                 <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">0104 586 361</p>
               </div>
             </a>
@@ -645,6 +638,17 @@ export default function Contact() {
                 </a>
                 <a href="tel:+254104586361" onClick={handleCall} aria-label="Call Boniface on 0104 586 361" className="btn-primary shine inline-flex" style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}>
                   <Phone size={14} /> Call Me
+                </a>
+                <a
+                  href={WHATSAPP_URL}
+                  onClick={handleWhatsApp}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="WhatsApp Boniface on 0104 586 361"
+                  className="btn-primary shine inline-flex"
+                  style={{ background: "transparent", border: "1px solid hsl(var(--border))" }}
+                >
+                  <MessageCircle size={14} /> WhatsApp Me
                 </a>
               </div>
               <p className="mt-6 text-xs text-muted-foreground">
