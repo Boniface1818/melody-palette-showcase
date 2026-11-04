@@ -285,7 +285,7 @@ export default function Contact() {
             >
               <MessageCircle size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
               <div>
-                <p className="text-xs text-muted-foreground">WhatsApp — starts a chat</p>
+                <p className="text-xs text-muted-foreground">WhatsApp</p>
                 <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">0104 586 361</p>
               </div>
             </a>
