@@ -10,7 +10,7 @@ import { useTextReveal } from "@/hooks/useTextReveal";
 import {
   Mail, MapPin, Phone, Music, Facebook, Instagram, Linkedin, Youtube,
   Sparkles, Heart, Clock, Mic, Quote, Users, BookOpen, Crown, Feather, Handshake, Headphones,
-  HelpCircle, ChevronDown, Globe2, Shield, Zap, FileMusic, FileAudio2,
+  HelpCircle, ChevronDown, Globe2, Shield, Zap, FileMusic, FileAudio2, MessageCircle,
 } from "lucide-react";
 import { useState } from "react";
 import { useNairobiClock } from "@/hooks/useNairobiClock";
@@ -251,7 +251,7 @@ export default function Contact() {
           </div>
         </Section>
 
-        <div className="grid sm:grid-cols-3 gap-4 mt-8 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 max-w-5xl mx-auto">
           <Section delay={100}>
             <a
               href={gmailLink("Music Inquiry")}
@@ -271,6 +271,21 @@ export default function Contact() {
               <Phone size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
               <div>
                 <p className="text-xs text-muted-foreground">Call (voice only)</p>
+                <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">0104 586 361</p>
+              </div>
+            </a>
+          </Section>
+          <Section delay={200}>
+            <a
+              href={`https://wa.me/254104586361?text=${encodeURIComponent("Hello Boniface! I'd like to talk about a song.")}`}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Start a WhatsApp conversation with Boniface on 0104 586 361"
+              className="glass-card flex items-start gap-3 h-full hover:border-primary/50 transition-all group"
+            >
+              <MessageCircle size={20} className="text-primary mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+              <div>
+                <p className="text-xs text-muted-foreground">WhatsApp — starts a chat</p>
                 <p className="text-sm font-body text-foreground group-hover:text-primary transition-colors">0104 586 361</p>
               </div>
             </a>
