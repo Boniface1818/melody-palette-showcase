@@ -158,6 +158,30 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          rating: number
+          review: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          rating: number
+          review: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          rating?: number
+          review?: string
+        }
+        Relationships: []
+      }
       score_subscribers: {
         Row: {
           active: boolean
