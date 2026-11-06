@@ -1,3 +1,3 @@
 - [x] Create public review storage with bounded server-side validation.
-- [ ] Add accessible review submission and display on Home.
+- [x] Add accessible review submission and display on Home.
 - [ ] Test validation, submit/display flow, and page health.

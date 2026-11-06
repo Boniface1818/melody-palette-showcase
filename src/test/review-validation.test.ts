@@ -3,7 +3,7 @@ import { visitorReviewSchema } from "@/lib/review-validation";
 
 describe("visitor review validation", () => {
   it("accepts a 2-character name, a 1-star rating, and a 10-character review", () => {
-    expect(visitorReviewSchema.safeParse({ name: "Jo", rating: 1, review: "Lovely!!!" }).success).toBe(true);
+    expect(visitorReviewSchema.safeParse({ name: "Jo", rating: 1, review: "Lovely song" }).success).toBe(true);
   });
 
   it("rejects names shorter than 2 characters", () => {

@@ -14,6 +14,7 @@ import ScoreOfTheDay from "@/components/ScoreOfTheDay";
 import profilePhoto from "@/assets/bk-profile.png";
 import SEO from "@/components/SEO";
 import Testimonials from "@/components/Testimonials";
+import VisitorReviews from "@/components/VisitorReviews";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -292,7 +293,13 @@ export default function Home() {
           </div>
         </Section>
 
-        <Section delay={350}>
+        <Section delay={340}>
+          <div className="mt-20 border-t border-border/50 pt-14">
+            <VisitorReviews />
+          </div>
+        </Section>
+
+        <Section delay={360}>
           <div className="mt-16 max-w-3xl mx-auto text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-accent mb-3">
               <Sparkles size={12} className="inline mr-1" /> One invitation
