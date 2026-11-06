@@ -65,7 +65,11 @@ export default function VisitorReviews() {
     setSubmitting(true);
     const { data, error } = await supabase
       .from("reviews")
-      .insert(result.data)
+      .insert({
+        name: result.data.name,
+        rating: result.data.rating,
+        review: result.data.review,
+      })
       .select("id,name,rating,review,created_at")
       .single();
     setSubmitting(false);
