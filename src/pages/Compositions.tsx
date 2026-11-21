@@ -3,7 +3,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Section from "@/components/Section";
 import SEO from "@/components/SEO";
-import SyncScoresButton, { syncScoresNow } from "@/components/SyncScoresButton";
+import SyncScoresButton, {
+  classifySyncResult,
+  recordSuccessfulSync,
+  recordSyncCooldown,
+  SCORE_SYNC_COOLDOWN_MS,
+  SyncCooldownError,
+  syncScoresNow,
+} from "@/components/SyncScoresButton";
 import { useBackgroundCycle } from "@/hooks/useBackgroundCycle";
 import { useColorCycle } from "@/hooks/useColorCycle";
 import { useRotatingSubtitles } from "@/hooks/useRotatingSubtitles";
@@ -143,29 +150,42 @@ export default function Compositions() {
 
     let cancelled = false;
     const AUTO_SYNC_KEY = "bk_last_sync_ts";
-    const AUTO_SYNC_COOLDOWN_MS = 6 * 60 * 60 * 1000; // 6 hours between automatic syncs
+    const AUTO_SYNC_COOLDOWN_MS = 6 * 60 * 60 * 1000; // 6 hours between successful automatic syncs
     const runAutomaticSync = async () => {
       try {
         const last = Number(localStorage.getItem(AUTO_SYNC_KEY) ?? 0);
         if (last && Date.now() - last < AUTO_SYNC_COOLDOWN_MS) {
           return; // Skip: recent sync already occurred
         }
-        // Reserve the slot BEFORE the network call so rapid remounts/reloads don't stack requests.
-        localStorage.setItem(AUTO_SYNC_KEY, String(Date.now()));
+        const cooldownUntil = Number(localStorage.getItem("bk_sync_cooldown_until") ?? 0);
+        if (cooldownUntil > Date.now()) return;
+
         const result = await syncScoresNow();
         if (cancelled) return;
-        if ((result.added ?? 0) > 0) {
-          setAutoSyncStatus(`Auto-loaded ${result.added} new score${result.added === 1 ? "" : "s"} from MuseScore.`);
-          await fetchScores();
+        await fetchScores();
+        const outcome = classifySyncResult(result);
+        if (outcome === "incomplete") {
+          recordSyncCooldown(SCORE_SYNC_COOLDOWN_MS);
+          setAutoSyncStatus("MuseScore could not confirm a complete catalog check.");
         } else {
-          setAutoSyncStatus(`MuseScore checked automatically · ${result.total ?? "all"} scores loaded.`);
+          recordSuccessfulSync(SCORE_SYNC_COOLDOWN_MS);
+        }
+        if (outcome === "added") {
+          setAutoSyncStatus(`Auto-loaded ${result.added} new score${result.added === 1 ? "" : "s"} from MuseScore.`);
+        } else if (outcome === "checked") {
+          setAutoSyncStatus("MuseScore checked automatically · no new scores found.");
         }
         window.setTimeout(() => {
           if (!cancelled) setAutoSyncStatus("");
         }, 6000);
       } catch (error) {
-        console.error("Automatic MuseScore sync failed:", error);
-        if (!cancelled) setAutoSyncStatus("Automatic check paused — use Sync New Scores to retry.");
+        if (error instanceof SyncCooldownError) {
+          recordSyncCooldown(error.retryAfterSeconds * 1000);
+          if (!cancelled) setAutoSyncStatus("A recent catalog check is still within the refresh limit.");
+        } else {
+          console.error("Automatic MuseScore sync failed:", error);
+          if (!cancelled) setAutoSyncStatus("Automatic check failed — use Sync New Scores to retry.");
+        }
       }
     };
     runAutomaticSync();

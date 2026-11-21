@@ -1,3 +1,3 @@
-- [x] Create public review storage with bounded server-side validation.
-- [x] Add accessible review submission and display on Home.
-- [x] Test validation, submit/display flow, and page health.
+- [ ] Correct score-sync result reporting and honor the server refresh cooldown.
+- [ ] Prevent failed automatic checks from blocking later sync attempts.
+- [ ] Test confirmed new-score, incomplete-result, cooldown, and page-loading flows.
