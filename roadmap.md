@@ -1,3 +1,4 @@
-- [ ] Correct score-sync result reporting and honor the server refresh cooldown.
-- [ ] Prevent failed automatic checks from blocking later sync attempts.
-- [ ] Test confirmed new-score, incomplete-result, cooldown, and page-loading flows.
+- [ ] Check every public page for rendering, navigation, console, and broken-image errors.
+- [ ] Exercise each page’s interactive controls, forms, and contact actions.
+- [ ] Reproduce and fix any confirmed bugs, including score refresh behavior.
+- [ ] Re-test fixes and mark any external-service-only actions clearly.
