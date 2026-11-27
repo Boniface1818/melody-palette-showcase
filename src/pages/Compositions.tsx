@@ -125,6 +125,7 @@ export default function Compositions() {
   const [memoriamOnly, setMemoriamOnly] = useState(false);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [preview, setPreview] = useState<Score | null>(null);
+  const [previewImageFailed, setPreviewImageFailed] = useState(false);
   const [shared, setShared] = useState<string | null>(null);
   const [recent, setRecent] = useState<string[]>([]);
   const [autoSyncStatus, setAutoSyncStatus] = useState("Checking MuseScore for new scores…");
@@ -226,6 +227,7 @@ export default function Compositions() {
   };
 
   const openPreview = (score: Score) => {
+    setPreviewImageFailed(false);
     setPreview(score);
     setRecent((prev) => {
       const next = [score.id, ...prev.filter((id) => id !== score.id)].slice(0, RECENT_MAX);
@@ -804,14 +806,20 @@ export default function Compositions() {
                 </button>
               </>
             )}
-            <div className="aspect-video bg-secondary">
-              <iframe
-                src={`https://musescore.com/user/108485503/scores/${preview.musescore_id}/embed`}
-                title={preview.title}
-                className="w-full h-full"
-                allow="autoplay; fullscreen"
-                loading="lazy"
-              />
+            <div className="aspect-video bg-secondary/60 flex items-center justify-center overflow-hidden">
+              {preview.thumbnail_url && !previewImageFailed ? (
+                <img
+                  src={preview.thumbnail_url}
+                  alt={`${preview.title} sheet music preview`}
+                  className="max-h-full max-w-full object-contain"
+                  onError={() => setPreviewImageFailed(true)}
+                />
+              ) : (
+                <div className="flex flex-col items-center gap-3 text-muted-foreground">
+                  <Music2 size={28} aria-hidden="true" />
+                  <span className="text-sm">Sheet preview unavailable</span>
+                </div>
+              )}
             </div>
             <div className="p-6">
               <h3 className="font-display text-xl font-semibold mb-2">{preview.title}</h3>
